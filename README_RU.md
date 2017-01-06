@@ -15,10 +15,11 @@ form-validation-constructor расчитан не на полную замену
 
 	npm install
 
-и после 
+после 
 
 	npm start
 
+и открыть в вашем браузере файл index.html
 
 ## Установка
 

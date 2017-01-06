@@ -17,10 +17,11 @@ You need clone repository and enter to console
 
 	npm install
 
-and after 
+after 
 
 	npm start
 
+and open in your browser file index.html
 
 ## Install
 
