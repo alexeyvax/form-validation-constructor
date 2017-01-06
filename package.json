@@ -7,24 +7,21 @@
   "homepage": "https://github.com/alexeyvax/form-validation-constructor",
   "main": "public/form-validation-constructor.js",
   "scripts": {
-    "start": "gulp",
-    "watch": "gulp watch"
+    "start": "npm run build",
+    "build": "NODE_ENV=production webpack --progress"
   },
   "keywords": [
     "form-validation",
     "form-validation-constructor",
     "patterns strategy",
-    "rollup",
-    "gulp",
+    "webpack",
     "ES6"
   ],
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-rollup": "^1.8.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^2.0.0",
-    "rollup-plugin-babel": "^2.6.1"
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "path": "^0.12.7",
+    "webpack": "^1.14.0"
   },
   "dependencies": {}
 }

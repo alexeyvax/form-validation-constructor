@@ -32,9 +32,9 @@ or
 
 **download script** form-validation-constructor
 
-[version form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.js)
+[version form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
 <br />
-[version form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.min.js)
+[version form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
 
 and connect script
 

@@ -30,9 +30,9 @@ form-validation-constructor расчитан не на полную замену
 
 **скачайте скрипт** form-validation-constructor
 
-[версия form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.js)
+[версия form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
 <br />
-[версия form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.min.js)
+[версия form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
 
 и подключите
 
