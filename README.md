@@ -117,32 +117,32 @@ and *"configValidation.js"* file to specify the name of the check corresponding 
 | ----------------- | ------------------- |
 | text              | isNonEmpty          |
 |                   | onlyLetters         |
-| ----------------- | ------------------- |
+|                   |                     |
 | number            | isNonEmpty          |
 |                   | isValidNumber       |
 |                   | minMax              |
 |                   | min                 |
 |                   | max                 |
-| ----------------- | ------------------- |
+|                   |                     |
 | email             | isNonEmpty          |
 |                   | isEmailCorrect      |
-| ----------------- | ------------------- |
+|                   |                     |
 | password          | isNonEmpty          |
-| ----------------- | ------------------- |
+|                   |                     |
 | file              | isNonEmpty          |
-| ----------------- | ------------------- |
+|                   |                     |
 | search            | isNonEmpty          |
 |                   | onlyLetters         |
-| ----------------- | ------------------- |
+|                   |                     |
 | tel               | isNonEmpty          |
 |                   | isValidTel          |
-| ----------------- | ------------------- |
+|                   |                     |
 | url               | isNonEmpty          |
 |                   | isValidUrl          |
-| ----------------- | ------------------- |
+|                   |                     |
 | checkbox          | isRequired          |
 |                   | group               |
-| ----------------- | ------------------- |
+|                   |                     |
 | radio             | isRequired          |
 |                   | group               |
 
