@@ -113,38 +113,37 @@ and *"configValidation.js"* file to specify the name of the check corresponding 
 
 ## A complete table of the checks
 
- **type of field** | **existing checks** 
---------------------------------------------------
- text              | isNonEmpty 
-                   | onlyLetters 
---------------------------------------------------
- number            | isNonEmpty 
-                   | isValidNumber 
-                   | minMax 
-                   | min 
-                   | max 
---------------------------------------------------
- email             | isNonEmpty 
-                   | isEmailCorrect 
---------------------------------------------------
- password          | isNonEmpty 
---------------------------------------------------
- file              | isNonEmpty 
---------------------------------------------------
- search            | isNonEmpty 
-                   | onlyLetters 
---------------------------------------------------
- tel               | isNonEmpty 
-                   | isValidTel 
---------------------------------------------------
- url               | isNonEmpty 
-                   | isValidUrl 
---------------------------------------------------
- checkbox          | isRequired 
-                   | group 
---------------------------------------------------
- radio             | isRequired 
-                   | group 
---------------------------------------------------
+| **type of field** | **existing checks** |
+|-----------------------------------------|
+| text              | isNonEmpty          |
+|                   | onlyLetters         |
+|-----------------------------------------|
+| number            | isNonEmpty          |
+|                   | isValidNumber       |
+|                   | minMax              |
+|                   | min                 |
+|                   | max                 |
+|-----------------------------------------|
+| email             | isNonEmpty          |
+|                   | isEmailCorrect      |
+|-----------------------------------------|
+| password          | isNonEmpty          |
+|-----------------------------------------|
+| file              | isNonEmpty          |
+|-----------------------------------------|
+| search            | isNonEmpty          |
+|                   | onlyLetters         |
+|-----------------------------------------|
+| tel               | isNonEmpty          |
+|                   | isValidTel          |
+|-----------------------------------------|
+| url               | isNonEmpty          |
+|                   | isValidUrl          |
+|-----------------------------------------|
+| checkbox          | isRequired          |
+|                   | group               |
+|-----------------------------------------|
+| radio             | isRequired          |
+|                   | group               |
 
 
