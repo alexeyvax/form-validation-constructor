@@ -11,6 +11,17 @@ will help in checking and it will work as intended.
 
 [Russian version README](https://github.com/alexeyvax/form-validation-constructor/blob/master/README_RU.md)
 
+## Show example
+
+You need clone repository and enter to console
+
+	npm install
+
+and after 
+
+	npm start
+
+
 ## Install
 
 library installed you can download it
