@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>form-validation-constructor</title>
+	<link rel="stylesheet" type="text/css" href="./styles/style.css">
+</head>
+<body>
+	<h1>Example to use form-validation-constructor</h1>
+	<form data-validation="true">
+		<ul>
+			<li>
+				<h2>text</h2>
+				<input type="text" name="name" data-options="isNonEmpty onlyLetters" 
+					placeholder="User name *" 
+				/>
+				<label>check name user</label>
+			</li>
+			<li>
+				<h2>text</h2>
+				<input type="text" name="surName" data-options="onlyLetters" 
+					placeholder="User surname" 
+				/>
+				<label>check surname user</label>
+			</li>
+			<li>
+				<h2>out warning to console</h2>
+				<input type="text" name="example-error" data-options="isEmailCorrect onlyLetters group min" 
+					placeholder="example error" 
+				/>
+				<label>example error</label>
+			</li>
+			<li>
+				<h2>text</h2>
+				<input type="text" name="login" data-options="isNonEmpty" 
+					placeholder="Login *" 
+				/>
+				<label>check login</label>
+			</li>
+			<li>
+				<h2>email</h2>
+				<input type="email" name="email" data-options="isNonEmpty isEmailCorrect" 
+					placeholder="Email *" 
+				/>
+				<label>check email</label>
+			</li>
+			<li>
+				<h2>password</h2>
+				<input type="password" name="password" data-options="isNonEmpty" 
+					placeholder="Password *" 
+				/>
+				<label>password authentication</label>
+			</li>
+			<li>
+				<h2>number</h2>
+				<input type="number" name="age" data-options="isNonEmpty isValidNumber" 
+					placeholder="How many years * " 
+				/>
+				<label>check age user</label>
+			</li>
+			<li>
+				<h2>number</h2>
+				<input type="number" name="age-min-max" data-options="isNonEmpty isValidNumber minMax" 
+					placeholder="How many years, min-max 10 to 50 * "min="10" max="50" 
+				/>
+				<label>check age, min 10, max 50</label>
+			</li>
+			<li>
+				<h2>number</h2>
+				<input type="number" name="age-min" data-options="isNonEmpty isValidNumber min" 
+					placeholder="How many years, min 10 * "min="10"
+				/>
+				<label>check age, min 10</label>
+			</li>
+			<li>
+				<h2>number</h2>
+				<input type="number" name="age" data-options="isNonEmpty isValidNumber max" 
+					placeholder="How many years, max 50 * "max="50"
+				/>
+				<label>check age, max 50</label>
+			</li>
+			<li>
+				<h2>file</h2>
+				<input type="file" name="file" data-options="isNonEmpty" />
+				<label>check empty file</label>
+			</li>
+			<li>
+				<h2>search</h2>
+				<input type="search" name="search" data-options="isNonEmpty" 
+					placeholder="Search *" 
+				/>
+				<label>check search</label>
+			</li>
+			<li>
+				<h2>tel</h2>
+				<input type="tel" name="tel" data-options="isNonEmpty isValidTel" 
+					placeholder="Tel *" 
+				/>
+				<label>check tel</label>
+			</li>
+			<li>
+				<h2>url</h2>
+				<input type="url" name="url" data-options="isNonEmpty isValidUrl" 
+					placeholder="Url *" 
+				/>
+				<label>check url</label>
+			</li>
+			<li>
+				<h2>checkbox</h2>
+				<input type="checkbox" name="checkbox" data-options="isRequired" />
+				<label>check checkbox required</label>
+			</li>
+			<li>
+				<h2>radio</h2>
+				<input type="radio" name="radio" data-options="isRequired" />
+				<label>check radio required</label>
+			</li>
+			<li>
+				<h2>group radio</h2>
+				<input type="radio" name="group-radio" data-options="group" />
+				<label>check groupRadio</label>
+				<input type="radio" name="group-radio" data-options="group" />
+				<label>check groupRadio</label>
+			</li>
+			<li>
+				<h2>group checkbox</h2>
+				<input type="checkbox" name="checkbox-group-first" data-groupname="one" data-options="group" />
+				<label>check group checkbox, first</label>
+				<input type="checkbox" name="checkbox-group-second" data-groupname="one" data-options="group" />
+				<label>check group checkbox, second</label>
+			</li>
+			<li>
+				<button type="submit">Send</button>
+			</li>
+		</ul>
+	</form>
+	<script src="public/index.min.js"></script>
+</body>
+</html>

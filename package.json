@@ -1,0 +1,30 @@
+{
+  "name": "form-validation-constructor",
+  "version": "0.0.1",
+  "description": "form-validation-constructor the simple constructor for validation form",
+  "author": "alexeyvax Alexey Vakhrushev <Alexeyvax1990@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/alexeyvax/form-validation-constructor",
+  "main": "public/form-validation-constructor.js",
+  "scripts": {
+    "start": "gulp",
+    "watch": "gulp watch"
+  },
+  "keywords": [
+    "form-validation",
+    "form-validation-constructor",
+    "patterns strategy",
+    "rollup",
+    "gulp",
+    "ES6"
+  ],
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rollup": "^1.8.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "rollup-plugin-babel": "^2.6.1"
+  },
+  "dependencies": {}
+}

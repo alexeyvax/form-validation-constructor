@@ -1,0 +1,10 @@
+/nbproject/private/
+/bower_components/
+node_modules
+
+__tests__
+.vscode
+
+npm-debug.log
+.babelrc
+.editorconfig
