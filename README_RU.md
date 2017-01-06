@@ -18,6 +18,7 @@ form-validation-constructor расчитан не на полную замену
 После необходимо подключить
 Лучше всего подключать в вашем корневом файле, куда подключаются все скрипты
 пример:
+
 	// index.js or main.js
 	// подключите
 	import validationForm from 'form-validation-constructor';
@@ -30,9 +31,11 @@ form-validation-constructor расчитан не на полную замену
 **скачайте скрипт** form-validation-constructor
 
 [версия form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.js)
+<br />
 [версия form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/public/form-validation-constructor.min.js)
 
 и подключите
+
 	// index.html
 	<script src="your-way/form-validation-constructor.min.js"></script>
 
@@ -46,11 +49,12 @@ form-validation-constructor расчитан не на полную замену
 Для проверки формы необходимо указать у неё **data** атрибут
 
 	<form name="form" action="/" method="post" data-validation="true"></form>
-	
+
 Теперь форма добавится в список проверяющихся, после необходимо добавить в форму поля ввода, к примеру 
 у нас есть простая форма состоящая из трёх полей: имя, email, и подтверждение о согласии.
 
 Запишем следующим образом:
+
 	<form name="form" action="/" method="post" data-validation="true">
 		// имя
 		<label for="name">Имя пользователя</label>
@@ -84,6 +88,7 @@ form-validation-constructor расчитан не на полную замену
 
 Всплывающие подсказки на данный момент на английском и русском языках. Язык подсказок соответствует языку, 
 который указан в атрибуте **lang** в теге **html**
+
 	<html lang="en">
 
 Идея в том, что можно безболезненно дописывать свои проверки к уже существующим в файл typesValidation.js 
@@ -91,18 +96,18 @@ form-validation-constructor расчитан не на полную замену
 
 ## Список существующих проверок
 
-* isNonEmpty - проверка на пустоту поля, (аналог **required** для всех полей ввода кроме *ckeckbox* и *radio*)
-* isValidNumber - проверка на число
-* isEmailCorrect - проверка на валидность введённого email адреса
-* isValidTel - проверка на валидность введённого номера телефона
-* isValidUrl - проверка на валидность введённого url адреса
-* onlyLetters - проверка на введение букв без спец символов
-* minMax - проверка на соответствие числа, не меньше min и не больше max (работает если указаны 
+* **isNonEmpty** - проверка на пустоту поля, (аналог **required** для всех полей ввода кроме *ckeckbox* и *radio*)
+* **isValidNumber** - проверка на число
+* **isEmailCorrect** - проверка на валидность введённого email адреса
+* **isValidTel** - проверка на валидность введённого номера телефона
+* **isValidUrl** - проверка на валидность введённого url адреса
+* **onlyLetters** - проверка на введение букв без спец символов
+* **minMax** - проверка на соответствие числа, не меньше min и не больше max (работает если указаны 
 			и min и max у input type="number") 
-* min - проверка на соответствия числа, не меньше min (для input type="number")
-* max - проверка соответствия числа, не больше max (для input type="number")
-* isRequired - проверка на активацию обязательного поля (для checkbox и radio)
-* group - проверка группы элементов на активацию хотя бы одного из группы (для checkbox и radio)
+* **min** - проверка на соответствия числа, не меньше min (для input type="number")
+* **max** - проверка соответствия числа, не больше max (для input type="number")
+* **isRequired** - проверка на активацию обязательного поля (для checkbox и radio)
+* **group** - проверка группы элементов на активацию хотя бы одного из группы (для checkbox и radio)
 
 
 ## Полная таблица проверок
