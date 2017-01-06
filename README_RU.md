@@ -116,32 +116,23 @@ form-validation-constructor расчитан не на полную замену
 | ----------------- | ------------------------- |
 | text              | isNonEmpty                |
 |                   | onlyLetters               |
-|                   |                           |
 | number            | isNonEmpty                |
 |                   | isValidNumber             |
 |                   | minMax                    |
 |                   | min                       |
 |                   | max                       |
-|                   |                           |
 | email             | isNonEmpty                |
 |                   | isEmailCorrect            |
-|                   |                           |
 | password          | isNonEmpty                |
-|                   |                           |
 | file              | isNonEmpty                |
-|                   |                           |
 | search            | isNonEmpty                |
 |                   | onlyLetters               |
-|                   |                           |
 | tel               | isNonEmpty                |
 |                   | isValidTel                |
-|                   |                           |
 | url               | isNonEmpty                |
 |                   | isValidUrl                |
-|                   |                           |
 | checkbox          | isRequired                |
 |                   | group                     |
-|                   |                           |
 | radio             | isRequired                |
 |                   | group                     |
 
