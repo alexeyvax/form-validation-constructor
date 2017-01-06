@@ -48,7 +48,7 @@ To begin, add a form on the page
 	// index.html
 	<form name="form" action="/" method="post"></form>
 
-To check the form, you must indicate her **data** attribute
+To check the form, you must indicate her **data** attribute **data-validation="true"**
 
 	<form name="form" action="/" method="post" data-validation="true"></form>
 
@@ -60,7 +60,7 @@ Write as follows:
 	<form name="form" action="/" method="post" data-validation="true">
 		// name
 		<label for="name">Name user</label>
-		<input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Имя *" />
+		<input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Name *" />
 		// email
 		<label for="email">Email address</label>
 		<input type="email" name="email" id="email" data-options="isNonEmpty isEmailCorrect" placeholder="Email *" />
@@ -75,15 +75,15 @@ To do this, add an attribute **data-options="isNonEmpty onlyLetters"** needed ch
 In the second field **input type="email"** we use a check on emptiness and on the correctness of the entered email address.
 
 The third field is a checkbox with the consent of, to the check you need to add attribute 
-**data-options="isRequired"** and then the field will be required to fill. Important factor, attribute **"isRequired"** 
-only works for input fields with types **checkbox** or **radio**.
+**data-options="isRequired"** and then the field will be required to fill. 
+Important factor, attribute **"isRequired"** only works for input fields with types **checkbox** or **radio**.
 
 **An important addition** in the data attribute **data-options** you can add any number of relevant
 checks by listing them separated by spaces, for example:
 
 	data-options="isNonEmpty onlyLetters"
 
-If you make a mistake or not to the type of field check, then a warning will be printed to the console
+If you make a **mistake** or not to the type of field check, then a warning will be printed to the console
 describing the error.
 
 If the form is optional fields, then just do not use them attribute **data-options**
@@ -93,8 +93,8 @@ the attribute **lang** in the tag **html**
 
 	<html lang="en">
 
-The idea is you can write your checks in the file *typesValidation.js* 
-and *configValidation.js* file to specify the name of the check corresponding to the field type.
+The idea is you can write your checks in the file *"typesValidation.js"* 
+and *"configValidation.js"* file to specify the name of the check corresponding to the field type.
 
 ## The list of existing checks
 
@@ -105,11 +105,11 @@ and *configValidation.js* file to specify the name of the check corresponding to
 * **isValidUrl** - check on the validity of the entered url address
 * **onlyLetters** - check on the entered letters without special characters
 * **minMax** - check for compliance with the number of not less than min and not more than max (works if given
-			and min and max at the input type = "number")
-* **min** - check for compliance of not less than min (for input type="number")
-* **max** - check for compliance of not more than max (for input type = "number")
-* **isRequired** - check activation of the required field (for checkbox or radio)
-* **group** - check the activation of elements of at least one of the groups (for checkbox or radio)
+			and **min** and **max** at the input **type = "number"**)
+* **min** - check for compliance of not less than min (for input **type="number"**)
+* **max** - check for compliance of not more than max (for input **type = "number"**)
+* **isRequired** - check activation of the required field (for **checkbox** or **radio**)
+* **group** - check the activation of elements of at least one of the groups (for **checkbox** or **radio**)
 
 ## A complete table of the checks
 
