@@ -5,7 +5,7 @@
   "author": "alexeyvax Alexey Vakhrushev <Alexeyvax1990@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/alexeyvax/form-validation-constructor",
-  "main": "public/form-validation-constructor.js",
+  "main": "public/index.js",
   "scripts": {
     "start": "npm run build",
     "build": "NODE_ENV=production webpack --progress"

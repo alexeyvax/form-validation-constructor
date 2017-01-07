@@ -4,7 +4,7 @@ const webpack = require( 'webpack' );
 module.exports = {
 	context: __dirname,
 	entry: {
-		'form-validation-constructor': './scripts/form-validation-constructor',
+		index: './scripts',
 	},
 	output: {
 		path: './public', filename: '[name].js'
