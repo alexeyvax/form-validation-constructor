@@ -29,6 +29,7 @@
     "gulp-uglify": "^2.0.0",
     "path": "^0.12.7",
     "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "webpack": "^1.14.0"
   },
   "dependencies": {}
