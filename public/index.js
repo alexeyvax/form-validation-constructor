@@ -1,2 +1,801 @@
-!function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={exports:{},id:r,loaded:!1};return e[r].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(){(0,a.default)()}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=n(1),a=r(u);t.default=i},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(){var e=document.querySelectorAll("form[data-validation=true]");u(e)}function u(e){Array.prototype.forEach.call(e,function(e){new o.default(e)})}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var a=n(2),o=r(a);t.default=i},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(3),o=r(a),s=n(4),l=(r(s),n(5)),c=r(l),f=n(7),d=r(f),v=n(8),m=r(v),p=n(9),h=r(p),y=n(10),E=r(y),b=n(11),g=r(b),_=function(){function e(t){i(this,e),this.form=t,this.listInputElement=t.querySelectorAll("input[type=text], input[type=number], input[type=email], input[type=password], input[type=file], \n\t\t\tinput[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]"),this.store=new g.default,this.storeErrors=new Map,this.groupsElements=[],this.dataInput=Object.create(null),this.isFirst=!0,this.registerHandlers()}return u(e,[{key:"registerHandlers",value:function(){var e=this;this.init(),this.form.addEventListener("submit",function(t){return e.validation(t)})}},{key:"init",value:function(){var e=this,t=document.documentElement.lang,n=[],r=[];Array.prototype.filter.call(this.listInputElement,function(e){var t=e.dataset.options;if(t){if("radio"===e.type||"checkbox"===e.type){var i=t.split(" "),u=((0,c.default)(e,i),i.some(m.default));return u?(r.push(e),!0):(n.push(e),!1)}return n.push(e),!1}}),this.groupsElements=(0,h.default)(r),n.forEach(function(n,r){var i=n.dataset.options,u=void 0;if(i){var a=i.split(" ");u=(0,c.default)(n,a)}e.dataInput[r]={input:n,name:n.name,config:u,lang:t}})}},{key:"validation",value:function(e){var t=this;e.preventDefault();var n=(0,d.default)(this.dataInput,this.storeErrors);n=(0,E.default)(this.groupsElements,this.storeErrors),this.store.getMessage(n),this.isFirst&&(this.form.addEventListener("input",(0,o.default)(function(e){return t.validation(e)},100,!0)),this.form.addEventListener("change",(0,o.default)(function(e){return t.validation(e)},100,!0)),this.isFirst=!1)}}]),e}();t.default=_},function(e,t){"use strict";function n(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:100,n=arguments.length>2&&void 0!==arguments[2]&&arguments[2],r=void 0;return function(){for(var i=this,u=arguments.length,a=Array(u),o=0;o<u;o++)a[o]=arguments[o];r?clearTimeout(r):n&&e.apply(this,a),r=setTimeout(function(){n||e.apply(i,a),r=0},t)}}Object.defineProperty(t,"__esModule",{value:!0}),t.default=n},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n={isNonEmpty:{validate:function(e){return""!==e.value},"instructions-ru":"это поле не может быть пустым.","instructions-en":"This field can not be empty."},onlyLetters:{validate:function(e){return!/[^a-zа-яё ]/gi.test(e.value)},"instructions-ru":'значением может быть только буквы от "а" до "я".',"instructions-en":'value can only be the letters "a" to "z".'},isValidNumber:{validate:function(e){return!isNaN(e.value)},"instructions-ru":"значением может быть только число­, например 1, 3.14 или 2010","instructions-en":"value can only be a number, such as 1, 3.14 or 2010"},minMax:{validate:function(e){var t=Number(e.min),n=Number(e.max),r=Number(e.value);return!(t>r||r>n)},"instructions-ru":"значением может быть только число не меньше min и не больше max","instructions-en":"value can only be a number no less and no more than min max"},min:{validate:function(e){var t=Number(e.min),n=Number(e.value);return!(t>n)},"instructions-ru":"значением может быть только число не меньше min","instructions-en":"value can only be a number not less than min"},max:{validate:function(e){var t=Number(e.max),n=Number(e.value);return!(n>t)},"instructions-ru":"значением может быть только число не больше max","instructions-en":"value can only be a number not more than max"},isEmailCorrect:{validate:function(e){return/^.+@.+$/.test(e.value)},"instructions-ru":"введите корректный email","instructions-en":"enter a valid email"},isValidTel:{validate:function(e){return!/[^0-9 .()*+-]/g.test(e.value)},"instructions-ru":"введите корректный телефон","instructions-en":"enter a valid phone"},isValidUrl:{validate:function(e){return/^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(e.value)},"instructions-ru":"введите корректный url","instructions-en":"enter a valid url"},isRequired:{validate:function(e){return e.checked},"instructions-ru":"для продолжения активируйте обязательное поле","instructions-en":"for to continue activate a mandatory field"},isEmptyGroup:{validate:function(e){var t=e.some(function(e){return!!e.checked});return t},"instructions-ru":"необходимо выбрать хоть один пункт","instructions-en":"you need to select at least one item"}};t.default=n},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(e,t){var n=(e.name,e.type),r=[];return t.forEach(function(e){a.default[n].indexOf(e)!==-1&&r.push(e)}),r}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=n(6),a=r(u);t.default=i},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n={text:["isNonEmpty","onlyLetters"],number:["isNonEmpty","isValidNumber","minMax","min","max"],email:["isNonEmpty","isEmailCorrect"],password:["isNonEmpty"],file:["isNonEmpty"],search:["isNonEmpty","onlyLetters"],tel:["isNonEmpty","isValidTel"],url:["isNonEmpty","isValidUrl"],checkbox:["isRequired","group"],radio:["isRequired","group"]};t.default=n},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(e,t){for(var n=Object.keys(e).length,r=function(n){var r=e[n],i=r.input,u=r.config,o="instructions-"+r.lang,s="",l=function(e){var t=a.default[e];if(t){var n=t.validate(i);if(n)return!1;var r=t[o];return s=r,!0}return!1};u&&u.some(l),t.set(i,s)},i=0;i<n;i++)r(i);return t}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=n(4),a=r(u);t.default=i},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e){return"group"===e};t.default=n},function(e,t){"use strict";function n(e){var t=[];e.forEach(function(e){var n=i(e);t.indexOf(n)===-1&&t.push(n)});var n=[];return t.forEach(function(t){var i=r(t,e);n.push(i)}),n}function r(e,t){var n=[];return t.forEach(function(t){var r=i(t);return e===r&&(n.push(t),!0)}),n}function i(e){var t=e.type,n=void 0;if("radio"===t)n=e.name;else if("checkbox"===t){var r=e.dataset.groupname;r&&(n=r)}return n}Object.defineProperty(t,"__esModule",{value:!0}),t.default=n},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(e,t){return e.forEach(function(e){var n=u(e);t.set(e[0],n)}),t}function u(e){var t="instructions-en",n="",r=function(r){var i=o.default.isEmptyGroup;if(i){var u=i.validate(e);if(u)return!1;var a=i[t];return n=a,!0}return!1};return e.some(r),n}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var a=n(4),o=r(a);t.default=i},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),a=n(12),o=r(a),s=function(){function e(){i(this,e),this.outputErrors=new o.default}return u(e,[{key:"getMessage",value:function(e){this.outMessage(e)}},{key:"outMessage",value:function(e){this.outputErrors.sortMessages(e)}}]),e}();t.default=s},function(e,t){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),i=function(){function e(){n(this,e),this.storeCreateElements=new Map,this.errorNotificationElement=Object.create(null)}return r(e,[{key:"sortMessages",value:function(e){var t=this,n=e.keys().next().value,r=n.closest("form");e.forEach(function(e,n,r){var i=n,u=e;u?t.storeCreateElements.has(i)?t.storeCreateElements.get(i).message!==u&&(t.storeCreateElements.get(i).newElement.textContent=u,t.storeCreateElements.get(i).message=u):(t.errorNotificationElement={newElement:t.createErrorElement(i,u),message:u},t.storeCreateElements.set(i,t.errorNotificationElement)):t.storeCreateElements.has(i)&&!function(){var e=t.storeCreateElements.get(i).newElement;e.classList.add("hide"),setTimeout(function(){i.parentElement.removeChild(e),t.storeCreateElements.delete(i)},100)}()}),0===this.storeCreateElements.size&&r.submit()}},{key:"createErrorElement",value:function(e,t){var n=document.createElement("span");return n.classList.add("notify"),setTimeout(function(){return n.classList.add("show")},0),n.textContent=t,e.parentElement.insertBefore(n,e),n}}]),e}();t.default=i}]);
-//# sourceMappingURL=index.js.map
+var formValidationConstructor = (function () {
+'use strict';
+
+/**
+ * Perform function more than once,
+ * Is not exceeded the interval between calls
+ * @param {Function} func
+ * @param {number=100} threshold
+ * @param {boolean=false} atBeginning
+ * @returns {Function}
+ */
+function debounce(func) {
+	var threshold = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+	var atBeginning = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+	var timerId = void 0;
+
+	return function debounced() {
+		var _this = this;
+
+		for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+			rest[_key] = arguments[_key];
+		}
+
+		if (timerId) {
+			clearTimeout(timerId);
+		} else if (atBeginning) {
+			func.apply(this, rest);
+		}
+
+		timerId = setTimeout(function () {
+			if (!atBeginning) {
+				func.apply(_this, rest);
+			}
+
+			timerId = 0;
+		}, threshold);
+	};
+}
+
+/**
+ * Contains embedded objects that contain check methods and a description of errors
+ * 
+ * types {Object} 
+ */
+
+var types = {
+	/**
+  * Check field on the empty
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isNonEmpty: {
+		validate: function validate(input) {
+			return input.value !== '';
+		},
+		'instructions-ru': 'это поле не может быть пустым.',
+		'instructions-en': 'This field can not be empty.'
+	},
+	/**
+  * Check on the entered letters without special characters
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	onlyLetters: {
+		validate: function validate(input) {
+			return !/[^a-zа-яё ]/gi.test(input.value);
+		},
+		'instructions-ru': 'значением может быть только буквы от "а" до "я".',
+		'instructions-en': 'value can only be the letters "a" to "z".'
+	},
+	/**
+  * Check of the number
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isValidNumber: {
+		validate: function validate(input) {
+			return !isNaN(input.value);
+		},
+		'instructions-ru': 'значением может быть только число­, например 1, 3.14 или 2010',
+		'instructions-en': 'value can only be a number, such as 1, 3.14 or 2010'
+	},
+	/**
+  * Check for compliance with the number of not less than min and not more than max 
+  * (works if given and min and max at the input type = "number")
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	minMax: {
+		validate: function validate(input) {
+			var min = Number(input.min);
+			var max = Number(input.max);
+			var value = Number(input.value);
+
+			if (min > value || value > max) {
+				return false;
+			}
+
+			return true;
+		},
+		'instructions-ru': 'значением может быть только число не меньше min и не больше max',
+		'instructions-en': 'value can only be a number no less and no more than min max'
+	},
+	/**
+  * Check for compliance of not less than min (for input type="number")
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	min: {
+		validate: function validate(input) {
+			var min = Number(input.min);
+			var value = Number(input.value);
+
+			if (min > value) {
+				return false;
+			}
+
+			return true;
+		},
+		'instructions-ru': 'значением может быть только число не меньше min',
+		'instructions-en': 'value can only be a number not less than min'
+	},
+	/**
+  * Check for compliance of not more than max (for input type = "number")
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	max: {
+		validate: function validate(input) {
+			var max = Number(input.max);
+			var value = Number(input.value);
+
+			if (value > max) {
+				return false;
+			}
+
+			return true;
+		},
+		'instructions-ru': 'значением может быть только число не больше max',
+		'instructions-en': 'value can only be a number not more than max'
+	},
+	/**
+  * Check the validity of the entered email address
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isEmailCorrect: {
+		validate: function validate(input) {
+			return (/^.+@.+$/.test(input.value)
+			);
+		},
+		'instructions-ru': 'введите корректный email',
+		'instructions-en': 'enter a valid email'
+	},
+	/**
+  * Check on the validity of the entered phone number
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isValidTel: {
+		validate: function validate(input) {
+			return !/[^0-9 .()*+-]/g.test(input.value);
+		},
+		'instructions-ru': 'введите корректный телефон',
+		'instructions-en': 'enter a valid phone'
+	},
+	/**
+  * Check on the validity of the entered url address
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isValidUrl: {
+		validate: function validate(input) {
+			return (/^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(input.value)
+			);
+		},
+		'instructions-ru': 'введите корректный url',
+		'instructions-en': 'enter a valid url'
+	},
+	/**
+  * Check activation of the required field (for checkbox or radio)
+  * 
+  * @param input {HTMLInputElement}
+  * @returns true or false {boolean}
+  */
+	isRequired: {
+		validate: function validate(input) {
+			return input.checked;
+		},
+		'instructions-ru': 'для продолжения активируйте обязательное поле',
+		'instructions-en': 'for to continue activate a mandatory field'
+	},
+	/**
+  * Check the activation of elements of at least one of the groups (for checkbox or radio)
+  * 
+  * @param array {Array}
+  * @returns rezult {boolean}
+  */
+	isEmptyGroup: {
+		validate: function validate(array) {
+			var rezult = array.some(function (item) {
+				if (item.checked) {
+					return true;
+				} else {
+					return false;
+				}
+			});
+
+			return rezult;
+		},
+		'instructions-ru': 'необходимо выбрать хоть один пункт',
+		'instructions-en': 'you need to select at least one item'
+	}
+};
+
+/**
+ * Checks distributed depending on the type of field
+ * 
+ * config {Object}
+ */
+var config = {
+	/** inpyt type="text" */
+	text: ['isNonEmpty', 'onlyLetters'],
+	/** inpyt type="number" */
+	number: ['isNonEmpty', 'isValidNumber', 'minMax', 'min', 'max'],
+	/** inpyt type="email" */
+	email: ['isNonEmpty', 'isEmailCorrect'],
+	/** inpyt type="password" */
+	password: ['isNonEmpty'],
+	/** inpyt type="file" */
+	file: ['isNonEmpty'],
+	/** inpyt type="search" */
+	search: ['isNonEmpty', 'onlyLetters'],
+	/** inpyt type="tel" */
+	tel: ['isNonEmpty', 'isValidTel'],
+	/** inpyt type="url" */
+	url: ['isNonEmpty', 'isValidUrl'],
+	/** inpyt type="checkbox" */
+	checkbox: ['isRequired', 'group'],
+	/** inpyt type="radio" */
+	radio: ['isRequired', 'group']
+};
+
+/**
+ * Find and out warnings
+ * 
+ * @param element {HTMLInputElement}
+ * @param arr {Array}
+ * @returns mediateArray {Array}
+ */
+function findWarning(element, arr) {
+	var name = element.name;
+	var type = element.type;
+	var mediateArray = [];
+
+	arr.forEach(function (item) {
+		if (config[type].indexOf(item) !== -1) {
+			mediateArray.push(item);
+		} else {
+			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
+		}
+	});
+
+	return mediateArray;
+}
+
+/**
+ * Determines error on ordinary field
+ * 
+ * @param dataInput {Object}
+ * @param storeErrors {Map}
+ * @returns storeErrors {Map}
+ */
+function checkValue(dataInput, storeErrors) {
+	var length = Object.keys(dataInput).length;
+
+	var _loop = function _loop(i) {
+		var data = dataInput[i];
+		var element = data['input'];
+		var config = data['config'];
+		var instructions = 'instructions-' + data['lang'];
+		var message = '';
+
+		var getMessage = function getMessage(item) {
+			var checker = types[item];
+
+			if (checker) {
+				var result = checker.validate(element);
+
+				if (!result) {
+					var msg = checker[instructions];
+
+					message = msg;
+
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		};
+
+		if (config) {
+			config.some(getMessage);
+		}
+
+		storeErrors.set(element, message);
+	};
+
+	for (var i = 0; i < length; i++) {
+		_loop(i);
+	}
+
+	return storeErrors;
+}
+
+/**
+ * Determines field in the group or ordinary
+ * 
+ * @param item {HTMLInputElement}
+ * @returns true or false {boolean}
+ */
+var checkAttrGroup = function checkAttrGroup(item) {
+	if (item === 'group') {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+/**
+ * Sort the field to check on groups
+ * 
+ * @param listGroups {Array}
+ * @returns arr {Array}
+ */
+function sortGroups(listGroups) {
+	var groups = [];
+
+	listGroups.forEach(function (item) {
+		var name = sortForName(item);
+
+		if (groups.indexOf(name) === -1) {
+			groups.push(name);
+		}
+	});
+
+	var arr = [];
+
+	groups.forEach(function (arrName) {
+		var itemArr = forEachGroup(arrName, listGroups);
+
+		arr.push(itemArr);
+	});
+
+	return arr;
+}
+
+/**
+ * It passes through the main list, and created groups to check
+ * 
+ * @param arrName {String}
+ * @param list {Array}
+ * @returns arr {Array}
+ */
+function forEachGroup(arrName, list) {
+	var arr = [];
+
+	list.forEach(function (item) {
+		var name = sortForName(item);
+
+		if (arrName === name) {
+			arr.push(item);
+			return true;
+		} else {
+			return false;
+		}
+	});
+
+	return arr;
+}
+
+/**
+ * Detected field type and detected name of its group
+ * 
+ * @param item {HTMLInputElement}
+ * @returns name {String}
+ */
+function sortForName(item) {
+	var type = item.type;
+	var name = void 0;
+
+	if (type === 'radio') {
+		name = item.name;
+	} else if (type === 'checkbox') {
+		var dataset = item.dataset['groupname'];
+
+		if (dataset) {
+			name = dataset;
+		}
+	}
+
+	return name;
+}
+
+/**
+ * Field group check
+ * 
+ * @param groupRadio {Array}
+ * @param storeErrors {Map}
+ * @returns storeErrors {Map}
+ */
+function checkValueGroup(groupRadio, storeErrors) {
+	groupRadio.forEach(function (arr) {
+		var message = getMessage(arr);
+
+		storeErrors.set(arr[0], message);
+	});
+
+	return storeErrors;
+}
+
+/**
+ * Get message about error
+ * 
+ * @param arr {Array}
+ * @returns message {String}
+ */
+function getMessage(arr) {
+	var instructions = 'instructions-en';
+	var message = '';
+
+	var checkValue = function checkValue(item) {
+		var checker = types['isEmptyGroup'];
+
+		if (checker) {
+			var result = checker.validate(arr);
+
+			if (!result) {
+				var msg = checker[instructions];
+
+				message = msg;
+
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	};
+
+	arr.some(checkValue);
+
+	return message;
+}
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+/**
+ * Out errors
+ * 
+ * @class OutputErrors
+ */
+var OutputErrors = function () {
+	/**
+  * Creates an instance of OutputErrors.
+  * 
+  */
+	function OutputErrors() {
+		classCallCheck(this, OutputErrors);
+
+		/** Store created tooltips */
+		this.storeCreateElements = new Map();
+		/** Object with input field and message about error */
+		this.errorNotificationElement = Object.create(null);
+	}
+
+	/**
+  * Sort messages and follow actions them
+  * 
+  * @param messages {Map}
+  */
+
+
+	createClass(OutputErrors, [{
+		key: 'sortMessages',
+		value: function sortMessages(messages) {
+			var _this = this;
+
+			var firstElement = messages.keys().next().value;
+			var currentForm = firstElement.closest('form');
+
+			messages.forEach(function (value, key, map) {
+				var element = key;
+				var message = value;
+
+				if (message) {
+					if (!_this.storeCreateElements.has(element)) {
+						_this.errorNotificationElement = {
+							newElement: _this.createErrorElement(element, message),
+							message: message
+						};
+
+						_this.storeCreateElements.set(element, _this.errorNotificationElement);
+					} else if (_this.storeCreateElements.get(element)['message'] !== message) {
+						_this.storeCreateElements.get(element)['newElement'].textContent = message;
+						_this.storeCreateElements.get(element)['message'] = message;
+					}
+				} else {
+					if (_this.storeCreateElements.has(element)) {
+						(function () {
+							var notifyElement = _this.storeCreateElements.get(element)['newElement'];
+
+							notifyElement.classList.add('hide');
+
+							setTimeout(function () {
+								element.parentElement.removeChild(notifyElement);
+								_this.storeCreateElements.delete(element);
+							}, 100);
+						})();
+					}
+				}
+			});
+
+			if (this.storeCreateElements.size === 0) {
+				currentForm.submit();
+			}
+		}
+
+		/**
+   * Create tooltip with error
+   * 
+   * @param element {HTMLInputElement}
+   * @param message {String}
+   * @returns span {HTMLSpanElement}
+   */
+
+	}, {
+		key: 'createErrorElement',
+		value: function createErrorElement(element, message) {
+			var span = document.createElement('span');
+			span.classList.add('notify');
+			setTimeout(function () {
+				return span.classList.add('show');
+			}, 0);
+			span.textContent = message;
+
+			element.parentElement.insertBefore(span, element);
+
+			return span;
+		}
+	}]);
+	return OutputErrors;
+}();
+
+/**
+ * Store
+ * 
+ * @class Store
+ */
+
+var Store = function () {
+	/**
+  * Creates an instance of Store.
+  * 
+  */
+	function Store() {
+		classCallCheck(this, Store);
+
+		this.outputErrors = new OutputErrors();
+	}
+
+	/**
+  * Get messages
+  * 
+  * @param messages {Map}
+  */
+
+
+	createClass(Store, [{
+		key: 'getMessage',
+		value: function getMessage(messages) {
+			this.outMessage(messages);
+		}
+
+		/**
+   * Out messages
+   * 
+   * @param messages {Map}
+   */
+
+	}, {
+		key: 'outMessage',
+		value: function outMessage(messages) {
+			this.outputErrors.sortMessages(messages);
+		}
+	}]);
+	return Store;
+}();
+
+/**
+* @class Validation
+ * 
+ * The main class for validation form
+ */
+
+var Validation = function () {
+	/**
+  * Creates an instance of Validation.
+  * 
+  * @param form {HTMLFormElement}
+  */
+	function Validation(form) {
+		classCallCheck(this, Validation);
+
+		this.form = form;
+		this.listInputElement = form.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=password], input[type=file], \n\t\t\tinput[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]');
+
+		this.store = new Store();
+		this.storeErrors = new Map();
+
+		this.groupsElements = [];
+		this.dataInput = Object.create(null);
+		/** Is this first press to send form? */
+		this.isFirst = true;
+
+		this.registerHandlers();
+	}
+
+	/**
+  * Registed handlers
+  */
+
+
+	createClass(Validation, [{
+		key: 'registerHandlers',
+		value: function registerHandlers() {
+			var _this = this;
+
+			this.init();
+			this.form.addEventListener('submit', function (event) {
+				return _this.validation(event);
+			});
+		}
+
+		/**
+   * Passes through the list of forms of gathering data about each
+   */
+
+	}, {
+		key: 'init',
+		value: function init() {
+			var _this2 = this;
+
+			var lang = document.documentElement.lang;
+			var arrayInputElement = [];
+			var listGroups = [];
+
+			Array.prototype.filter.call(this.listInputElement, function (input) {
+				var dataset = input.dataset['options'];
+
+				if (dataset) {
+					if (input.type === 'radio' || input.type === 'checkbox') {
+						var datasetToArray = dataset.split(' ');
+						var config = findWarning(input, datasetToArray);
+						var isGroup = datasetToArray.some(checkAttrGroup);
+
+						if (isGroup) {
+							listGroups.push(input);
+
+							return true;
+						} else {
+							arrayInputElement.push(input);
+
+							return false;
+						}
+					} else {
+						arrayInputElement.push(input);
+
+						return false;
+					}
+				}
+			});
+
+			this.groupsElements = sortGroups(listGroups);
+
+			arrayInputElement.forEach(function (input, index) {
+				var dataset = input.dataset['options'];
+				var config = void 0;
+
+				if (dataset) {
+					var datasetToArray = dataset.split(' ');
+
+					config = findWarning(input, datasetToArray);
+				}
+
+				_this2.dataInput[index] = {
+					input: input,
+					name: input.name,
+					config: config,
+					lang: lang
+				};
+			});
+		}
+
+		/**
+   * Checks forms
+   * 
+   * @param event {Event}
+   */
+
+	}, {
+		key: 'validation',
+		value: function validation(event) {
+			var _this3 = this;
+
+			event.preventDefault();
+
+			/** check the ordinary fields */
+			var storeErrors = checkValue(this.dataInput, this.storeErrors);
+
+			/** checking the group fields */
+			storeErrors = checkValueGroup(this.groupsElements, this.storeErrors);
+
+			this.store.getMessage(storeErrors);
+
+			if (this.isFirst) {
+				this.form.addEventListener('input', debounce(function (event) {
+					return _this3.validation(event);
+				}, 100, true));
+				this.form.addEventListener('change', debounce(function (event) {
+					return _this3.validation(event);
+				}, 100, true));
+				this.isFirst = false;
+			}
+		}
+	}]);
+	return Validation;
+}();
+
+/**
+ * Find all forms on the page
+ */
+function validation() {
+	var forms = document.querySelectorAll('form[data-validation=true]');
+
+	initValidation(forms);
+}
+
+/**
+ * The passing through of the list forms and creating an instance of the class for each form
+ * 
+ * @param forms список форм {NodeListOf<HTMLFormElement>}
+ */
+function initValidation(forms) {
+	Array.prototype.forEach.call(forms, function (item) {
+		new Validation(item);
+	});
+}
+
+function main() {
+	validation();
+}
+
+return main;
+
+}());
