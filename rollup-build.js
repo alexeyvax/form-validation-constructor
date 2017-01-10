@@ -11,12 +11,13 @@ rollup({
 				exclude: 'node_modules/**',
 				presets: 'es2015-rollup'
 			}),
+			uglify( {}, minify ) // activate when you need to uglify
 			/*uglify( {}, minify )*/ // activate when you need to uglify
 		]
 	}).then( ( bundle ) =>
 	{
 		return bundle.write({
-			format: 'iife',
+			format: 'cjs',
 			dest: 'public/index.js',
 			moduleName: 'formValidationConstructor'
 		});
