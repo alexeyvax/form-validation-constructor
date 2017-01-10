@@ -1,6 +1,6 @@
 {
   "name": "form-validation-constructor",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "form-validation-constructor the simple constructor for validation form",
   "author": "alexeyvax Alexey Vakhrushev <Alexeyvax1990@gmail.com>",
   "license": "MIT",
@@ -22,5 +22,8 @@
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-uglify": "^1.0.1",
     "uglify-js": "^2.7.5"
+  },
+  "dependencies": {
+    "rollup-plugin-commonjs": "^7.0.0"
   }
 }
