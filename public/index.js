@@ -1,4 +1,4 @@
-var formValidationConstructor = (function () {
+(function () {
 'use strict';
 
 /**
@@ -978,10 +978,13 @@ function initValidation(forms) {
 	});
 }
 
-function main() {
-	validation$1();
-}
+// function main()
+// {
+validation$1();
+// }
 
-return main;
+// export {
+// 	main as default,
+// }
 
 }());
