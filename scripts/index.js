@@ -1,10 +1,4 @@
 import validation from './modules/validation';
 
-function main()
-{
-	validation();
-}
+validation();
 
-export {
-	main as default,
-}
