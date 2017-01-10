@@ -977,4 +977,8 @@ function initValidation(forms) {
 	});
 }
 
-validation$1();
+function main() {
+	validation$1();
+}
+
+module.exports = main;
