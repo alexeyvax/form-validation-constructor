@@ -1,3 +1,6 @@
+(function () {
+'use strict';
+
 /**
  * Perform function more than once,
  * Is not exceeded the interval between calls
@@ -975,8 +978,13 @@ function initValidation(forms) {
 	});
 }
 
-function main() {
-	validation$1();
-}
+// function main()
+// {
+validation$1();
+// }
 
-export default main;
+/*export {
+	main as default,
+}*/
+
+}());
