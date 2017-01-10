@@ -1,4 +1,3 @@
-(function () {
 'use strict';
 
 /**
@@ -979,5 +978,3 @@ function initValidation(forms) {
 }
 
 validation$1();
-
-}());
