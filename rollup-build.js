@@ -16,7 +16,7 @@ rollup({
 	}).then( ( bundle ) =>
 	{
 		return bundle.write({
-			format: 'cjs',
+			format: 'es',
 			dest: 'public/index.js',
 			moduleName: 'formValidationConstructor'
 		});

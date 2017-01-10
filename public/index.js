@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Perform function more than once,
  * Is not exceeded the interval between calls
@@ -981,4 +979,4 @@ function main() {
 	validation$1();
 }
 
-module.exports = main;
+export default main;
