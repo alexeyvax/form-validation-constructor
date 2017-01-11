@@ -1,10 +1,15 @@
 import validation from './modules/validation';
-
-// function main()
-// {
+// validation();
+/*function main()
+{
 	validation();
-// }
+}
+
+export {
+	main as default,
+}*/
 
 // export {
-// 	main as default,
+// 	validation as default,
 // }
+module.exports = validation;

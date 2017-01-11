@@ -1,3 +1,4 @@
+(function () {
 'use strict';
 
 /**
@@ -977,7 +978,7 @@ function initValidation(forms) {
 	});
 }
 
-// validation();
+validation$1();
 /*function main()
 {
 	validation();
@@ -990,4 +991,6 @@ export {
 // export {
 // 	validation as default,
 // }
-module.exports = validation$1;
+// module.exports = validation;
+
+}());
