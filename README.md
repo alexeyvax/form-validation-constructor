@@ -35,10 +35,10 @@ for example:
 
 	// index.js or main.js
 	// to connect
-	import validationForm from 'form-validation-constructor';
+	import formValidationConstructor from 'form-validation-constructor';
 	
 	// to run
-	validationForm();
+	formValidationConstructor();
 
 or 
 

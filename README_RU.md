@@ -33,10 +33,10 @@ form-validation-constructor расчитан не на полную замену
 
 	// index.js or main.js
 	// подключите
-	import validationForm from 'form-validation-constructor';
+	import formValidationConstructor from 'form-validation-constructor';
 	
 	// запустите
-	validationForm();
+	formValidationConstructor();
 
 или
 
