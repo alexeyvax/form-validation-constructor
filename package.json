@@ -11,11 +11,11 @@
   },
   "keywords": [
     "form-validation",
+    "form validator",
     "form validation builder",
     "form-validation-constructor",
     "patterns strategy",
-    "rollup",
-    "ES6"
+    "rollup"
   ],
   "devDependencies": {
     "babel-cli": "^6.18.0",
