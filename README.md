@@ -149,4 +149,6 @@ and *"configValidation.js"* file to specify the name of the check corresponding 
 | radio             | isRequired          |
 |                   | group               |
 
+## License
 
+[MIT](https://github.com/alexeyvax/form-validation-constructor/blob/master/LICENSE.md)

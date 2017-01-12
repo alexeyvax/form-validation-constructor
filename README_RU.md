@@ -148,4 +148,6 @@ form-validation-constructor расчитан не на полную замену
 | radio             | isRequired                |
 |                   | group                     |
 
+## Лицензия
 
+[MIT](https://github.com/alexeyvax/form-validation-constructor/blob/master/LICENSE.md)
