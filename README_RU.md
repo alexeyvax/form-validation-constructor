@@ -11,7 +11,7 @@ form-validation-constructor расчитан не на полную замену
 
 ## Посмотреть пример
 
-![Example gif]()
+![Example gif](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example.gif)
 
 Вам необходимо склонировать репозиторий и ввести в консоли
 

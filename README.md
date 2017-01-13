@@ -13,6 +13,8 @@ will help in checking and it will work as intended.
 
 ## Show example
 
+![Example gif](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example.gif)
+
 You need clone repository and enter to console
 
 	npm install
