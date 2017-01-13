@@ -227,7 +227,7 @@ var types = {
  * 
  * config {Object}
  */
-var config$1 = {
+var config = {
 	/** inpyt type="text" */
 	text: ['isNonEmpty', 'onlyLetters'],
 	/** inpyt type="number" */
@@ -263,7 +263,7 @@ function findWarning(element, arr) {
 	var mediateArray = [];
 
 	arr.forEach(function (item) {
-		if (config$1[type].indexOf(item) !== -1) {
+		if (config[type].indexOf(item) !== -1) {
 			mediateArray.push(item);
 		} else {
 			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
@@ -960,25 +960,24 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation$1(config) {
+function validation$1(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
 
 	var _loop = function _loop(key) {
-		var types$$1 = config[key]['typeField'];
-		var name = config[key]['checkName'];
+		var types$$1 = config$$1[key]['typeField'];
+		var name = config$$1[key]['checkName'];
 
 		types$$1.forEach(function (item) {
-			config$1[item].push(name);
-			console.log(item);
+			config[item].push(name);
 		});
 	};
 
-	for (var key in config) {
+	for (var key in config$$1) {
 		_loop(key);
 	}
 
-	Object.assign(types, config);
-	console.log(config$1);
+	Object.assign(types, config$$1);
+
 	initValidation(forms);
 }
 
@@ -993,27 +992,4 @@ function initValidation(forms) {
 	});
 }
 
-var config = {
-	'isTest': {
-		'typeField': ['text', 'number'],
-		'checkName': 'isTest',
-		validate: function validate(input) {
-			return input.value !== '';
-		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
-	},
-	'isTestTwo': {
-		'typeField': ['number'],
-		'checkName': 'isTestTwo',
-		validate: function validate(input) {
-			return input.value !== '';
-		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
-	}
-};
-
-validation$1(config);
-
-// module.exports = validation;
+module.exports = validation$1;
