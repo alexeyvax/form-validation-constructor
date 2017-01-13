@@ -227,7 +227,7 @@ var types = {
  * 
  * config {Object}
  */
-var config$1 = {
+var config = {
 	/** inpyt type="text" */
 	text: ['isNonEmpty', 'onlyLetters'],
 	/** inpyt type="number" */
@@ -263,7 +263,7 @@ function findWarning(element, arr) {
 	var mediateArray = [];
 
 	arr.forEach(function (item) {
-		if (config$1[type].indexOf(item) !== -1) {
+		if (config[type].indexOf(item) !== -1) {
 			mediateArray.push(item);
 		} else {
 			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
@@ -960,17 +960,17 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation$1(config) {
+function validation$1(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
 
-	for (var key in config) {
-		var type = config[key]['typeField'];
-		var name = config[key]['checkName'];
+	for (var key in config$$1) {
+		var type = config$$1[key]['typeField'];
+		var name = config$$1[key]['checkName'];
 
-		config$1[type].push(name);
+		config[type].push(name);
 	}
 
-	Object.assign(types, config);
+	Object.assign(types, config$$1);
 
 	initValidation(forms);
 }
@@ -986,49 +986,4 @@ function initValidation(forms) {
 	});
 }
 
-var config = {
-	'isTest': {
-		'typeField': 'text',
-		'checkName': 'isTest',
-		validate: function validate(input) {
-			return input.value !== '';
-		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
-	},
-	'isTestTwo': {
-		'typeField': 'number',
-		'checkName': 'isTestTwo',
-		validate: function validate(input) {
-			return input.value !== '';
-		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
-	}
-};
-
-validation$1(config);
-/*function main()
-{
-	validation();
-}
-
-export {
-	main as default,
-}*/
-
-// export {
-// 	validation as default,
-// }
-// module.exports = validation;
-
-function count() {
-	// count.howCount ? count.howCount : count.howCount = 0;
-	count.howCount = count.howCount || 0;
-
-	return ++count.howCount;
-}
-
-console.log(count());
-console.log(count());
-console.log(count());
+module.exports = validation$1;
