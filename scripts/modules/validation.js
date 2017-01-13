@@ -1,11 +1,23 @@
 import Validation from '../classes/Validation';
+import typesValidation from '../function/typesValidation';
+import configValidation from '../function/configValidation';
 
 /**
  * Find all forms on the page
  */
-function validation()
+function validation( config )
 {
 	const forms = document.querySelectorAll( 'form[data-validation=true]' );
+	
+	for ( let key in config )
+	{
+		const type = config[key]['typeField'];
+		const name = config[key]['checkName'];
+		
+		configValidation[type].push( name );
+	}
+	
+	Object.assign( typesValidation, config );
 	
 	initValidation( forms );
 }

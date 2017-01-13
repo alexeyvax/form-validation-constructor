@@ -227,7 +227,7 @@ var types = {
  * 
  * config {Object}
  */
-var config = {
+var config$1 = {
 	/** inpyt type="text" */
 	text: ['isNonEmpty', 'onlyLetters'],
 	/** inpyt type="number" */
@@ -263,7 +263,7 @@ function findWarning(element, arr) {
 	var mediateArray = [];
 
 	arr.forEach(function (item) {
-		if (config[type].indexOf(item) !== -1) {
+		if (config$1[type].indexOf(item) !== -1) {
 			mediateArray.push(item);
 		} else {
 			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
@@ -960,8 +960,17 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation$1() {
+function validation$1(config) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
+
+	for (var key in config) {
+		var type = config[key]['typeField'];
+		var name = config[key]['checkName'];
+
+		config$1[type].push(name);
+	}
+
+	Object.assign(types, config);
 
 	initValidation(forms);
 }
@@ -977,7 +986,28 @@ function initValidation(forms) {
 	});
 }
 
-// validation();
+var config = {
+	'isTest': {
+		'typeField': 'text',
+		'checkName': 'isTest',
+		validate: function validate(input) {
+			return input.value !== '';
+		},
+		'instructions-ru': 'это поле не может быть пустым.',
+		'instructions-en': 'This field can not be empty.'
+	},
+	'isTestTwo': {
+		'typeField': 'number',
+		'checkName': 'isTestTwo',
+		validate: function validate(input) {
+			return input.value !== '';
+		},
+		'instructions-ru': 'это поле не может быть пустым.',
+		'instructions-en': 'This field can not be empty.'
+	}
+};
+
+validation$1(config);
 /*function main()
 {
 	validation();
@@ -990,4 +1020,15 @@ export {
 // export {
 // 	validation as default,
 // }
-module.exports = validation$1;
+// module.exports = validation;
+
+function count() {
+	// count.howCount ? count.howCount : count.howCount = 0;
+	count.howCount = count.howCount || 0;
+
+	return ++count.howCount;
+}
+
+console.log(count());
+console.log(count());
+console.log(count());

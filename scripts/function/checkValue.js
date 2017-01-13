@@ -26,7 +26,7 @@ function checkValue( dataInput, storeErrors )
 			if ( checker )
 			{
 				const result = checker.validate( element );
-			
+				
 				if ( !result )
 				{
 					const msg = checker[instructions];
