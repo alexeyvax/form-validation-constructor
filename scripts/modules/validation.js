@@ -11,10 +11,15 @@ function validation( config )
 	
 	for ( let key in config )
 	{
-		const type = config[key]['typeField'];
+		const types = config[key]['typeField'];
 		const name = config[key]['checkName'];
 		
-		configValidation[type].push( name );
+		types.forEach(
+			( item ) =>
+			{
+				configValidation[item].push( name );
+			}
+		);
 	}
 	
 	Object.assign( typesValidation, config );
