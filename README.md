@@ -7,7 +7,7 @@ substitution checks necessary to fit the input fields.
 
 form-validation-constructor to complement native browser's validation its custom checks and to replace them.
 
-In the section [how to add a check](#add-custom-ckeck), you can see an example
+In the section [how to add a custom check](#add-custom-ckeck), you can see an example
 add your own inspection to check items.
 
 [Russian version README](https://github.com/alexeyvax/form-validation-constructor/blob/master/README_RU.md)
@@ -111,7 +111,7 @@ the attribute **lang** in the tag **html**
 
 	<html lang="en">
 
-### <a name="add-custom-ckeck"></a> How to add a check
+### <a name="add-custom-ckeck"></a> How to add a custom check
 
 The idea is you can add a custom check to its existing, writing it as follows:
 and pass the first argument when the script is embedded 
