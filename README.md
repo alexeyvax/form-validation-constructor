@@ -5,11 +5,13 @@ The simple library-constructor for validation form on the client side.
 Constructor is based on a "strategy" pattern. That makes it possible to
 substitution checks necessary to fit the input fields.
 
-form-validation-constructor is not a complete replacement native browser's validation, but rather to complement
-existing checks. For example, the Safari browser does not support **required** attribute, constructor 
-will help in checking and it will work as intended.
+form-validation-constructor to complement native browser's validation its custom checks and to replace them.
+
+In the section [how to add a check](#add-custom-ckeck), you can see an example
+add your own inspection to check items.
 
 [Russian version README](https://github.com/alexeyvax/form-validation-constructor/blob/master/README_RU.md)
+
 
 ## Show example
 
@@ -24,6 +26,7 @@ after
 	npm start
 
 and open in your browser file index.html
+
 
 ## Install
 
@@ -54,6 +57,7 @@ and connect script
 
 	// index.html
 	<script src="your-way/form-validation-constructor.min.js"></script>
+
 
 ## Instructions for use
 
@@ -107,8 +111,44 @@ the attribute **lang** in the tag **html**
 
 	<html lang="en">
 
-The idea is you can write your checks in the file *"typesValidation.js"* 
-and *"configValidation.js"* file to specify the name of the check corresponding to the field type.
+### <a name="add-custom-ckeck"></a> Kак добавить свою проверку
+
+The idea is you can add a custom check to its existing, writing it as follows:
+and pass the first argument when the script is embedded 
+example:
+
+	// list of custom checks {Object}
+	const myCustomChecks = {
+		// the name of your check
+		'isTestCheck': {
+			// types of fields which will be applied verification (listed in the array {Array})
+			'typeField': [
+				'text',
+				'number'
+			],
+			// the name of your check
+			'checkName': 'isTestCheck',
+			// check function, checked element receives input {HTMLInputElement}
+			// returned true or false {Boolean}
+			validate: function ( input )
+			{
+				return input.value !== '';
+			},
+			// error output text in your language 
+			// name has two parts **instructions** и **en** 
+			// the language which the attribute **lang** in the tag **html**, you can specify multiple 
+			'instructions-ru': 'это поле не может быть пустым.',
+			'instructions-en': 'This field can not be empty.'
+		}
+	};
+	
+	// when the script is run pass argument
+	formValidationConstructor( myCustomChecks );
+
+and now you can add a check to the element
+
+	<input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Name *" />
+
 
 ## The list of existing checks
 
