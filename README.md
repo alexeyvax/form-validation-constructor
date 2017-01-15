@@ -113,8 +113,9 @@ the attribute **lang** in the tag **html**
 
 ### <a name="add-custom-ckeck"></a> How to add a custom check
 
-The idea is you can add a custom check to its existing, writing it as follows:
+The idea is you can add a custom check to its existing, writing it as follows
 and pass the first argument when the script is embedded 
+
 example:
 
 	// list of custom checks {Object}
