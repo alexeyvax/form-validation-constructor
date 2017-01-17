@@ -111,6 +111,8 @@ the attribute **lang** in the tag **html**
 
 	<html lang="en">
 
+The default language is English 'en'.
+
 ### <a name="add-custom-ckeck"></a> How to add a custom check
 
 The idea is you can add a custom check to its existing, writing it as follows
