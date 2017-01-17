@@ -871,9 +871,15 @@ var Validation = function () {
 		value: function init() {
 			var _this2 = this;
 
-			var lang = document.documentElement.lang;
 			var arrayInputElement = [];
 			var listGroups = [];
+			var lang = document.documentElement.lang;
+
+			if (!lang) {
+				lang = 'en';
+			}
+
+			console.log(lang);
 
 			Array.prototype.filter.call(this.listInputElement, function (input) {
 				var dataset = input.dataset['options'];
@@ -992,4 +998,5 @@ function initValidation(forms) {
 	});
 }
 
-module.exports = validation$1;
+// module.exports = validation;
+validation$1();

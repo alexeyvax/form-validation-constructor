@@ -51,9 +51,14 @@ class Validation
 	 */
 	init()
 	{
-		const lang = document.documentElement.lang;
 		const arrayInputElement = [];
 		const listGroups = [];
+		let lang = document.documentElement.lang;
+		
+		if ( !lang )
+		{
+			lang = 'en';
+		}
 		
 		Array.prototype.filter.call(
 			this.listInputElement,
