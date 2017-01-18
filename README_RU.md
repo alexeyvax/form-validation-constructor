@@ -14,7 +14,7 @@ form-validation-constructor расчитан на дополнение суще�
 
 ## Посмотреть пример
 
-![Example](https://github.com/alexeyvax/form-validation-constructor/blob/master/example/example1.gif)
+![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example1.gif)
 
 Вам необходимо склонировать репозиторий и ввести в консоли
 
