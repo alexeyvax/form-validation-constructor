@@ -103,6 +103,7 @@ checks by listing them separated by spaces, for example:
 
 If you make a **mistake** or not to the type of field check, then a warning will be printed to the console
 describing the error.
+![Example error 1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example-error.png)
 
 If the form is optional fields, then just do not use them attribute **data-options**
 

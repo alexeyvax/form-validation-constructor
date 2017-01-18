@@ -6,6 +6,7 @@ h1
 form
 {
 	margin: 0 0 60px 0;
+	border-bottom: 2px solid lightgray;
 }
 
 ul
@@ -23,9 +24,10 @@ li
 	list-style: none;
 }
 
-h2
+label
 {
-	margin: 0 0 10px 0;
+	display: block;
+	margin-bottom: 10px;
 }
 
 input:not([type="radio"]):not([type="checkbox"]):not([type="file"])
