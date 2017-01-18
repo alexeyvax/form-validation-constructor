@@ -15,7 +15,7 @@ add your own inspection to check items.
 
 ## Show example
 
-![Example gif](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example.gif)
+![Example](https://github.com/alexeyvax/form-validation-constructor/blob/master/example/example1.ogv)
 
 You need clone repository and enter to console
 

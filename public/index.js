@@ -967,20 +967,22 @@ var Validation = function () {
 function validation$1(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
 
-	var _loop = function _loop(key) {
-		var types$$1 = config$$1[key]['typeField'];
-		var name = config$$1[key]['checkName'];
+	if (config$$1) {
+		var _loop = function _loop(key) {
+			var types$$1 = config$$1[key]['typeField'];
+			var name = config$$1[key]['checkName'];
 
-		types$$1.forEach(function (item) {
-			config[item].push(name);
-		});
-	};
+			types$$1.forEach(function (item) {
+				config[item].push(name);
+			});
+		};
 
-	for (var key in config$$1) {
-		_loop(key);
+		for (var key in config$$1) {
+			_loop(key);
+		}
+
+		Object.assign(types, config$$1);
 	}
-
-	Object.assign(types, config$$1);
 
 	initValidation(forms);
 }

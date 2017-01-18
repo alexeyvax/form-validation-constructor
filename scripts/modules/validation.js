@@ -9,20 +9,23 @@ function validation( config )
 {
 	const forms = document.querySelectorAll( 'form[data-validation=true]' );
 	
-	for ( let key in config )
+	if ( config )
 	{
-		const types = config[key]['typeField'];
-		const name = config[key]['checkName'];
+		for ( let key in config )
+		{
+			const types = config[key]['typeField'];
+			const name = config[key]['checkName'];
+			
+			types.forEach(
+				( item ) =>
+				{
+					configValidation[item].push( name );
+				}
+			);
+		}
 		
-		types.forEach(
-			( item ) =>
-			{
-				configValidation[item].push( name );
-			}
-		);
+		Object.assign( typesValidation, config );
 	}
-	
-	Object.assign( typesValidation, config );
 	
 	initValidation( forms );
 }
