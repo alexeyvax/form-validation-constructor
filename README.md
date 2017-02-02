@@ -1,14 +1,12 @@
 # form-validation-constructor
 
-The simple library-constructor for validation form on the client side.
+The simple library-constructor use for validation form on the client side.
+Constructor was based on a "strategy" pattern. The Constructor can add your personal check form.
 
-Constructor is based on a "strategy" pattern. That makes it possible to
-substitution checks necessary to fit the input fields.
+form-validation-constructor complement native browser's validation or replace them his custom checks.
 
-form-validation-constructor to complement native browser's validation its custom checks and to replace them.
-
-In the section [how to add a custom check](#add-custom-ckeck), you can see an example
-add your own inspection to check items.
+On the section [how to add a custom check](#add-custom-ckeck), you can see an example which
+add your own inspection to the list of checks.
 
 [Russian version README](https://github.com/alexeyvax/form-validation-constructor/blob/master/README_RU.md)
 
@@ -17,7 +15,7 @@ add your own inspection to check items.
 
 ![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example1.gif)
 
-You need clone repository and enter to console
+You`ll need clone repository and enter on console
 
 	npm install
 
@@ -25,18 +23,18 @@ after
 
 	npm start
 
-and open in your browser file index.html
+and open on your browser file **index.html**
 
 
 ## Install
 
-library installed you can download it
+You`ll can install library
 
 	npm install --save form-validation-constructor
 
-After download you need to connect
-It is best to connect your root file, which connect all scripts
-for example:
+After install you need connect to your project
+The best place to connect your root file, which connected all scripts
+example:
 
 	// index.js or main.js
 	// to connect
@@ -61,19 +59,17 @@ and connect script
 
 ## Instructions for use
 
-To begin, add a form on the page
+At first, add form on your page
 
 	// index.html
 	<form name="form" action="/" method="post"></form>
 
-To check the form, you must indicate her **data** attribute **data-validation="true"**
+now you must add **data** attribute **data-validation="true"**
 
 	<form name="form" action="/" method="post" data-validation="true"></form>
 
-Now the form is added to the list of scanned, after you need to add in the form input fields, for example, 
-we have a simple form consisting of three fields: name, email, and confirmation of the agreement.
-
-Write as follows:
+Form was add to the list of scanned, after you need add input fields in the form, example: 
+We had simple form contain three fields: name, email, and confirmation of the agreement.
 
 	<form name="form" action="/" method="post" data-validation="true">
 		// name
@@ -87,42 +83,43 @@ Write as follows:
 		<input type="checkbox" name="agreement" id="agreement" data-options="isRequired" />
 	</form>
 
-In the first field you must enter a name, which contains only letters, without special characters. 
-To do this, add an attribute **data-options="isNonEmpty onlyLetters"** needed checks.
+You must enter name in the first field, which contain only letters, without special characters. 
+You need add checks on attribute **data-options="isNonEmpty onlyLetters"**.
 
-In the second field **input type="email"** we use a check on emptiness and on the correctness of the entered email address.
+The second field **input type="email"** 
+We use check on emptiness and on the correctness of the entered email address.
 
-The third field is a checkbox with the consent of, to the check you need to add attribute 
-**data-options="isRequired"** and then the field will be required to fill. 
-Important factor, attribute **"isRequired"** only works for input fields with types **checkbox** or **radio**.
+The third field is a checkbox with the agreement. You need add check on attribute 
+**data-options="isRequired"** and then field will be required to fill. 
+Important factor, attribute **"isRequired"** works only input fields with types **checkbox** or **radio**.
 
-**An important addition** in the data attribute **data-options** you can add any number of relevant
-checks by listing them separated by spaces, for example:
+**An important addition** the data attribute **data-options** you can add any checks and 
+separate them by space, example:
 
-	data-options="isNonEmpty onlyLetters"
+	data-options="isNonEmpty onlyLetters email"
 
-If you make a **mistake** or not to the type of field check, then a warning will be printed to the console
-describing the error.
+If you make a **mistake** you will see warning with description about error on the console
+
 ![Example error 1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example-error.png)
 
-If the form is optional fields, then just do not use them attribute **data-options**
+If the form have got optional field, just don`t use attribute **data-options**
 
-Tooltips are currently available in English and Russian languages. Language tooltips to fit is the language which 
-the attribute **lang** in the tag **html**
+Tooltips are currently available in English and Russian languages. Language tooltips fit is the language which 
+the attribute **lang** on the tag **html**
 
 	<html lang="en">
 
-The default language is English 'en'.
+The default language is English **'en'**.
 
 ### <a name="add-custom-ckeck"></a> How to add a custom check
 
-The idea is you can add a custom check to its existing, writing it as follows
-and pass the first argument when the script is embedded 
+You can add a personal check to existing checks.
+You can add your personal check on the first argument
 
 example:
 
-	// list of custom checks {Object}
-	const myCustomChecks = {
+	// list of personal checks {Object}
+	const myPersonalChecks = {
 		// the name of your check
 		'isTestCheck': {
 			// types of fields which will be applied verification (listed in the array {Array})
@@ -133,41 +130,41 @@ example:
 			// the name of your check
 			'checkName': 'isTestCheck',
 			// check function, checked element receives input {HTMLInputElement}
-			// returned true or false {Boolean}
+			// return true or false {Boolean}
 			validate: function ( input )
 			{
 				return input.value !== '';
 			},
-			// error output text in your language 
-			// name has two parts **instructions** и **en** 
-			// the language which the attribute **lang** in the tag **html**, you can specify multiple 
+			// error output text on your language 
+			// name has two parts **instructions** and **en** 
+			// the language which the attribute **lang** on the tag **html**, you can specify multiple 
 			'instructions-ru': 'это поле не может быть пустым.',
 			'instructions-en': 'This field can not be empty.'
 		}
 	};
 	
-	// when the script is run pass argument
+	// enter first argument
 	formValidationConstructor( myCustomChecks );
 
-and now you can add a check to the element
+and now you can add check to the element
 
 	<input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Name *" />
 
 
 ## The list of existing checks
 
-* **isNonEmpty** - check field on the empty (analogue input **required** for all fields except **ckeckbox** and **radio**)
+* **isNonEmpty** - check field on the empty (analogue input **required** all fields except **ckeckbox** and **radio**)
 * **isValidNumber** - check of the number
 * **isEmailCorrect** - check the validity of the entered email address
 * **isValidTel** - check on the validity of the entered phone number
 * **isValidUrl** - check on the validity of the entered url address
 * **onlyLetters** - check on the entered letters without special characters
-* **minMax** - check for compliance with the number of not less than min and not more than max (works if given
+* **minMax** - check compliance with the number of not less than min and not more than max (works if given
 			and **min** and **max** at the input **type = "number"**)
-* **min** - check for compliance of not less than min (for input **type="number"**)
-* **max** - check for compliance of not more than max (for input **type = "number"**)
-* **isRequired** - check activation of the required field (for **checkbox** or **radio**)
-* **group** - check the activation of elements of at least one of the groups (for **checkbox** or **radio**)
+* **min** - check compliance of not less than min (input **type="number"**)
+* **max** - check compliance of not more than max (input **type = "number"**)
+* **isRequired** - check activation required field (**checkbox** or **radio**)
+* **group** - check activation elements at least one of the groups (**checkbox** or **radio**)
 
 ## A complete table of the checks
 
