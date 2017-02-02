@@ -1,7 +1,7 @@
 # form-validation-constructor
 
-The simple library-constructor use for validation form on the client side.
-Constructor was based on a "strategy" pattern. The Constructor can add your personal check form.
+The simple library-constructor use validation form on the client side.
+Constructor was base on a "strategy" pattern and can add your personal check form.
 
 form-validation-constructor complement native browser's validation or replace them his custom checks.
 
