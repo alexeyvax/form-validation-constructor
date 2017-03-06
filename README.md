@@ -10,6 +10,11 @@ add your own inspection to the list of checks.
 
 [Russian version README](https://github.com/alexeyvax/form-validation-constructor/blob/master/README_RU.md)
 
+## Pay attention please 
+
+This is not end version the constructor.
+It may not work correctly.
+This project is currently being developed.
 
 ## Show example
 
