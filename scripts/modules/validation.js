@@ -5,29 +5,20 @@ import configValidation from '../function/configValidation';
 /**
  * Find all forms on the page
  */
-function validation( config )
-{
-	const forms = document.querySelectorAll( 'form[data-validation=true]' );
+function validation(config) {
+	const forms = document.querySelectorAll('form[data-validation=true]');
 	
-	if ( config )
-	{
-		for ( let key in config )
-		{
+	if (config) {
+		for (let key in config) {
 			const types = config[key]['typeField'];
 			const name = config[key]['checkName'];
-			
-			types.forEach(
-				( item ) =>
-				{
-					configValidation[item].push( name );
-				}
-			);
+			types.forEach(item => configValidation[item].push(name));
 		}
 		
-		Object.assign( typesValidation, config );
+		Object.assign(typesValidation, config);
 	}
 	
-	initValidation( forms );
+	initValidation(forms);
 }
 
 /**
@@ -35,17 +26,11 @@ function validation( config )
  * 
  * @param forms список форм {NodeListOf<HTMLFormElement>}
  */
-function initValidation( forms )
-{
+function initValidation(forms) {
 	Array.prototype.forEach.call(
 		forms,
-		( item ) =>
-		{
-			new Validation( item );
-		}
+		item => new Validation(item)
 	);
 }
 
-export {
-	validation as default,
-}
+export default validation;

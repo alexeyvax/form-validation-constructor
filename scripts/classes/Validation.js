@@ -12,25 +12,23 @@ import Store from './Store';
  * 
  * The main class for validation form
  */
-class Validation
-{
+class Validation {
 	/**
 	 * Creates an instance of Validation.
 	 * 
 	 * @param form {HTMLFormElement}
 	 */
-	constructor( form )
-	{
+	constructor(form) {
 		this.form = form;
-		this.listInputElement = form.querySelectorAll( 
-			`input[type=text], input[type=number], input[type=email], input[type=password], input[type=file], 
-			input[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]` );
+		this.listInputElement = form.querySelectorAll(
+			`input[type=text], input[type=number], input[type=email], input[type=password], input[type=file],
+			input[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]`);
 		
 		this.store = new Store();
 		this.storeErrors = new Map();
 		
 		this.groupsElements = [];
-		this.dataInput = Object.create( null );
+		this.dataInput = Object.create(null);
 		/** Is this first press to send form? */
 		this.isFirst = true;
 		
@@ -40,85 +38,68 @@ class Validation
 	/**
 	 * Registed handlers
 	 */
-	registerHandlers()
-	{
+	registerHandlers() {
 		this.init();
-		this.form.addEventListener( 'submit', ( event ) => this.validation( event ) );
+		this.form.addEventListener('submit', event => this.validation(event));
 	}
 	
 	/**
 	 * Passes through the list of forms of gathering data about each
 	 */
-	init()
-	{
+	init() {
 		const arrayInputElement = [];
 		const listGroups = [];
 		let lang = document.documentElement.lang;
 		
-		if ( !lang )
-		{
+		if (!lang) {
 			lang = 'en';
 		}
 		
 		Array.prototype.filter.call(
 			this.listInputElement,
-			( input ) =>
-			{
+			input => {
 				const dataset = input.dataset['options'];
 				
-				if ( dataset )
-				{
-					if ( input.type === 'radio' 
-						|| input.type === 'checkbox' )
-					{
+				if (dataset) {
+					if ((input.type === 'radio')
+						|| (input.type === 'checkbox')) {
 						const datasetToArray = dataset.split(' ');
-						const config = findWarning( input, datasetToArray );
-						const isGroup = datasetToArray.some( checkAttrGroup );
+						const config = findWarning(input, datasetToArray);
+						const isGroup = datasetToArray.some(checkAttrGroup);
 						
-						if ( isGroup )
-						{
-							listGroups.push( input );
-							
+						if (isGroup) {
+							listGroups.push(input);
 							return true;
-						}
-						else
-						{
-							arrayInputElement.push( input );
-							
+						} else {
+							arrayInputElement.push(input);
 							return false;
 						}
-					}
-					else
-					{
-						arrayInputElement.push( input );
-						
+					} else {
+						arrayInputElement.push(input);
 						return false;
 					}
 				}
 			}
 		);
 		
-		this.groupsElements = sortGroups( listGroups );
+		this.groupsElements = sortGroups(listGroups);
 		
 		arrayInputElement.forEach(
-			( input, index ) =>
-			{
+			(input, index) => {
 				const dataset = input.dataset['options'];
 				let config;
 				
-				if ( dataset )
-				{
+				if (dataset) {
 					const datasetToArray = dataset.split(' ');
-					
-					config = findWarning( input, datasetToArray );
+					config = findWarning(input, datasetToArray);
 				}
 				
 				this.dataInput[index] = {
 					input: input,
 					name: input.name,
 					config: config,
-					lang: lang
-				}
+					lang: lang,
+				};
 			}
 		);
 	}
@@ -128,27 +109,23 @@ class Validation
 	 * 
 	 * @param event {Event}
 	 */
-	validation( event )
-	{
+	validation(event) {
 		event.preventDefault();
-		
+		console.log(123);
 		/** check the ordinary fields */
-		let storeErrors = checkValue( this.dataInput, this.storeErrors );
+		let storeErrors = checkValue(this.dataInput, this.storeErrors);
 		
 		/** checking the group fields */
-		storeErrors = checkValueGroup( this.groupsElements, this.storeErrors );
+		storeErrors = checkValueGroup(this.groupsElements, this.storeErrors);
 		
-		this.store.getMessage( storeErrors );
+		this.store.getMessage(storeErrors);
 		
-		if ( this.isFirst )
-		{
-			this.form.addEventListener( 'input', debounce(( event ) => this.validation( event ), 100, true));
-			this.form.addEventListener( 'change', debounce(( event ) => this.validation( event ), 100, true));
+		if (this.isFirst) {
+			this.form.addEventListener('input', debounce(event => this.validation(event), 100, true));
+			this.form.addEventListener('change', debounce(event => this.validation(event), 100, true));
 			this.isFirst = false;
 		}
 	}
 }
 
-export {
-	Validation as default,
-}
+export default Validation;

@@ -1,9 +1,11 @@
+import warnings from '../warnings/index';
+import { INSTRUCTION_EN, INSTRUCTION_RU } from '../constants/index';
+
 /**
  * Contains embedded objects that contain check methods and a description of errors
  * 
  * types {Object} 
  */
-
 const types = {
 	/**
 	 * Check field on the empty
@@ -12,12 +14,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isNonEmpty: {
-		validate: function ( input )
-		{
+		validate: function (input) {
 			return input.value !== '';
 		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
+		INSTRUCTION_EN: warnings.en.isNonEmpty,
+		INSTRUCTION_RU: warnings.ru.isNonEmpty,
 	},
 	/**
 	 * Check on the entered letters without special characters
@@ -26,12 +27,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	onlyLetters: {
-		validate: function ( input )
-		{
-			return !/[^a-zа-яё ]/gi.test( input.value );
+		validate: function (input) {
+			return !/[^a-zа-яё ]/gi.test(input.value);
 		},
-		'instructions-ru': 'значением может быть только буквы от "а" до "я".',
-		'instructions-en': 'value can only be the letters "a" to "z".'
+		INSTRUCTION_EN: warnings.en.onlyLetters,
+		INSTRUCTION_RU: warnings.ru.onlyLetters,
 	},
 	/**
 	 * Check of the number
@@ -40,12 +40,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isValidNumber: {
-		validate: function ( input )
-		{
-			return !isNaN( input.value );
+		validate: function (input) {
+			return !isNaN(input.value);
 		},
-		'instructions-ru': 'значением может быть только число­, например 1, 3.14 или 2010',
-		'instructions-en': 'value can only be a number, such as 1, 3.14 or 2010'
+		INSTRUCTION_EN: warnings.en.isValidNumber,
+		INSTRUCTION_RU: warnings.ru.isValidNumber,
 	},
 	/**
 	 * Check for compliance with the number of not less than min and not more than max 
@@ -55,22 +54,15 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	minMax: {
-		validate: function ( input )
-		{
-			const min = Number( input.min );
-			const max = Number( input.max );
-			const value = Number( input.value );
+		validate: function (input) {
+			const min = Number(input.min);
+			const max = Number(input.max);
+			const value = Number(input.value);
 			
-			if ( min > value 
-				|| value > max )
-			{
-				return false;
-			}
-			
-			return true;
+			return (min > value) || (value > max);
 		},
-		'instructions-ru': 'значением может быть только число не меньше min и не больше max',
-		'instructions-en': 'value can only be a number no less and no more than min max'
+		INSTRUCTION_EN: warnings.en.minMax,
+		INSTRUCTION_RU: warnings.ru.minMax,
 	},
 	/**
 	 * Check for compliance of not less than min (for input type="number")
@@ -79,20 +71,14 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	min: {
-		validate: function ( input )
-		{
-			const min = Number( input.min );
-			const value = Number( input.value );
+		validate: function (input) {
+			const min = Number(input.min);
+			const value = Number(input.value);
 			
-			if ( min > value )
-			{
-				return false;
-			}
-			
-			return true;
+			return min > value;
 		},
-		'instructions-ru': 'значением может быть только число не меньше min',
-		'instructions-en': 'value can only be a number not less than min'
+		INSTRUCTION_EN: warnings.en.min,
+		INSTRUCTION_RU: warnings.ru.min,
 	},
 	/**
 	 * Check for compliance of not more than max (for input type = "number")
@@ -101,20 +87,14 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	max: {
-		validate: function ( input )
-		{
-			const max = Number( input.max );
-			const value = Number( input.value );
+		validate: function (input) {
+			const max = Number(input.max);
+			const value = Number(input.value);
 			
-			if ( value > max )
-			{
-				return false;
-			}
-			
-			return true;
+			return value > max;
 		},
-		'instructions-ru': 'значением может быть только число не больше max',
-		'instructions-en': 'value can only be a number not more than max'
+		INSTRUCTION_EN: warnings.en.max,
+		INSTRUCTION_RU: warnings.ru.max,
 	},
 	/**
 	 * Check the validity of the entered email address
@@ -123,12 +103,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isEmailCorrect: {
-		validate: function ( input )
-		{
-			return /^.+@.+$/.test( input.value );
+		validate: function (input) {
+			return /^.+@.+$/.test(input.value);
 		},
-		'instructions-ru': 'введите корректный email',
-		'instructions-en': 'enter a valid email'
+		INSTRUCTION_EN: warnings.en.isEmailCorrect,
+		INSTRUCTION_RU: warnings.ru.isEmailCorrect,
 	},
 	/**
 	 * Check on the validity of the entered phone number
@@ -137,12 +116,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isValidTel: {
-		validate: function ( input )
-		{
+		validate: function (input) {
 			return !/[^0-9 .()*+-]/g.test( input.value );
 		},
-		'instructions-ru': 'введите корректный телефон',
-		'instructions-en': 'enter a valid phone'
+		INSTRUCTION_EN: warnings.en.isValidTel,
+		INSTRUCTION_RU: warnings.ru.isValidTel,
 	},
 	/**
 	 * Check on the validity of the entered url address
@@ -151,12 +129,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isValidUrl: {
-		validate: function ( input )
-		{
-			return /^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test( input.value );
+		validate: function (input) {
+			return /^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(input.value);
 		},
-		'instructions-ru': 'введите корректный url',
-		'instructions-en': 'enter a valid url'
+		INSTRUCTION_EN: warnings.en.isValidUrl,
+		INSTRUCTION_RU: warnings.ru.isValidUrl,
 	},
 	/**
 	 * Check activation of the required field (for checkbox or radio)
@@ -165,12 +142,11 @@ const types = {
 	 * @returns true or false {boolean}
 	 */
 	isRequired: {
-		validate: function ( input )
-		{
+		validate: function (input) {
 			return input.checked;
 		},
-		'instructions-ru': 'для продолжения активируйте обязательное поле',
-		'instructions-en': 'for to continue activate a mandatory field'
+		INSTRUCTION_EN: warnings.en.isRequired,
+		INSTRUCTION_RU: warnings.ru.isRequired,
 	},
 	/**
 	 * Check the activation of elements of at least one of the groups (for checkbox or radio)
@@ -179,29 +155,14 @@ const types = {
 	 * @returns rezult {boolean}
 	 */
 	isEmptyGroup: {
-		validate: function( array )
-		{
-			const rezult = array.some(
-				( item ) =>
-				{
-					if ( item.checked )
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			);
-			
-			return rezult;
+		validate: function(array) {
+			return array.some(item => {
+				return item.checked;
+			});
 		},
-		'instructions-ru': 'необходимо выбрать хоть один пункт',
-		'instructions-en': 'you need to select at least one item'
+		INSTRUCTION_EN: warnings.en.isEmptyGroup,
+		INSTRUCTION_RU: warnings.ru.isEmptyGroup,
 	}
 };
 
-export {
-	types as default,
-}
+export default types;

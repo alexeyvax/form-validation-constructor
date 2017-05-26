@@ -3,18 +3,15 @@
  * 
  * @class OutputErrors
  */
-class OutputErrors
-{
+class OutputErrors {
 	/**
 	 * Creates an instance of OutputErrors.
-	 * 
 	 */
-	constructor()
-	{
+	constructor() {
 		/** Store created tooltips */
 		this.storeCreateElements = new Map();
 		/** Object with input field and message about error */
-		this.errorNotificationElement = Object.create( null );
+		this.errorNotificationElement = Object.create(null);
 	}
 	
 	/**
@@ -22,52 +19,40 @@ class OutputErrors
 	 * 
 	 * @param messages {Map}
 	 */
-	sortMessages( messages )
-	{
+	sortMessages(messages) {
 		const firstElement = messages.keys().next().value;
-		const currentForm = firstElement.closest( 'form' );
+		const currentForm = firstElement.closest('form');
 		
-		messages.forEach(( value, key, map ) =>
-		{
+		messages.forEach((value, key, map) => {
 			const element = key;
 			const message = value;
 			
-			if ( message )
-			{
-				if ( !this.storeCreateElements.has( element ))
-				{
+			if (message) {
+				if (!this.storeCreateElements.has(element)) {
 					this.errorNotificationElement = {
-						newElement: this.createErrorElement( element, message ),
-						message: message
-					}
+						newElement: this.createErrorElement(element, message),
+						message: message,
+					};
 					
-					this.storeCreateElements.set( element, this.errorNotificationElement );
+					this.storeCreateElements.set(element, this.errorNotificationElement);
+				} else if (this.storeCreateElements.get(element)['message'] !== message) {
+					this.storeCreateElements.get(element)['newElement'].textContent = message;
+					this.storeCreateElements.get(element)['message'] = message;
 				}
-				else if ( this.storeCreateElements.get( element )['message'] !== message )
-				{
-					this.storeCreateElements.get( element )['newElement'].textContent = message;
-					this.storeCreateElements.get( element )['message'] = message;
-				}
-			}
-			else
-			{
-				if ( this.storeCreateElements.has( element ))
-				{
-					const notifyElement = this.storeCreateElements.get( element )['newElement'];
+			} else {
+				if (this.storeCreateElements.has(element)) {
+					const notifyElement = this.storeCreateElements.get(element)['newElement'];
+					notifyElement.classList.add('hide');
 					
-					notifyElement.classList.add( 'hide' );
-					
-					setTimeout(() =>
-					{
-						element.parentElement.removeChild( notifyElement );
-						this.storeCreateElements.delete( element );
+					setTimeout(() => {
+						element.parentElement.removeChild(notifyElement);
+						this.storeCreateElements.delete(element);
 					}, 100);
 				}
 			}
 		});
 		
-		if ( this.storeCreateElements.size === 0 )
-		{
+		if (this.storeCreateElements.size === 0) {
 			currentForm.submit();
 		}
 	}
@@ -79,19 +64,14 @@ class OutputErrors
 	 * @param message {String}
 	 * @returns span {HTMLSpanElement}
 	 */
-	createErrorElement( element, message )
-	{
-		const span = document.createElement( 'span' );
-		span.classList.add( 'notify' );
-		setTimeout(() => span.classList.add( 'show' ), 0);
+	createErrorElement(element, message) {
+		const span = document.createElement('span');
+		span.classList.add('notify');
+		setTimeout(() => span.classList.add('show'), 0);
 		span.textContent = message;
-		
-		element.parentElement.insertBefore( span, element );
-		
+		element.parentElement.insertBefore(span, element);
 		return span;
 	}
 }
 
-export {
-	OutputErrors as default,
-}
+export default OutputErrors;

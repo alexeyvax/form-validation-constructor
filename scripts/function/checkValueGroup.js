@@ -1,4 +1,5 @@
 import typesValidation from './typesValidation';
+import { IS_EMPTY_GROUP, INSTRUCTION_EN } from '../constants/index';
 
 /**
  * Field group check
@@ -7,17 +8,11 @@ import typesValidation from './typesValidation';
  * @param storeErrors {Map}
  * @returns storeErrors {Map}
  */
-function checkValueGroup( groupRadio, storeErrors )
-{
-	groupRadio.forEach(
-		( arr ) =>
-		{
-			const message = getMessage( arr )
-			
-			storeErrors.set( arr[0], message );
-		}
-	);
-	
+function checkValueGroup(groupRadio, storeErrors) {
+	groupRadio.forEach(arr => {
+		const message = getMessage(arr)
+		storeErrors.set(arr[0], message);
+	});
 	return storeErrors;
 }
 
@@ -27,43 +22,25 @@ function checkValueGroup( groupRadio, storeErrors )
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage( arr )
-{
-	const instructions = `instructions-en`;
+function getMessage(arr) {
 	let message = '';
 	
-	const checkValue = ( item ) =>
-	{
-		const checker = typesValidation['isEmptyGroup'];
+	const checkValue = item => {
+		const checker = typesValidation[IS_EMPTY_GROUP];
 		
-		if ( checker )
-		{
-			const result = checker.validate( arr );
+		if (checker) {
+			const result = checker.validate(arr);
 		
-			if ( !result )
-			{
-				const msg = checker[instructions];
-				
-				message = msg;
-				
+			if (!result) {
+				message = checker[INSTRUCTION_EN];
 				return true;
 			}
-			else
-			{
-				return false;
-			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	};
 	
-	arr.some( checkValue );
-	
+	arr && arr.some(checkValue);
 	return message;
 }
 
-export {
-	checkValueGroup as default,
-}
+export default checkValueGroup;
