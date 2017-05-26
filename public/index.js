@@ -37,12 +37,56 @@ function debounce(func) {
 	};
 }
 
+var warnings = {
+	en: {
+		isNonEmpty: 'This field can not be empty.',
+		onlyLetters: 'value can only be the letters "a" to "z".',
+		isValidNumber: 'value can only be a number, such as 1, 3.14 or 2010',
+		minMax: 'value can only be a number no less and no more than min max',
+		min: 'value can only be a number not less than min',
+		max: 'value can only be a number not more than max',
+		isEmailCorrect: 'enter a valid email',
+		isValidTel: 'enter a valid phone',
+		isValidUrl: 'enter a valid url',
+		isRequired: 'for to continue activate a mandatory field',
+		isEmptyGroup: 'you need to select at least one item'
+	},
+	ru: {
+		isNonEmpty: 'это поле не может быть пустым.',
+		onlyLetters: 'значением может быть только буквы от "а" до "я".',
+		isValidNumber: 'значением может быть только число­, например 1, 3.14 или 2010',
+		minMax: 'значением может быть только число не меньше min и не больше max',
+		min: 'значением может быть только число не меньше min',
+		max: 'значением может быть только число не больше max',
+		isEmailCorrect: 'введите корректный email',
+		isValidTel: 'введите корректный телефон',
+		isValidUrl: 'введите корректный url',
+		isRequired: 'для продолжения активируйте обязательное поле',
+		isEmptyGroup: 'необходимо выбрать хоть один пункт'
+	}
+};
+
+/** Warnings */
+var IS_NON_EMPTY = 'isNonEmpty';
+var ONLY_LETTERS = 'onlyLetters';
+var IS_VALID_NUMBER = 'isValidNumber';
+var MIN_MAX = 'minMax';
+var MIN = 'min';
+var MAX = 'max';
+var IS_EMAIL_CORRECT = 'isEmailCorrect';
+var IS_VALID_TEL = 'isValidTel';
+var IS_VALID_URL = 'isValidUrl';
+var IS_REQUIRED = 'isRequired';
+var IS_EMPTY_GROUP = 'isEmptyGroup';
+
+/** Language */
+var INSTRUCTION_EN = 'instructions-en';
+
 /**
  * Contains embedded objects that contain check methods and a description of errors
  * 
  * types {Object} 
  */
-
 var types = {
 	/**
   * Check field on the empty
@@ -54,8 +98,8 @@ var types = {
 		validate: function validate(input) {
 			return input.value !== '';
 		},
-		'instructions-ru': 'это поле не может быть пустым.',
-		'instructions-en': 'This field can not be empty.'
+		INSTRUCTION_EN: warnings.en.isNonEmpty,
+		INSTRUCTION_RU: warnings.ru.isNonEmpty
 	},
 	/**
   * Check on the entered letters without special characters
@@ -67,8 +111,8 @@ var types = {
 		validate: function validate(input) {
 			return !/[^a-zа-яё ]/gi.test(input.value);
 		},
-		'instructions-ru': 'значением может быть только буквы от "а" до "я".',
-		'instructions-en': 'value can only be the letters "a" to "z".'
+		INSTRUCTION_EN: warnings.en.onlyLetters,
+		INSTRUCTION_RU: warnings.ru.onlyLetters
 	},
 	/**
   * Check of the number
@@ -80,8 +124,8 @@ var types = {
 		validate: function validate(input) {
 			return !isNaN(input.value);
 		},
-		'instructions-ru': 'значением может быть только число­, например 1, 3.14 или 2010',
-		'instructions-en': 'value can only be a number, such as 1, 3.14 or 2010'
+		INSTRUCTION_EN: warnings.en.isValidNumber,
+		INSTRUCTION_RU: warnings.ru.isValidNumber
 	},
 	/**
   * Check for compliance with the number of not less than min and not more than max 
@@ -96,14 +140,10 @@ var types = {
 			var max = Number(input.max);
 			var value = Number(input.value);
 
-			if (min > value || value > max) {
-				return false;
-			}
-
-			return true;
+			return min > value || value > max;
 		},
-		'instructions-ru': 'значением может быть только число не меньше min и не больше max',
-		'instructions-en': 'value can only be a number no less and no more than min max'
+		INSTRUCTION_EN: warnings.en.minMax,
+		INSTRUCTION_RU: warnings.ru.minMax
 	},
 	/**
   * Check for compliance of not less than min (for input type="number")
@@ -116,14 +156,10 @@ var types = {
 			var min = Number(input.min);
 			var value = Number(input.value);
 
-			if (min > value) {
-				return false;
-			}
-
-			return true;
+			return min > value;
 		},
-		'instructions-ru': 'значением может быть только число не меньше min',
-		'instructions-en': 'value can only be a number not less than min'
+		INSTRUCTION_EN: warnings.en.min,
+		INSTRUCTION_RU: warnings.ru.min
 	},
 	/**
   * Check for compliance of not more than max (for input type = "number")
@@ -136,14 +172,10 @@ var types = {
 			var max = Number(input.max);
 			var value = Number(input.value);
 
-			if (value > max) {
-				return false;
-			}
-
-			return true;
+			return value > max;
 		},
-		'instructions-ru': 'значением может быть только число не больше max',
-		'instructions-en': 'value can only be a number not more than max'
+		INSTRUCTION_EN: warnings.en.max,
+		INSTRUCTION_RU: warnings.ru.max
 	},
 	/**
   * Check the validity of the entered email address
@@ -156,8 +188,8 @@ var types = {
 			return (/^.+@.+$/.test(input.value)
 			);
 		},
-		'instructions-ru': 'введите корректный email',
-		'instructions-en': 'enter a valid email'
+		INSTRUCTION_EN: warnings.en.isEmailCorrect,
+		INSTRUCTION_RU: warnings.ru.isEmailCorrect
 	},
 	/**
   * Check on the validity of the entered phone number
@@ -169,8 +201,8 @@ var types = {
 		validate: function validate(input) {
 			return !/[^0-9 .()*+-]/g.test(input.value);
 		},
-		'instructions-ru': 'введите корректный телефон',
-		'instructions-en': 'enter a valid phone'
+		INSTRUCTION_EN: warnings.en.isValidTel,
+		INSTRUCTION_RU: warnings.ru.isValidTel
 	},
 	/**
   * Check on the validity of the entered url address
@@ -183,8 +215,8 @@ var types = {
 			return (/^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(input.value)
 			);
 		},
-		'instructions-ru': 'введите корректный url',
-		'instructions-en': 'enter a valid url'
+		INSTRUCTION_EN: warnings.en.isValidUrl,
+		INSTRUCTION_RU: warnings.ru.isValidUrl
 	},
 	/**
   * Check activation of the required field (for checkbox or radio)
@@ -196,8 +228,8 @@ var types = {
 		validate: function validate(input) {
 			return input.checked;
 		},
-		'instructions-ru': 'для продолжения активируйте обязательное поле',
-		'instructions-en': 'for to continue activate a mandatory field'
+		INSTRUCTION_EN: warnings.en.isRequired,
+		INSTRUCTION_RU: warnings.ru.isRequired
 	},
 	/**
   * Check the activation of elements of at least one of the groups (for checkbox or radio)
@@ -207,18 +239,12 @@ var types = {
   */
 	isEmptyGroup: {
 		validate: function validate(array) {
-			var rezult = array.some(function (item) {
-				if (item.checked) {
-					return true;
-				} else {
-					return false;
-				}
+			return array.some(function (item) {
+				return item.checked;
 			});
-
-			return rezult;
 		},
-		'instructions-ru': 'необходимо выбрать хоть один пункт',
-		'instructions-en': 'you need to select at least one item'
+		INSTRUCTION_EN: warnings.en.isEmptyGroup,
+		INSTRUCTION_RU: warnings.ru.isEmptyGroup
 	}
 };
 
@@ -229,25 +255,25 @@ var types = {
  */
 var config = {
 	/** inpyt type="text" */
-	text: ['isNonEmpty', 'onlyLetters'],
+	text: [IS_NON_EMPTY, ONLY_LETTERS],
 	/** inpyt type="number" */
-	number: ['isNonEmpty', 'isValidNumber', 'minMax', 'min', 'max'],
+	number: [IS_NON_EMPTY, IS_VALID_NUMBER, MIN_MAX, MIN, MAX],
 	/** inpyt type="email" */
-	email: ['isNonEmpty', 'isEmailCorrect'],
+	email: [IS_NON_EMPTY, IS_EMAIL_CORRECT],
 	/** inpyt type="password" */
-	password: ['isNonEmpty'],
+	password: [IS_NON_EMPTY],
 	/** inpyt type="file" */
-	file: ['isNonEmpty'],
+	file: [IS_NON_EMPTY],
 	/** inpyt type="search" */
-	search: ['isNonEmpty', 'onlyLetters'],
+	search: [IS_NON_EMPTY, ONLY_LETTERS],
 	/** inpyt type="tel" */
-	tel: ['isNonEmpty', 'isValidTel'],
+	tel: [IS_NON_EMPTY, IS_VALID_TEL],
 	/** inpyt type="url" */
-	url: ['isNonEmpty', 'isValidUrl'],
+	url: [IS_NON_EMPTY, IS_VALID_URL],
 	/** inpyt type="checkbox" */
-	checkbox: ['isRequired', 'group'],
+	checkbox: [IS_REQUIRED, IS_EMPTY_GROUP],
 	/** inpyt type="radio" */
-	radio: ['isRequired', 'group']
+	radio: [IS_REQUIRED, IS_EMPTY_GROUP]
 };
 
 /**
@@ -263,13 +289,12 @@ function findWarning(element, arr) {
 	var mediateArray = [];
 
 	arr.forEach(function (item) {
-		if (config[type].indexOf(item) !== -1) {
+		if (config[type].includes(item)) {
 			mediateArray.push(item);
 		} else {
 			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
 		}
 	});
-
 	return mediateArray;
 }
 
@@ -282,6 +307,7 @@ function findWarning(element, arr) {
  */
 function checkValue(dataInput, storeErrors) {
 	var length = Object.keys(dataInput).length;
+	console.log(length);
 
 	var _loop = function _loop(i) {
 		var data = dataInput[i];
@@ -292,35 +318,24 @@ function checkValue(dataInput, storeErrors) {
 
 		var getMessage = function getMessage(item) {
 			var checker = types[item];
-
 			if (checker) {
 				var result = checker.validate(element);
 
 				if (!result) {
-					var msg = checker[instructions];
-
-					message = msg;
-
+					message = checker[instructions];
 					return true;
-				} else {
-					return false;
 				}
-			} else {
-				return false;
 			}
+			return false;
 		};
 
-		if (config) {
-			config.some(getMessage);
-		}
-
+		config && config.some(getMessage);
 		storeErrors.set(element, message);
 	};
 
 	for (var i = 0; i < length; i++) {
 		_loop(i);
 	}
-
 	return storeErrors;
 }
 
@@ -331,11 +346,7 @@ function checkValue(dataInput, storeErrors) {
  * @returns true or false {boolean}
  */
 var checkAttrGroup = function checkAttrGroup(item) {
-	if (item === 'group') {
-		return true;
-	} else {
-		return false;
-	}
+  return item === IS_EMPTY_GROUP;
 };
 
 /**
@@ -346,23 +357,18 @@ var checkAttrGroup = function checkAttrGroup(item) {
  */
 function sortGroups(listGroups) {
 	var groups = [];
+	var arr = [];
 
 	listGroups.forEach(function (item) {
 		var name = sortForName(item);
-
-		if (groups.indexOf(name) === -1) {
+		if (!groups.includes(name)) {
 			groups.push(name);
 		}
 	});
-
-	var arr = [];
-
 	groups.forEach(function (arrName) {
 		var itemArr = forEachGroup(arrName, listGroups);
-
 		arr.push(itemArr);
 	});
-
 	return arr;
 }
 
@@ -378,15 +384,12 @@ function forEachGroup(arrName, list) {
 
 	list.forEach(function (item) {
 		var name = sortForName(item);
-
 		if (arrName === name) {
 			arr.push(item);
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	});
-
 	return arr;
 }
 
@@ -404,12 +407,10 @@ function sortForName(item) {
 		name = item.name;
 	} else if (type === 'checkbox') {
 		var dataset = item.dataset['groupname'];
-
 		if (dataset) {
 			name = dataset;
 		}
 	}
-
 	return name;
 }
 
@@ -422,11 +423,9 @@ function sortForName(item) {
  */
 function checkValueGroup(groupRadio, storeErrors) {
 	groupRadio.forEach(function (arr) {
-		var message = getMessage$1(arr);
-
+		var message = getMessage(arr);
 		storeErrors.set(arr[0], message);
 	});
-
 	return storeErrors;
 }
 
@@ -436,151 +435,26 @@ function checkValueGroup(groupRadio, storeErrors) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage$1(arr) {
-	var instructions = 'instructions-en';
+function getMessage(arr) {
 	var message = '';
 
 	var checkValue = function checkValue(item) {
-		var checker = types['isEmptyGroup'];
+		var checker = types[IS_EMPTY_GROUP];
 
 		if (checker) {
 			var result = checker.validate(arr);
 
 			if (!result) {
-				var msg = checker[instructions];
-
-				message = msg;
-
+				message = checker[INSTRUCTION_EN];
 				return true;
-			} else {
-				return false;
 			}
-		} else {
-			return false;
 		}
+		return false;
 	};
 
-	arr.some(checkValue);
-
+	arr && arr.some(checkValue);
 	return message;
 }
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -606,75 +480,6 @@ var createClass = function () {
   };
 }();
 
-
-
-
-
-
-
-var get = function get(object, property, receiver) {
-  if (object === null) object = Function.prototype;
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent === null) {
-      return undefined;
-    } else {
-      return get(parent, property, receiver);
-    }
-  } else if ("value" in desc) {
-    return desc.value;
-  } else {
-    var getter = desc.get;
-
-    if (getter === undefined) {
-      return undefined;
-    }
-
-    return getter.call(receiver);
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var set = function set(object, property, value, receiver) {
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent !== null) {
-      set(parent, property, value, receiver);
-    }
-  } else if ("value" in desc && desc.writable) {
-    desc.value = value;
-  } else {
-    var setter = desc.set;
-
-    if (setter !== undefined) {
-      setter.call(receiver, value);
-    }
-  }
-
-  return value;
-};
-
 /**
  * Out errors
  * 
@@ -683,7 +488,6 @@ var set = function set(object, property, value, receiver) {
 var OutputErrors = function () {
 	/**
   * Creates an instance of OutputErrors.
-  * 
   */
 	function OutputErrors() {
 		classCallCheck(this, OutputErrors);
@@ -727,16 +531,13 @@ var OutputErrors = function () {
 					}
 				} else {
 					if (_this.storeCreateElements.has(element)) {
-						(function () {
-							var notifyElement = _this.storeCreateElements.get(element)['newElement'];
+						var notifyElement = _this.storeCreateElements.get(element)['newElement'];
+						notifyElement.classList.add('hide');
 
-							notifyElement.classList.add('hide');
-
-							setTimeout(function () {
-								element.parentElement.removeChild(notifyElement);
-								_this.storeCreateElements.delete(element);
-							}, 100);
-						})();
+						setTimeout(function () {
+							element.parentElement.removeChild(notifyElement);
+							_this.storeCreateElements.delete(element);
+						}, 100);
 					}
 				}
 			});
@@ -763,9 +564,7 @@ var OutputErrors = function () {
 				return span.classList.add('show');
 			}, 0);
 			span.textContent = message;
-
 			element.parentElement.insertBefore(span, element);
-
 			return span;
 		}
 	}]);
@@ -781,7 +580,6 @@ var OutputErrors = function () {
 var Store = function () {
 	/**
   * Creates an instance of Store.
-  * 
   */
 	function Store() {
 		classCallCheck(this, Store);
@@ -833,7 +631,7 @@ var Validation = function () {
 		classCallCheck(this, Validation);
 
 		this.form = form;
-		this.listInputElement = form.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=password], input[type=file], \n\t\t\tinput[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]');
+		this.listInputElement = form.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=password], input[type=file],\n\t\t\tinput[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]');
 
 		this.store = new Store();
 		this.storeErrors = new Map();
@@ -890,16 +688,13 @@ var Validation = function () {
 
 						if (isGroup) {
 							listGroups.push(input);
-
 							return true;
 						} else {
 							arrayInputElement.push(input);
-
 							return false;
 						}
 					} else {
 						arrayInputElement.push(input);
-
 						return false;
 					}
 				}
@@ -913,7 +708,6 @@ var Validation = function () {
 
 				if (dataset) {
 					var datasetToArray = dataset.split(' ');
-
 					config = findWarning(input, datasetToArray);
 				}
 
@@ -938,7 +732,7 @@ var Validation = function () {
 			var _this3 = this;
 
 			event.preventDefault();
-
+			console.log(123);
 			/** check the ordinary fields */
 			var storeErrors = checkValue(this.dataInput, this.storeErrors);
 
@@ -964,16 +758,15 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation$1(config$$1) {
+function validation(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
 
 	if (config$$1) {
 		var _loop = function _loop(key) {
 			var types$$1 = config$$1[key]['typeField'];
 			var name = config$$1[key]['checkName'];
-
 			types$$1.forEach(function (item) {
-				config[item].push(name);
+				return config[item].push(name);
 			});
 		};
 
@@ -994,8 +787,9 @@ function validation$1(config$$1) {
  */
 function initValidation(forms) {
 	Array.prototype.forEach.call(forms, function (item) {
-		new Validation(item);
+		return new Validation(item);
 	});
 }
 
-module.exports = validation$1;
+// module.exports = validation;
+validation();

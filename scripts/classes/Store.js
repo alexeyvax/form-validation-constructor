@@ -5,14 +5,11 @@ import OutputErrors from './OutputErrors';
  * 
  * @class Store
  */
-class Store
-{
+class Store {
 	/**
 	 * Creates an instance of Store.
-	 * 
 	 */
-	constructor()
-	{
+	constructor() {
 		this.outputErrors = new OutputErrors();
 	}
 	
@@ -21,9 +18,8 @@ class Store
 	 * 
 	 * @param messages {Map}
 	 */
-	getMessage( messages )
-	{
-		this.outMessage( messages );
+	getMessage(messages) {
+		this.outMessage(messages);
 	}
 	
 	/**
@@ -31,12 +27,9 @@ class Store
 	 * 
 	 * @param messages {Map}
 	 */
-	outMessage( messages )
-	{
-		this.outputErrors.sortMessages( messages );
+	outMessage(messages) {
+		this.outputErrors.sortMessages(messages);
 	}
 }
 
-export {
-	Store as default,
-}
+export default Store;

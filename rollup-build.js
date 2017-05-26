@@ -8,19 +8,14 @@ rollup({
 		plugins: [
 			babel({
 				exclude: 'node_modules/**',
-				presets: 'es2015-rollup'
+				presets: 'es2015-rollup',
 			}),
 			/*uglify( {}, minify )*/ // activate when you need to uglify
 		]
-	}).then( ( bundle ) =>
-	{
+	}).then(bundle => {
 		return bundle.write({
 			format: 'cjs',
 			dest: 'public/index.js',
-			moduleName: 'formValidationConstructor'
+			moduleName: 'formValidationConstructor',
 		});
-	}).then( () =>
-	{
-		console.log( 'Сборка окончена' );
-	}
-);
+	}).then(() => console.log( 'Сборка окончена' ));

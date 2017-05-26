@@ -1,21 +1,13 @@
+import { IS_EMPTY_GROUP } from '../constants/index';
+
 /**
  * Determines field in the group or ordinary
  * 
  * @param item {HTMLInputElement}
  * @returns true or false {boolean}
  */
-const checkAttrGroup = ( item ) =>
-{
-	if ( item === 'group' )
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+const checkAttrGroup = item => {
+	return item === IS_EMPTY_GROUP;
+};
 
-export {
-	checkAttrGroup as default,
-}
+export default checkAttrGroup;

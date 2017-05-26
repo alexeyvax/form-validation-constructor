@@ -4,33 +4,23 @@
  * @param listGroups {Array}
  * @returns arr {Array}
  */
-function sortGroups( listGroups )
-{
+function sortGroups(listGroups) {
 	const groups = [];
+	const arr = [];
 	
 	listGroups.forEach(
-		( item ) =>
-		{
-			const name = sortForName( item );
-			
-			if ( groups.indexOf( name ) === -1 )
-			{
-				groups.push( name );
+		item => {
+			const name = sortForName(item);
+			if (!groups.includes(name)) {
+				groups.push(name);
 			}
 		}
 	);
-	
-	const arr = [];
-	
-	groups.forEach(
-		( arrName ) =>
-		{
-			const itemArr = forEachGroup( arrName, listGroups );
-			
-			arr.push( itemArr );
+	groups.forEach(arrName => {
+			const itemArr = forEachGroup(arrName, listGroups);
+			arr.push(itemArr);
 		}
 	);
-	
 	return arr;
 }
 
@@ -41,27 +31,17 @@ function sortGroups( listGroups )
  * @param list {Array}
  * @returns arr {Array}
  */
-function forEachGroup( arrName, list )
-{
+function forEachGroup(arrName, list) {
 	const arr = [];
 	
-	list.forEach(
-		( item ) =>
-		{
-			const name = sortForName( item );
-			
-			if ( arrName === name )
-			{
-				arr.push( item );
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+	list.forEach(item => {
+		const name = sortForName(item);
+		if (arrName === name) {
+			arr.push(item);
+			return true;
 		}
-	);
-	
+		return false;
+	});
 	return arr;
 }
 
@@ -71,28 +51,19 @@ function forEachGroup( arrName, list )
  * @param item {HTMLInputElement}
  * @returns name {String}
  */
-function sortForName( item )
-{
+function sortForName(item) {
 	const type = item.type;
 	let name;
 	
-	if ( type === 'radio' )
-	{
+	if (type === 'radio') {
 		name = item.name;
-	}
-	else if ( type === 'checkbox' )
-	{
+	} else if (type === 'checkbox') {
 		const dataset = item.dataset['groupname'];
-		
-		if ( dataset )
-		{
+		if (dataset) {
 			name = dataset;
 		}
 	}
-	
 	return name;
 }
 
-export {
-	sortGroups as default,
-}
+export default sortGroups;
