@@ -20,41 +20,44 @@ class OutputErrors {
 	 * @param messages {Map}
 	 */
 	sortMessages(messages) {
-		const firstElement = messages.keys().next().value;
-		const currentForm = firstElement.closest('form');
-		
-		messages.forEach((value, key, map) => {
-			const element = key;
-			const message = value;
-			
+		messages.forEach((message, element, map) => {
+			// console.log(message);
 			if (message) {
 				if (!this.storeCreateElements.has(element)) {
 					this.errorNotificationElement = {
 						newElement: this.createErrorElement(element, message),
 						message: message,
 					};
-					
 					this.storeCreateElements.set(element, this.errorNotificationElement);
+					// console.log('if');
 				} else if (this.storeCreateElements.get(element)['message'] !== message) {
-					this.storeCreateElements.get(element)['newElement'].textContent = message;
-					this.storeCreateElements.get(element)['message'] = message;
+					const notifyElement = this.storeCreateElements.get(element);
+					notifyElement['newElement'].textContent = message;
+					notifyElement['message'] = message;
+					notifyElement['newElement'].classList.add('show');
+					// console.log('else if');
 				}
 			} else {
 				if (this.storeCreateElements.has(element)) {
-					const notifyElement = this.storeCreateElements.get(element)['newElement'];
-					notifyElement.classList.add('hide');
+					// console.log('else');
+					const notifyElement = this.storeCreateElements.get(element);
+					notifyElement['newElement'].textContent = '';
+					notifyElement['message'] = '';
+					notifyElement['newElement'].classList.remove('show');
 					
-					setTimeout(() => {
-						element.parentElement.removeChild(notifyElement);
-						this.storeCreateElements.delete(element);
-					}, 100);
+					// TODO решено сделать так, чтобы при инициализации создавался span и 
+					// чтобы он не удалялся, а удалялся textContent в нём
+					// Попробовать обойтись без дополнительного Map и setTimeout
 				}
 			}
+			// try {
+			// 	throw new Error('oops');
+			// } catch (err) {
+			// 	console.error(err.message);
+			// }
 		});
-		
-		if (this.storeCreateElements.size === 0) {
-			currentForm.submit();
-		}
+		// console.log(this.storeCreateElements);
+		// console.log(messages);
 	}
 	
 	/**

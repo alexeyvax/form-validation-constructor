@@ -9,8 +9,8 @@ import { IS_EMPTY_GROUP, INSTRUCTION_EN } from '../constants/index';
  * @returns storeErrors {Map}
  */
 function checkValueGroup(groupRadio, storeErrors) {
-	groupRadio.forEach(arr => {
-		const message = getMessage(arr)
+	groupRadio[0] && groupRadio.forEach(arr => {
+		const message = getMessage(arr);
 		storeErrors.set(arr[0], message);
 	});
 	return storeErrors;
@@ -25,7 +25,7 @@ function checkValueGroup(groupRadio, storeErrors) {
 function getMessage(arr) {
 	let message = '';
 	
-	const checkValue = item => {
+	arr[0] && arr.some(item => {
 		const checker = typesValidation[IS_EMPTY_GROUP];
 		
 		if (checker) {
@@ -37,9 +37,7 @@ function getMessage(arr) {
 			}
 		}
 		return false;
-	};
-	
-	arr && arr.some(checkValue);
+	});
 	return message;
 }
 
