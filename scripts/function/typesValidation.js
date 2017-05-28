@@ -17,8 +17,8 @@ const types = {
 		validate: function (input) {
 			return input.value !== '';
 		},
-		INSTRUCTION_EN: warnings.en.isNonEmpty,
-		INSTRUCTION_RU: warnings.ru.isNonEmpty,
+		[INSTRUCTION_EN]: warnings.en.isNonEmpty,
+		[INSTRUCTION_RU]: warnings.ru.isNonEmpty,
 	},
 	/**
 	 * Check on the entered letters without special characters
@@ -30,8 +30,8 @@ const types = {
 		validate: function (input) {
 			return !/[^a-zа-яё ]/gi.test(input.value);
 		},
-		INSTRUCTION_EN: warnings.en.onlyLetters,
-		INSTRUCTION_RU: warnings.ru.onlyLetters,
+		[INSTRUCTION_EN]: warnings.en.onlyLetters,
+		[INSTRUCTION_RU]: warnings.ru.onlyLetters,
 	},
 	/**
 	 * Check of the number
@@ -43,8 +43,8 @@ const types = {
 		validate: function (input) {
 			return !isNaN(input.value);
 		},
-		INSTRUCTION_EN: warnings.en.isValidNumber,
-		INSTRUCTION_RU: warnings.ru.isValidNumber,
+		[INSTRUCTION_EN]: warnings.en.isValidNumber,
+		[INSTRUCTION_RU]: warnings.ru.isValidNumber,
 	},
 	/**
 	 * Check for compliance with the number of not less than min and not more than max 
@@ -61,8 +61,8 @@ const types = {
 			
 			return (min > value) || (value > max);
 		},
-		INSTRUCTION_EN: warnings.en.minMax,
-		INSTRUCTION_RU: warnings.ru.minMax,
+		[INSTRUCTION_EN]: warnings.en.minMax,
+		[INSTRUCTION_RU]: warnings.ru.minMax,
 	},
 	/**
 	 * Check for compliance of not less than min (for input type="number")
@@ -77,8 +77,8 @@ const types = {
 			
 			return min > value;
 		},
-		INSTRUCTION_EN: warnings.en.min,
-		INSTRUCTION_RU: warnings.ru.min,
+		[INSTRUCTION_EN]: warnings.en.min,
+		[INSTRUCTION_RU]: warnings.ru.min,
 	},
 	/**
 	 * Check for compliance of not more than max (for input type = "number")
@@ -93,8 +93,8 @@ const types = {
 			
 			return value > max;
 		},
-		INSTRUCTION_EN: warnings.en.max,
-		INSTRUCTION_RU: warnings.ru.max,
+		[INSTRUCTION_EN]: warnings.en.max,
+		[INSTRUCTION_RU]: warnings.ru.max,
 	},
 	/**
 	 * Check the validity of the entered email address
@@ -106,8 +106,8 @@ const types = {
 		validate: function (input) {
 			return /^.+@.+$/.test(input.value);
 		},
-		INSTRUCTION_EN: warnings.en.isEmailCorrect,
-		INSTRUCTION_RU: warnings.ru.isEmailCorrect,
+		[INSTRUCTION_EN]: warnings.en.isEmailCorrect,
+		[INSTRUCTION_RU]: warnings.ru.isEmailCorrect,
 	},
 	/**
 	 * Check on the validity of the entered phone number
@@ -119,8 +119,8 @@ const types = {
 		validate: function (input) {
 			return !/[^0-9 .()*+-]/g.test( input.value );
 		},
-		INSTRUCTION_EN: warnings.en.isValidTel,
-		INSTRUCTION_RU: warnings.ru.isValidTel,
+		[INSTRUCTION_EN]: warnings.en.isValidTel,
+		[INSTRUCTION_RU]: warnings.ru.isValidTel,
 	},
 	/**
 	 * Check on the validity of the entered url address
@@ -132,8 +132,8 @@ const types = {
 		validate: function (input) {
 			return /^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(input.value);
 		},
-		INSTRUCTION_EN: warnings.en.isValidUrl,
-		INSTRUCTION_RU: warnings.ru.isValidUrl,
+		[INSTRUCTION_EN]: warnings.en.isValidUrl,
+		[INSTRUCTION_RU]: warnings.ru.isValidUrl,
 	},
 	/**
 	 * Check activation of the required field (for checkbox or radio)
@@ -145,8 +145,8 @@ const types = {
 		validate: function (input) {
 			return input.checked;
 		},
-		INSTRUCTION_EN: warnings.en.isRequired,
-		INSTRUCTION_RU: warnings.ru.isRequired,
+		[INSTRUCTION_EN]: warnings.en.isRequired,
+		[INSTRUCTION_RU]: warnings.ru.isRequired,
 	},
 	/**
 	 * Check the activation of elements of at least one of the groups (for checkbox or radio)
@@ -160,8 +160,8 @@ const types = {
 				return item.checked;
 			});
 		},
-		INSTRUCTION_EN: warnings.en.isEmptyGroup,
-		INSTRUCTION_RU: warnings.ru.isEmptyGroup,
+		[INSTRUCTION_EN]: warnings.en.isEmptyGroup,
+		[INSTRUCTION_RU]: warnings.ru.isEmptyGroup,
 	}
 };
 

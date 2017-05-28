@@ -12,13 +12,12 @@ function findWarning(element, arr) {
 	const type = element.type;
 	const mediateArray = [];
 	
-	arr.forEach(item => {
+	arr[0] && arr.forEach(item => {
 			if (configValidation[type].includes(item)) {
 				mediateArray.push(item);
 			} else {
-				console.error(
-					`Warning: field named "${name}" with type="${type}". data-options can not contain check to "${item}"`
-				);
+				console.error(`Warning: field named "${name}" with type="${type}". 
+				data-options can not contain check to "${item}"`);
 			}
 		}
 	);

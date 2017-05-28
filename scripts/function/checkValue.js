@@ -8,31 +8,29 @@ import typesValidation from './typesValidation';
  * @returns storeErrors {Map}
  */
 function checkValue(dataInput, storeErrors) {
-	const length = Object.keys(dataInput).length;
-	console.log(length);
-	for (let i = 0; i < length; i++){
-		const data = dataInput[i];
-		const element = data['input'];
+	const toArray = Object.keys(dataInput);
+	const instructions = `instructions-${typesValidation.lang}`;
+	
+	toArray[0] && toArray.forEach(elem => {
+		const data = dataInput[elem];
+		const element = data['inputElement'];
 		const config = data['config'];
-		const instructions = `instructions-${data['lang']}`;
 		let message = '';
 		
-		const getMessage = item => {
+		config[0] && config.some(item => {
 			const checker = typesValidation[item];
 			if (checker) {
 				const result = checker.validate(element);
-				
 				if (!result) {
 					message = checker[instructions];
 					return true;
 				}
 			}
 			return false;
-		};
-		
-		config && config.some(getMessage);
+		});
 		storeErrors.set(element, message);
-	}
+	});
+	// console.log(toArray);
 	return storeErrors;
 }
 

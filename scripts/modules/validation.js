@@ -1,18 +1,27 @@
 import Validation from '../classes/Validation';
 import typesValidation from '../function/typesValidation';
 import configValidation from '../function/configValidation';
+import { EN } from '../constants/index';
 
 /**
  * Find all forms on the page
  */
 function validation(config) {
 	const forms = document.querySelectorAll('form[data-validation=true]');
+	if (config && config.lang) {
+		typesValidation.lang = config.lang;
+	} else {
+		const getHtmlLang = document.documentElement.lang;
+		typesValidation.lang = (getHtmlLang)
+			? getHtmlLang
+			: EN;
+	}
 	
 	if (config) {
 		for (let key in config) {
 			const types = config[key]['typeField'];
 			const name = config[key]['checkName'];
-			types.forEach(item => configValidation[item].push(name));
+			types[0] && types.forEach(item => configValidation[item].push(name));
 		}
 		
 		Object.assign(typesValidation, config);

@@ -6,22 +6,16 @@
  */
 function sortGroups(listGroups) {
 	const groups = [];
-	const arr = [];
-	
-	listGroups.forEach(
-		item => {
-			const name = sortForName(item);
-			if (!groups.includes(name)) {
-				groups.push(name);
-			}
+	const listGroupsName = [];
+	listGroups.forEach(item => {
+		const currentName = sortForName(item);
+		if (!listGroupsName.includes(currentName)) {
+			const currentCroup = selectAllElementsCurrentGroup(currentName, listGroups);
+			listGroupsName.push(currentName);
+			groups.push(currentCroup);
 		}
-	);
-	groups.forEach(arrName => {
-			const itemArr = forEachGroup(arrName, listGroups);
-			arr.push(itemArr);
-		}
-	);
-	return arr;
+	});
+	return groups;
 }
 
 /**
@@ -31,16 +25,14 @@ function sortGroups(listGroups) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function forEachGroup(arrName, list) {
+function selectAllElementsCurrentGroup(currentName, list) {
 	const arr = [];
 	
 	list.forEach(item => {
 		const name = sortForName(item);
-		if (arrName === name) {
+		if (currentName === name) {
 			arr.push(item);
-			return true;
 		}
-		return false;
 	});
 	return arr;
 }
@@ -61,6 +53,10 @@ function sortForName(item) {
 		const dataset = item.dataset['groupname'];
 		if (dataset) {
 			name = dataset;
+		} else {
+			// TODO сделать вывод ошибки один раз, а не по колличеству элементов
+			console.error(`Input please valid groupname for input with name ${item.name} 
+				and type="checkbox"`);
 		}
 	}
 	return name;

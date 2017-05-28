@@ -20,17 +20,30 @@ class Validation {
 	 */
 	constructor(form) {
 		this.form = form;
-		this.listInputElement = form.querySelectorAll(
-			`input[type=text], input[type=number], input[type=email], input[type=password], input[type=file],
-			input[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]`);
+		this.listInputElement = form.querySelectorAll(`
+			input[type=text],
+			input[type=number],
+			input[type=email],
+			input[type=password],
+			input[type=file],
+			input[type=search],
+			input[type=tel],
+			input[type=url],
+			input[type=checkbox],
+			input[type=radio]
+		`);
 		
 		this.store = new Store();
 		this.storeErrors = new Map();
-		
-		this.groupsElements = [];
-		this.dataInput = Object.create(null);
+		this.dataSimpleInput = Object.create(null);
+		this.dataGroupElements = [];
 		/** Is this first press to send form? */
-		this.isFirst = true;
+		this.isFormRegisterHandler = false;
+		
+		this.boundFormInputHandler = debounce(
+			event => this.validation(event), 100, true);
+		this.boundFormChangeHandler = debounce(
+			event => this.validation(event), 100, true);
 		
 		this.registerHandlers();
 	}
@@ -43,65 +56,54 @@ class Validation {
 		this.form.addEventListener('submit', event => this.validation(event));
 	}
 	
+	formRegisterHandlers() {
+		if (!this.isFormRegisterHandler) {
+			this.form.addEventListener('input', this.boundFormInputHandler);
+			this.form.addEventListener('change', this.boundFormChangeHandler);
+			this.isFormRegisterHandler = true;
+		}
+	}
+	
+	formUnRegisterHandlers() {
+		this.form.removeEventListener('input', this.boundFormInputHandler);
+		this.form.removeEventListener('change', this.boundFormChangeHandler);
+		this.isFormRegisterHandler = false;
+	}
+	
 	/**
 	 * Passes through the list of forms of gathering data about each
 	 */
 	init() {
-		const arrayInputElement = [];
 		const listGroups = [];
-		let lang = document.documentElement.lang;
 		
-		if (!lang) {
-			lang = 'en';
-		}
-		
-		Array.prototype.filter.call(
+		Array.prototype.forEach.call(
 			this.listInputElement,
-			input => {
-				const dataset = input.dataset['options'];
+			(inputElement, index) => {
+				const dataset = inputElement.dataset['options'];
 				
-				if (dataset) {
-					if ((input.type === 'radio')
-						|| (input.type === 'checkbox')) {
-						const datasetToArray = dataset.split(' ');
-						const config = findWarning(input, datasetToArray);
-						const isGroup = datasetToArray.some(checkAttrGroup);
-						
-						if (isGroup) {
-							listGroups.push(input);
-							return true;
-						} else {
-							arrayInputElement.push(input);
-							return false;
-						}
-					} else {
-						arrayInputElement.push(input);
-						return false;
+				if (!dataset) {
+					return;
+				}
+				const datasetToArray = dataset.split(' ');
+				
+				if ((inputElement.type === 'radio')
+					|| (inputElement.type === 'checkbox')) {
+					const isGroup = datasetToArray.some(checkAttrGroup);
+					
+					if (isGroup) {
+						listGroups.push(inputElement);
+						return;
 					}
 				}
-			}
-		);
-		
-		this.groupsElements = sortGroups(listGroups);
-		
-		arrayInputElement.forEach(
-			(input, index) => {
-				const dataset = input.dataset['options'];
-				let config;
 				
-				if (dataset) {
-					const datasetToArray = dataset.split(' ');
-					config = findWarning(input, datasetToArray);
-				}
-				
-				this.dataInput[index] = {
-					input: input,
-					name: input.name,
-					config: config,
-					lang: lang,
+				this.dataSimpleInput[index] = {
+					inputElement,
+					name: inputElement.name,
+					config: findWarning(inputElement, datasetToArray),
 				};
 			}
 		);
+		this.dataGroupElements = sortGroups(listGroups);
 	}
 	
 	/**
@@ -111,19 +113,23 @@ class Validation {
 	 */
 	validation(event) {
 		event.preventDefault();
-		console.log(123);
 		/** check the ordinary fields */
-		let storeErrors = checkValue(this.dataInput, this.storeErrors);
-		
+		this.dataSimpleInput[0] && checkValue(this.dataSimpleInput, this.storeErrors);
 		/** checking the group fields */
-		storeErrors = checkValueGroup(this.groupsElements, this.storeErrors);
+		this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
 		
-		this.store.getMessage(storeErrors);
-		
-		if (this.isFirst) {
-			this.form.addEventListener('input', debounce(event => this.validation(event), 100, true));
-			this.form.addEventListener('change', debounce(event => this.validation(event), 100, true));
-			this.isFirst = false;
+		this.store.getMessage(this.storeErrors);
+		const errors = this.storeErrors.entries();
+		// console.log(this.storeErrors);
+		for (let [key, value] of errors) {
+			if (value !== '') {
+				this.formRegisterHandlers();
+				return;
+			}
+		}
+		if (event.type === 'submit') {
+			this.formUnRegisterHandlers();
+			this.form.submit();
 		}
 	}
 }

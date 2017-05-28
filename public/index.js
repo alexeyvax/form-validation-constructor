@@ -80,7 +80,283 @@ var IS_REQUIRED = 'isRequired';
 var IS_EMPTY_GROUP = 'isEmptyGroup';
 
 /** Language */
+var EN = 'en';
+
 var INSTRUCTION_EN = 'instructions-en';
+var INSTRUCTION_RU = 'instructions-ru';
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+var get = function get(object, property, receiver) {
+  if (object === null) object = Function.prototype;
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent === null) {
+      return undefined;
+    } else {
+      return get(parent, property, receiver);
+    }
+  } else if ("value" in desc) {
+    return desc.value;
+  } else {
+    var getter = desc.get;
+
+    if (getter === undefined) {
+      return undefined;
+    }
+
+    return getter.call(receiver);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var set = function set(object, property, value, receiver) {
+  var desc = Object.getOwnPropertyDescriptor(object, property);
+
+  if (desc === undefined) {
+    var parent = Object.getPrototypeOf(object);
+
+    if (parent !== null) {
+      set(parent, property, value, receiver);
+    }
+  } else if ("value" in desc && desc.writable) {
+    desc.value = value;
+  } else {
+    var setter = desc.set;
+
+    if (setter !== undefined) {
+      setter.call(receiver, value);
+    }
+  }
+
+  return value;
+};
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
+
+var _isNonEmpty;
+var _onlyLetters;
+var _isValidNumber;
+var _minMax;
+var _min;
+var _max;
+var _isEmailCorrect;
+var _isValidTel;
+var _isValidUrl;
+var _isRequired;
+var _isEmptyGroup;
 
 /**
  * Contains embedded objects that contain check methods and a description of errors
@@ -94,39 +370,33 @@ var types = {
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isNonEmpty: {
+	isNonEmpty: (_isNonEmpty = {
 		validate: function validate(input) {
 			return input.value !== '';
-		},
-		INSTRUCTION_EN: warnings.en.isNonEmpty,
-		INSTRUCTION_RU: warnings.ru.isNonEmpty
-	},
+		}
+	}, defineProperty(_isNonEmpty, INSTRUCTION_EN, warnings.en.isNonEmpty), defineProperty(_isNonEmpty, INSTRUCTION_RU, warnings.ru.isNonEmpty), _isNonEmpty),
 	/**
   * Check on the entered letters without special characters
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	onlyLetters: {
+	onlyLetters: (_onlyLetters = {
 		validate: function validate(input) {
 			return !/[^a-zа-яё ]/gi.test(input.value);
-		},
-		INSTRUCTION_EN: warnings.en.onlyLetters,
-		INSTRUCTION_RU: warnings.ru.onlyLetters
-	},
+		}
+	}, defineProperty(_onlyLetters, INSTRUCTION_EN, warnings.en.onlyLetters), defineProperty(_onlyLetters, INSTRUCTION_RU, warnings.ru.onlyLetters), _onlyLetters),
 	/**
   * Check of the number
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isValidNumber: {
+	isValidNumber: (_isValidNumber = {
 		validate: function validate(input) {
 			return !isNaN(input.value);
-		},
-		INSTRUCTION_EN: warnings.en.isValidNumber,
-		INSTRUCTION_RU: warnings.ru.isValidNumber
-	},
+		}
+	}, defineProperty(_isValidNumber, INSTRUCTION_EN, warnings.en.isValidNumber), defineProperty(_isValidNumber, INSTRUCTION_RU, warnings.ru.isValidNumber), _isValidNumber),
 	/**
   * Check for compliance with the number of not less than min and not more than max 
   * (works if given and min and max at the input type = "number")
@@ -134,118 +404,102 @@ var types = {
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	minMax: {
+	minMax: (_minMax = {
 		validate: function validate(input) {
 			var min = Number(input.min);
 			var max = Number(input.max);
 			var value = Number(input.value);
 
 			return min > value || value > max;
-		},
-		INSTRUCTION_EN: warnings.en.minMax,
-		INSTRUCTION_RU: warnings.ru.minMax
-	},
+		}
+	}, defineProperty(_minMax, INSTRUCTION_EN, warnings.en.minMax), defineProperty(_minMax, INSTRUCTION_RU, warnings.ru.minMax), _minMax),
 	/**
   * Check for compliance of not less than min (for input type="number")
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	min: {
+	min: (_min = {
 		validate: function validate(input) {
 			var min = Number(input.min);
 			var value = Number(input.value);
 
 			return min > value;
-		},
-		INSTRUCTION_EN: warnings.en.min,
-		INSTRUCTION_RU: warnings.ru.min
-	},
+		}
+	}, defineProperty(_min, INSTRUCTION_EN, warnings.en.min), defineProperty(_min, INSTRUCTION_RU, warnings.ru.min), _min),
 	/**
   * Check for compliance of not more than max (for input type = "number")
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	max: {
+	max: (_max = {
 		validate: function validate(input) {
 			var max = Number(input.max);
 			var value = Number(input.value);
 
 			return value > max;
-		},
-		INSTRUCTION_EN: warnings.en.max,
-		INSTRUCTION_RU: warnings.ru.max
-	},
+		}
+	}, defineProperty(_max, INSTRUCTION_EN, warnings.en.max), defineProperty(_max, INSTRUCTION_RU, warnings.ru.max), _max),
 	/**
   * Check the validity of the entered email address
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isEmailCorrect: {
+	isEmailCorrect: (_isEmailCorrect = {
 		validate: function validate(input) {
 			return (/^.+@.+$/.test(input.value)
 			);
-		},
-		INSTRUCTION_EN: warnings.en.isEmailCorrect,
-		INSTRUCTION_RU: warnings.ru.isEmailCorrect
-	},
+		}
+	}, defineProperty(_isEmailCorrect, INSTRUCTION_EN, warnings.en.isEmailCorrect), defineProperty(_isEmailCorrect, INSTRUCTION_RU, warnings.ru.isEmailCorrect), _isEmailCorrect),
 	/**
   * Check on the validity of the entered phone number
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isValidTel: {
+	isValidTel: (_isValidTel = {
 		validate: function validate(input) {
 			return !/[^0-9 .()*+-]/g.test(input.value);
-		},
-		INSTRUCTION_EN: warnings.en.isValidTel,
-		INSTRUCTION_RU: warnings.ru.isValidTel
-	},
+		}
+	}, defineProperty(_isValidTel, INSTRUCTION_EN, warnings.en.isValidTel), defineProperty(_isValidTel, INSTRUCTION_RU, warnings.ru.isValidTel), _isValidTel),
 	/**
   * Check on the validity of the entered url address
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isValidUrl: {
+	isValidUrl: (_isValidUrl = {
 		validate: function validate(input) {
 			return (/^(https?|s?ftp|file):\/\/[a-zа-яё_-]+[\a-zа-яё\.]{2,6}\??([a-zа-яё_-]+)\#?([a-zа-яё_-]+)/g.test(input.value)
 			);
-		},
-		INSTRUCTION_EN: warnings.en.isValidUrl,
-		INSTRUCTION_RU: warnings.ru.isValidUrl
-	},
+		}
+	}, defineProperty(_isValidUrl, INSTRUCTION_EN, warnings.en.isValidUrl), defineProperty(_isValidUrl, INSTRUCTION_RU, warnings.ru.isValidUrl), _isValidUrl),
 	/**
   * Check activation of the required field (for checkbox or radio)
   * 
   * @param input {HTMLInputElement}
   * @returns true or false {boolean}
   */
-	isRequired: {
+	isRequired: (_isRequired = {
 		validate: function validate(input) {
 			return input.checked;
-		},
-		INSTRUCTION_EN: warnings.en.isRequired,
-		INSTRUCTION_RU: warnings.ru.isRequired
-	},
+		}
+	}, defineProperty(_isRequired, INSTRUCTION_EN, warnings.en.isRequired), defineProperty(_isRequired, INSTRUCTION_RU, warnings.ru.isRequired), _isRequired),
 	/**
   * Check the activation of elements of at least one of the groups (for checkbox or radio)
   * 
   * @param array {Array}
   * @returns rezult {boolean}
   */
-	isEmptyGroup: {
+	isEmptyGroup: (_isEmptyGroup = {
 		validate: function validate(array) {
 			return array.some(function (item) {
 				return item.checked;
 			});
-		},
-		INSTRUCTION_EN: warnings.en.isEmptyGroup,
-		INSTRUCTION_RU: warnings.ru.isEmptyGroup
-	}
+		}
+	}, defineProperty(_isEmptyGroup, INSTRUCTION_EN, warnings.en.isEmptyGroup), defineProperty(_isEmptyGroup, INSTRUCTION_RU, warnings.ru.isEmptyGroup), _isEmptyGroup)
 };
 
 /**
@@ -288,11 +542,11 @@ function findWarning(element, arr) {
 	var type = element.type;
 	var mediateArray = [];
 
-	arr.forEach(function (item) {
+	arr[0] && arr.forEach(function (item) {
 		if (config[type].includes(item)) {
 			mediateArray.push(item);
 		} else {
-			console.error('Warning: field named "' + name + '" with type="' + type + '". data-options can not contain check to "' + item + '"');
+			console.error('Warning: field named "' + name + '" with type="' + type + '". \n\t\t\t\tdata-options can not contain check to "' + item + '"');
 		}
 	});
 	return mediateArray;
@@ -306,36 +560,29 @@ function findWarning(element, arr) {
  * @returns storeErrors {Map}
  */
 function checkValue(dataInput, storeErrors) {
-	var length = Object.keys(dataInput).length;
-	console.log(length);
+	var toArray = Object.keys(dataInput);
+	var instructions = 'instructions-' + types.lang;
 
-	var _loop = function _loop(i) {
-		var data = dataInput[i];
-		var element = data['input'];
+	toArray[0] && toArray.forEach(function (elem) {
+		var data = dataInput[elem];
+		var element = data['inputElement'];
 		var config = data['config'];
-		var instructions = 'instructions-' + data['lang'];
 		var message = '';
 
-		var getMessage = function getMessage(item) {
+		config.some(function (item) {
 			var checker = types[item];
 			if (checker) {
 				var result = checker.validate(element);
-
 				if (!result) {
 					message = checker[instructions];
 					return true;
 				}
 			}
 			return false;
-		};
-
-		config && config.some(getMessage);
+		});
 		storeErrors.set(element, message);
-	};
-
-	for (var i = 0; i < length; i++) {
-		_loop(i);
-	}
+	});
+	// console.log(toArray);
 	return storeErrors;
 }
 
@@ -357,19 +604,16 @@ var checkAttrGroup = function checkAttrGroup(item) {
  */
 function sortGroups(listGroups) {
 	var groups = [];
-	var arr = [];
-
+	var listGroupsName = [];
 	listGroups.forEach(function (item) {
-		var name = sortForName(item);
-		if (!groups.includes(name)) {
-			groups.push(name);
+		var currentName = sortForName(item);
+		if (!listGroupsName.includes(currentName)) {
+			var currentCroup = selectAllElementsCurrentGroup(currentName, listGroups);
+			listGroupsName.push(currentName);
+			groups.push(currentCroup);
 		}
 	});
-	groups.forEach(function (arrName) {
-		var itemArr = forEachGroup(arrName, listGroups);
-		arr.push(itemArr);
-	});
-	return arr;
+	return groups;
 }
 
 /**
@@ -379,16 +623,14 @@ function sortGroups(listGroups) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function forEachGroup(arrName, list) {
+function selectAllElementsCurrentGroup(currentName, list) {
 	var arr = [];
 
 	list.forEach(function (item) {
 		var name = sortForName(item);
-		if (arrName === name) {
+		if (currentName === name) {
 			arr.push(item);
-			return true;
 		}
-		return false;
 	});
 	return arr;
 }
@@ -409,6 +651,9 @@ function sortForName(item) {
 		var dataset = item.dataset['groupname'];
 		if (dataset) {
 			name = dataset;
+		} else {
+			// TODO сделать вывод ошибки один раз, а не по колличеству элементов
+			console.error('Input please valid groupname for input with name ' + item.name + ' \n\t\t\t\tand type="checkbox"');
 		}
 	}
 	return name;
@@ -422,8 +667,8 @@ function sortForName(item) {
  * @returns storeErrors {Map}
  */
 function checkValueGroup(groupRadio, storeErrors) {
-	groupRadio.forEach(function (arr) {
-		var message = getMessage(arr);
+	groupRadio[0] && groupRadio.forEach(function (arr) {
+		var message = getMessage$1(arr);
 		storeErrors.set(arr[0], message);
 	});
 	return storeErrors;
@@ -435,10 +680,10 @@ function checkValueGroup(groupRadio, storeErrors) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage(arr) {
+function getMessage$1(arr) {
 	var message = '';
 
-	var checkValue = function checkValue(item) {
+	arr[0] && arr.some(function (item) {
 		var checker = types[IS_EMPTY_GROUP];
 
 		if (checker) {
@@ -450,35 +695,9 @@ function getMessage(arr) {
 			}
 		}
 		return false;
-	};
-
-	arr && arr.some(checkValue);
+	});
 	return message;
 }
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
 
 /**
  * Out errors
@@ -510,41 +729,44 @@ var OutputErrors = function () {
 		value: function sortMessages(messages) {
 			var _this = this;
 
-			var firstElement = messages.keys().next().value;
-			var currentForm = firstElement.closest('form');
-
-			messages.forEach(function (value, key, map) {
-				var element = key;
-				var message = value;
-
+			messages.forEach(function (message, element, map) {
+				// console.log(message);
 				if (message) {
 					if (!_this.storeCreateElements.has(element)) {
 						_this.errorNotificationElement = {
 							newElement: _this.createErrorElement(element, message),
 							message: message
 						};
-
 						_this.storeCreateElements.set(element, _this.errorNotificationElement);
+						// console.log('if');
 					} else if (_this.storeCreateElements.get(element)['message'] !== message) {
-						_this.storeCreateElements.get(element)['newElement'].textContent = message;
-						_this.storeCreateElements.get(element)['message'] = message;
+						var notifyElement = _this.storeCreateElements.get(element);
+						notifyElement['newElement'].textContent = message;
+						notifyElement['message'] = message;
+						notifyElement['newElement'].classList.add('show');
+						// console.log('else if');
 					}
 				} else {
 					if (_this.storeCreateElements.has(element)) {
-						var notifyElement = _this.storeCreateElements.get(element)['newElement'];
-						notifyElement.classList.add('hide');
+						// console.log('else');
+						var _notifyElement = _this.storeCreateElements.get(element);
+						_notifyElement['newElement'].textContent = '';
+						_notifyElement['message'] = '';
+						_notifyElement['newElement'].classList.remove('show');
 
-						setTimeout(function () {
-							element.parentElement.removeChild(notifyElement);
-							_this.storeCreateElements.delete(element);
-						}, 100);
+						// TODO решено сделать так, чтобы при инициализации создавался span и 
+						// чтобы он не удалялся, а удалялся textContent в нём
+						// Попробовать обойтись без дополнительного Map и setTimeout
 					}
 				}
+				// try {
+				// 	throw new Error('oops');
+				// } catch (err) {
+				// 	console.error(err.message);
+				// }
 			});
-
-			if (this.storeCreateElements.size === 0) {
-				currentForm.submit();
-			}
+			// console.log(this.storeCreateElements);
+			// console.log(messages);
 		}
 
 		/**
@@ -609,6 +831,7 @@ var Store = function () {
 	}, {
 		key: 'outMessage',
 		value: function outMessage(messages) {
+			// console.log(messages, 'messages');
 			this.outputErrors.sortMessages(messages);
 		}
 	}]);
@@ -628,18 +851,26 @@ var Validation = function () {
   * @param form {HTMLFormElement}
   */
 	function Validation(form) {
+		var _this = this;
+
 		classCallCheck(this, Validation);
 
 		this.form = form;
-		this.listInputElement = form.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=password], input[type=file],\n\t\t\tinput[type=search], input[type=tel], input[type=url], input[type=checkbox], input[type=radio]');
+		this.listInputElement = form.querySelectorAll('\n\t\t\tinput[type=text],\n\t\t\tinput[type=number],\n\t\t\tinput[type=email],\n\t\t\tinput[type=password],\n\t\t\tinput[type=file],\n\t\t\tinput[type=search],\n\t\t\tinput[type=tel],\n\t\t\tinput[type=url],\n\t\t\tinput[type=checkbox],\n\t\t\tinput[type=radio]\n\t\t');
 
 		this.store = new Store();
 		this.storeErrors = new Map();
-
-		this.groupsElements = [];
-		this.dataInput = Object.create(null);
+		this.dataSimpleInput = Object.create(null);
+		this.dataGroupElements = [];
 		/** Is this first press to send form? */
-		this.isFirst = true;
+		this.isFormRegisterHandler = false;
+
+		this.boundFormInputHandler = debounce(function (event) {
+			return _this.validation(event);
+		}, 100, true);
+		this.boundFormChangeHandler = debounce(function (event) {
+			return _this.validation(event);
+		}, 100, true);
 
 		this.registerHandlers();
 	}
@@ -652,12 +883,28 @@ var Validation = function () {
 	createClass(Validation, [{
 		key: 'registerHandlers',
 		value: function registerHandlers() {
-			var _this = this;
+			var _this2 = this;
 
 			this.init();
 			this.form.addEventListener('submit', function (event) {
-				return _this.validation(event);
+				return _this2.validation(event);
 			});
+		}
+	}, {
+		key: 'formRegisterHandlers',
+		value: function formRegisterHandlers() {
+			if (!this.isFormRegisterHandler) {
+				this.form.addEventListener('input', this.boundFormInputHandler);
+				this.form.addEventListener('change', this.boundFormChangeHandler);
+				this.isFormRegisterHandler = true;
+			}
+		}
+	}, {
+		key: 'formUnRegisterHandlers',
+		value: function formUnRegisterHandlers() {
+			this.form.removeEventListener('input', this.boundFormInputHandler);
+			this.form.removeEventListener('change', this.boundFormChangeHandler);
+			this.isFormRegisterHandler = false;
 		}
 
 		/**
@@ -667,57 +914,34 @@ var Validation = function () {
 	}, {
 		key: 'init',
 		value: function init() {
-			var _this2 = this;
+			var _this3 = this;
 
-			var arrayInputElement = [];
 			var listGroups = [];
-			var lang = document.documentElement.lang;
 
-			if (!lang) {
-				lang = 'en';
-			}
+			Array.prototype.forEach.call(this.listInputElement, function (inputElement, index) {
+				var dataset = inputElement.dataset['options'];
 
-			Array.prototype.filter.call(this.listInputElement, function (input) {
-				var dataset = input.dataset['options'];
+				if (!dataset) {
+					return;
+				}
+				var datasetToArray = dataset.split(' ');
 
-				if (dataset) {
-					if (input.type === 'radio' || input.type === 'checkbox') {
-						var datasetToArray = dataset.split(' ');
-						var config = findWarning(input, datasetToArray);
-						var isGroup = datasetToArray.some(checkAttrGroup);
+				if (inputElement.type === 'radio' || inputElement.type === 'checkbox') {
+					var isGroup = datasetToArray.some(checkAttrGroup);
 
-						if (isGroup) {
-							listGroups.push(input);
-							return true;
-						} else {
-							arrayInputElement.push(input);
-							return false;
-						}
-					} else {
-						arrayInputElement.push(input);
-						return false;
+					if (isGroup) {
+						listGroups.push(inputElement);
+						return;
 					}
 				}
-			});
 
-			this.groupsElements = sortGroups(listGroups);
-
-			arrayInputElement.forEach(function (input, index) {
-				var dataset = input.dataset['options'];
-				var config = void 0;
-
-				if (dataset) {
-					var datasetToArray = dataset.split(' ');
-					config = findWarning(input, datasetToArray);
-				}
-
-				_this2.dataInput[index] = {
-					input: input,
-					name: input.name,
-					config: config,
-					lang: lang
+				_this3.dataSimpleInput[index] = {
+					inputElement: inputElement,
+					name: inputElement.name,
+					config: findWarning(inputElement, datasetToArray)
 				};
 			});
+			this.dataGroupElements = sortGroups(listGroups);
 		}
 
 		/**
@@ -729,26 +953,48 @@ var Validation = function () {
 	}, {
 		key: 'validation',
 		value: function validation(event) {
-			var _this3 = this;
-
 			event.preventDefault();
-			console.log(123);
 			/** check the ordinary fields */
-			var storeErrors = checkValue(this.dataInput, this.storeErrors);
-
+			this.dataSimpleInput[0] && checkValue(this.dataSimpleInput, this.storeErrors);
 			/** checking the group fields */
-			storeErrors = checkValueGroup(this.groupsElements, this.storeErrors);
+			this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
 
-			this.store.getMessage(storeErrors);
+			this.store.getMessage(this.storeErrors);
+			var errors = this.storeErrors.entries();
+			// console.log(this.storeErrors);
+			var _iteratorNormalCompletion = true;
+			var _didIteratorError = false;
+			var _iteratorError = undefined;
 
-			if (this.isFirst) {
-				this.form.addEventListener('input', debounce(function (event) {
-					return _this3.validation(event);
-				}, 100, true));
-				this.form.addEventListener('change', debounce(function (event) {
-					return _this3.validation(event);
-				}, 100, true));
-				this.isFirst = false;
+			try {
+				for (var _iterator = errors[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					var _step$value = slicedToArray(_step.value, 2),
+					    key = _step$value[0],
+					    value = _step$value[1];
+
+					if (value !== '') {
+						this.formRegisterHandlers();
+						return;
+					}
+				}
+			} catch (err) {
+				_didIteratorError = true;
+				_iteratorError = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion && _iterator.return) {
+						_iterator.return();
+					}
+				} finally {
+					if (_didIteratorError) {
+						throw _iteratorError;
+					}
+				}
+			}
+
+			if (event.type === 'submit') {
+				this.formUnRegisterHandlers();
+				this.form.submit();
 			}
 		}
 	}]);
@@ -758,14 +1004,20 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation(config$$1) {
+function validation$1(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
+	if (config$$1 && config$$1.lang) {
+		types.lang = config$$1.lang;
+	} else {
+		var getHtmlLang = document.documentElement.lang;
+		types.lang = getHtmlLang ? getHtmlLang : EN;
+	}
 
 	if (config$$1) {
 		var _loop = function _loop(key) {
 			var types$$1 = config$$1[key]['typeField'];
 			var name = config$$1[key]['checkName'];
-			types$$1.forEach(function (item) {
+			types$$1[0] && types$$1.forEach(function (item) {
 				return config[item].push(name);
 			});
 		};
@@ -792,4 +1044,8 @@ function initValidation(forms) {
 }
 
 // module.exports = validation;
-validation();
+validation$1();
+// validation({lang: 'ru'});
+
+// TODO чекбокс не с первого раза при добавлении галочки, убирает ошибку
+// TODO при добалении в npm не проходит быстрое тестирование прямо на сайте
