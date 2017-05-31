@@ -27,22 +27,22 @@ class OutputErrors {
 			if (message) {
 				if (!this.storeCreateElements.has(element)) {
 					this.errorNotificationElement = {
-						newElement: this.createErrorElement(element, message),
+						createdElement: this.createErrorElement(element, message),
 						message: message,
 					};
 					this.storeCreateElements.set(element, this.errorNotificationElement);
-				} else if (this.storeCreateElements.get(element)['message'] !== message) {
+				} else if (this.storeCreateElements.get(element).message !== message) {
 					const notifyElement = this.storeCreateElements.get(element);
-					notifyElement['newElement'].textContent = message;
-					notifyElement['message'] = message;
-					addedClasses(notifyElement['newElement'], CLASS_SHOW);
+					notifyElement.createdElement.textContent = message;
+					notifyElement.message = message;
+					addedClasses(notifyElement.createdElement, CLASS_SHOW);
 				}
 			} else {
 				if (this.storeCreateElements.has(element)) {
 					const notifyElement = this.storeCreateElements.get(element);
-					notifyElement['newElement'].textContent = '';
-					notifyElement['message'] = '';
-					removedClasses(notifyElement['newElement'], CLASS_SHOW);
+					notifyElement.createdElement.textContent = '';
+					notifyElement.message = '';
+					removedClasses(notifyElement.createdElement, CLASS_SHOW);
 				}
 			}
 		});

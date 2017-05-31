@@ -336,7 +336,7 @@ function findWarning(element, arr) {
 	var type = element.type;
 	var mediateArray = [];
 
-	arr[0] && arr.forEach(function (item) {
+	arr.length && arr.forEach(function (item) {
 		if (config[type].includes(item)) {
 			mediateArray.push(item);
 		} else {
@@ -357,13 +357,13 @@ function checkValue(dataInput, storeErrors) {
 	var toArray = Object.keys(dataInput);
 	var instructions = 'instructions-' + types.lang;
 
-	toArray[0] && toArray.forEach(function (elem) {
+	toArray.length && toArray.forEach(function (elem) {
 		var data = dataInput[elem];
-		var element = data['inputElement'];
-		var config = data['config'];
+		var element = data.inputElement;
+		var config = data.config;
 		var message = '';
 
-		config[0] && config.some(function (item) {
+		config.length && config.some(function (item) {
 			var checker = types[item];
 			if (checker) {
 				var result = checker.validate(element);
@@ -444,7 +444,7 @@ function sortForName(item, listOfErrors) {
 	if (type === RADIO) {
 		name = item.name;
 	} else if (type === CHECKBOX) {
-		var dataset = item.dataset['groupname'];
+		var dataset = item.dataset.groupname;
 		if (dataset) {
 			name = dataset;
 		} else {
@@ -465,8 +465,10 @@ function sortForName(item, listOfErrors) {
  * @returns storeErrors {Map}
  */
 function checkValueGroup(groupRadio, storeErrors) {
-	groupRadio[0] && groupRadio.forEach(function (arr) {
-		var message = getMessage(arr);
+	var instructions = 'instructions-' + types.lang;
+
+	groupRadio.length && groupRadio.forEach(function (arr) {
+		var message = getMessage(arr, instructions);
 		storeErrors.set(arr[0], message);
 	});
 	return storeErrors;
@@ -478,17 +480,17 @@ function checkValueGroup(groupRadio, storeErrors) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage(arr) {
+function getMessage(arr, instructions) {
 	var message = '';
 
-	arr[0] && arr.some(function (item) {
+	arr.length && arr.some(function (item) {
 		var checker = types[IS_EMPTY_GROUP];
 
 		if (checker) {
 			var result = checker.validate(arr);
 
 			if (!result) {
-				message = checker[INSTRUCTION_EN];
+				message = checker[instructions];
 				return true;
 			}
 		}
@@ -547,22 +549,22 @@ var OutputErrors = function () {
 				if (message) {
 					if (!_this.storeCreateElements.has(element)) {
 						_this.errorNotificationElement = {
-							newElement: _this.createErrorElement(element, message),
+							createdElement: _this.createErrorElement(element, message),
 							message: message
 						};
 						_this.storeCreateElements.set(element, _this.errorNotificationElement);
-					} else if (_this.storeCreateElements.get(element)['message'] !== message) {
+					} else if (_this.storeCreateElements.get(element).message !== message) {
 						var notifyElement = _this.storeCreateElements.get(element);
-						notifyElement['newElement'].textContent = message;
-						notifyElement['message'] = message;
-						addedClasses(notifyElement['newElement'], CLASS_SHOW);
+						notifyElement.createdElement.textContent = message;
+						notifyElement.message = message;
+						addedClasses(notifyElement.createdElement, CLASS_SHOW);
 					}
 				} else {
 					if (_this.storeCreateElements.has(element)) {
 						var _notifyElement = _this.storeCreateElements.get(element);
-						_notifyElement['newElement'].textContent = '';
-						_notifyElement['message'] = '';
-						removedClasses(_notifyElement['newElement'], CLASS_SHOW);
+						_notifyElement.createdElement.textContent = '';
+						_notifyElement.message = '';
+						removedClasses(_notifyElement.createdElement, CLASS_SHOW);
 					}
 				}
 			});
@@ -716,7 +718,7 @@ var Validation = function () {
 			var listGroups = [];
 
 			Array.prototype.forEach.call(this.listInputElement, function (inputElement, index) {
-				var dataset = inputElement.dataset['options'];
+				var dataset = inputElement.dataset.options;
 
 				if (!dataset) {
 					return;
@@ -752,9 +754,9 @@ var Validation = function () {
 		value: function validation(event) {
 			event.preventDefault();
 			/** check the ordinary fields */
-			this.dataSimpleInput[0] && checkValue(this.dataSimpleInput, this.storeErrors);
+			checkValue(this.dataSimpleInput, this.storeErrors);
 			/** checking the group fields */
-			this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
+			checkValueGroup(this.dataGroupElements, this.storeErrors);
 
 			this.store.getMessage(this.storeErrors);
 
@@ -798,7 +800,9 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation(config$$1) {
+function validation() {
+	var config$$1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
 	if (typeof window === 'undefined') {
 		console.error('Sorry but this library is designed to work in the browser!');
 		return;
@@ -806,18 +810,18 @@ function validation(config$$1) {
 
 	var forms = document.querySelectorAll('form[data-validation=true]');
 
-	if (config$$1 && config$$1.lang) {
+	if (config$$1.lang) {
 		types.lang = config$$1.lang;
 	} else {
 		var getHtmlLang = document.documentElement.lang;
 		types.lang = getHtmlLang ? getHtmlLang : EN;
 	}
 
-	if (config$$1) {
+	if (Object.keys(config$$1).length) {
 		var _loop = function _loop(key) {
-			var types$$1 = config$$1[key]['typeField'];
-			var name = config$$1[key]['checkName'];
-			types$$1[0] && types$$1.forEach(function (item) {
+			var types$$1 = config$$1[key].typeField;
+			var name = config$$1[key].checkName;
+			types$$1 && types$$1.forEach(function (item) {
 				return config[item].push(name);
 			});
 		};
@@ -843,8 +847,4 @@ function initValidation(forms) {
 	});
 }
 
-// module.exports = validation;
-validation();
-// validation({lang: 'ru'});
-
-// TODO при добалении в npm не проходит быстрое тестирование в runkit
+module.exports = validation;
