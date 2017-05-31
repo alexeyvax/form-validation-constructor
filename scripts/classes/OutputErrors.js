@@ -43,10 +43,6 @@ class OutputErrors {
 					notifyElement['newElement'].textContent = '';
 					notifyElement['message'] = '';
 					removedClasses(notifyElement['newElement'], CLASS_SHOW);
-					
-					// TODO решено сделать так, чтобы при инициализации создавался span и 
-					// чтобы он не удалялся, а удалялся textContent в нём
-					// Попробовать обойтись без дополнительного Map и setTimeout
 				}
 			}
 		});
