@@ -79,7 +79,7 @@ class Validation {
 		Array.prototype.forEach.call(
 			this.listInputElement,
 			(inputElement, index) => {
-				const dataset = inputElement.dataset['options'];
+				const dataset = inputElement.dataset.options;
 				
 				if (!dataset) {
 					return;
@@ -114,9 +114,9 @@ class Validation {
 	validation(event) {
 		event.preventDefault();
 		/** check the ordinary fields */
-		this.dataSimpleInput[0] && checkValue(this.dataSimpleInput, this.storeErrors);
+		checkValue(this.dataSimpleInput, this.storeErrors);
 		/** checking the group fields */
-		this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
+		checkValueGroup(this.dataGroupElements, this.storeErrors);
 		
 		this.store.getMessage(this.storeErrors);
 		

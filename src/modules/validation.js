@@ -6,7 +6,7 @@ import { EN } from '../constants/index';
 /**
  * Find all forms on the page
  */
-function validation(config) {
+function validation(config = {}) {
 	if (typeof window === 'undefined') {
 		console.error('Sorry but this library is designed to work in the browser!');
 		return;
@@ -14,7 +14,7 @@ function validation(config) {
 	
 	const forms = document.querySelectorAll('form[data-validation=true]');
 	
-	if (config && config.lang) {
+	if (config.lang) {
 		typesValidation.lang = config.lang;
 	} else {
 		const getHtmlLang = document.documentElement.lang;
@@ -23,11 +23,11 @@ function validation(config) {
 			: EN;
 	}
 	
-	if (config) {
+	if (Object.keys(config).length) {
 		for (let key in config) {
-			const types = config[key]['typeField'];
-			const name = config[key]['checkName'];
-			types[0] && types.forEach(item => configValidation[item].push(name));
+			const types = config[key].typeField;
+			const name = config[key].checkName;
+			types && types.forEach(item => configValidation[item].push(name));
 		}
 		
 		Object.assign(typesValidation, config);

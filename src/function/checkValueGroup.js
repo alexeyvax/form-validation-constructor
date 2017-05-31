@@ -1,5 +1,5 @@
 import typesValidation from './typesValidation';
-import { IS_EMPTY_GROUP, INSTRUCTION_EN } from '../constants/index';
+import { IS_EMPTY_GROUP } from '../constants/index';
 
 /**
  * Field group check
@@ -9,8 +9,10 @@ import { IS_EMPTY_GROUP, INSTRUCTION_EN } from '../constants/index';
  * @returns storeErrors {Map}
  */
 function checkValueGroup(groupRadio, storeErrors) {
-	groupRadio[0] && groupRadio.forEach(arr => {
-		const message = getMessage(arr);
+	const instructions = `instructions-${typesValidation.lang}`;
+	
+	groupRadio.length && groupRadio.forEach(arr => {
+		const message = getMessage(arr, instructions);
 		storeErrors.set(arr[0], message);
 	});
 	return storeErrors;
@@ -22,17 +24,17 @@ function checkValueGroup(groupRadio, storeErrors) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage(arr) {
+function getMessage(arr, instructions) {
 	let message = '';
 	
-	arr[0] && arr.some(item => {
+	arr.length && arr.some(item => {
 		const checker = typesValidation[IS_EMPTY_GROUP];
 		
 		if (checker) {
 			const result = checker.validate(arr);
 		
 			if (!result) {
-				message = checker[INSTRUCTION_EN];
+				message = checker[instructions];
 				return true;
 			}
 		}

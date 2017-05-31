@@ -12,7 +12,7 @@ function findWarning(element, arr) {
 	const type = element.type;
 	const mediateArray = [];
 	
-	arr[0] && arr.forEach(item => {
+	arr.length && arr.forEach(item => {
 		if (configValidation[type].includes(item)) {
 			mediateArray.push(item);
 		} else {

@@ -56,7 +56,7 @@ function sortForName(item, listOfErrors) {
 	if (type === RADIO) {
 		name = item.name;
 	} else if (type === CHECKBOX) {
-		const dataset = item.dataset['groupname'];
+		const dataset = item.dataset.groupname;
 		if (dataset) {
 			name = dataset;
 		} else {

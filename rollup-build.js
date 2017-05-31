@@ -4,7 +4,7 @@ import uglify from 'rollup-plugin-uglify';
 import { minify } from 'uglify-js';
 
 rollup({
-		entry: 'scripts/index.js',
+		entry: 'src/index.js',
 		plugins: [
 			babel({
 				exclude: 'node_modules/**',

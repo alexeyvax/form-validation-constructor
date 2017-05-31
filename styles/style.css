@@ -1,37 +1,31 @@
-h1
-{
+h1 {
 	margin: 0 0 40px 0;
 }
 
-form
-{
+form {
 	margin: 0 0 60px 0;
 	border-bottom: 2px solid lightgray;
 }
 
-ul
-{
+ul {
 	width: 600px;
 	padding: 0;
 	margin: 0;
 }
 
-li
-{
+li {
 	position: relative;
 	display: block;
 	margin: 0 0 20px 0;
 	list-style: none;
 }
 
-label
-{
+label {
 	display: block;
 	margin-bottom: 10px;
 }
 
-input:not([type="radio"]):not([type="checkbox"]):not([type="file"])
-{
+input:not([type="radio"]):not([type="checkbox"]):not([type="file"]) {
 	display: inline-block;
 	width: 220px;
 	padding: 10px 5px;
@@ -42,13 +36,11 @@ input:not([type="radio"]):not([type="checkbox"]):not([type="file"])
 }
 
 input[type="radio"],
-input[type="checkbox"]
-{
+input[type="checkbox"] {
 	display: block;
 }
 
-span.notify
-{
+span.notify {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -68,22 +60,19 @@ span.notify
 	transition: visibility .3s, opacity .3s, transform .3s;
 }
 
-span.show
-{
+span.show {
 	visibility: visible;
 	opacity: 1;
 	transform: translateX(0);
 }
 
-span.hide
-{
+span.hide {
 	visibility: hidden;
 	opacity: 0;
 	transform: translateX(0);
 }
 
-span.notify::before
-{
+span.notify::before {
 	position: absolute;
 	top: 6px;
 	left: -20px;
@@ -97,8 +86,7 @@ span.notify::before
 	border-right: 12px solid red;
 }
 
-span.notify::after
-{
+span.notify::after {
 	position: absolute;
 	top: 8px;
 	left: -16px;
@@ -112,7 +100,6 @@ span.notify::after
 	border-right: 10px solid #ffffff;
 }
 
-span.notify:hover
-{
+span.notify:hover {
 	z-index: 2;
 }
