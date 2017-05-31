@@ -26,7 +26,7 @@ You`ll need clone repository and enter on console
 
 	npm install
 
-after 
+after
 
 	npm start
 
@@ -54,14 +54,14 @@ or
 
 **download script** form-validation-constructor
 
-[version form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
+version [form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
 <br />
-[version form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
+version [form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
 
 and connect script
 
 	// index.html
-	<script src="your-way/form-validation-constructor.min.js"></script>
+	<script src="your-path/form-validation-constructor.min.js"></script>
 
 
 ## Instructions for use
@@ -111,12 +111,19 @@ If you make a **mistake** you will see warning with description about error on t
 
 If the form have got optional field, just don`t use attribute **data-options**
 
+### Set language for tooltips
+
 Tooltips are currently available in English and Russian languages. Language tooltips fit is the language which 
-the attribute **lang** on the tag **html**
+is passed when the script is initialized, example: 
+
+	formValidationConstructor({ lang: 'en' });
+
+or the installed language in the attribute **lang** on the tag **html**
 
 	<html lang="en">
 
-The default language is English **'en'**.
+If the language is not initialized or is not set in the ** lang ** attribute,
+Then the default language is English **'en'**'.
 
 ### <a name="add-custom-ckeck"></a> How to add a custom check
 
@@ -129,6 +136,8 @@ example:
 	const myPersonalChecks = {
 		// the name of your check
 		'isTestCheck': {
+			// set english for tooltips
+			lang: 'en',
 			// types of fields which will be applied verification (listed in the array {Array})
 			'typeField': [
 				'text',
@@ -156,6 +165,18 @@ example:
 and now you can add check to the element
 
 	<input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Name *" />
+
+
+### Create a group for items with a checkbox type
+
+All items with the checkbox type that will be in the same group, you need to add the data attribute **data-groupname = ""** 
+with the group name and data attribute **data-options = "isEmptyGroup"**
+To verify that at least one checkbox is selected.
+
+example:
+	<input type="checkbox" name="checkbox-first" data-groupname="one" data-options="isEmptyGroup" />
+	<input type="checkbox" name="checkbox-second" data-groupname="one" data-options="isEmptyGroup" />
+	<input type="checkbox" name="checkbox-third" data-groupname="one" data-options="isEmptyGroup" />
 
 
 ## The list of existing checks
