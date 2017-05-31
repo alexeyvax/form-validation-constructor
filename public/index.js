@@ -31,7 +31,6 @@ function debounce(func) {
 			if (!atBeginning) {
 				func.apply(_this, rest);
 			}
-
 			timerId = 0;
 		}, threshold);
 	};
@@ -85,122 +84,9 @@ var EN = 'en';
 var INSTRUCTION_EN = 'instructions-en';
 var INSTRUCTION_RU = 'instructions-ru';
 
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
+/** Classes */
+var CLASS_SHOW = 'show';
+var CLASS_NOTIFY = 'notify';
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -244,107 +130,6 @@ var defineProperty = function (obj, key, value) {
 
   return obj;
 };
-
-var get = function get(object, property, receiver) {
-  if (object === null) object = Function.prototype;
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent === null) {
-      return undefined;
-    } else {
-      return get(parent, property, receiver);
-    }
-  } else if ("value" in desc) {
-    return desc.value;
-  } else {
-    var getter = desc.get;
-
-    if (getter === undefined) {
-      return undefined;
-    }
-
-    return getter.call(receiver);
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var set = function set(object, property, value, receiver) {
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-
-    if (parent !== null) {
-      set(parent, property, value, receiver);
-    }
-  } else if ("value" in desc && desc.writable) {
-    desc.value = value;
-  } else {
-    var setter = desc.set;
-
-    if (setter !== undefined) {
-      setter.call(receiver, value);
-    }
-  }
-
-  return value;
-};
-
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
 
 var _isNonEmpty;
 var _onlyLetters;
@@ -569,7 +354,7 @@ function checkValue(dataInput, storeErrors) {
 		var config = data['config'];
 		var message = '';
 
-		config.some(function (item) {
+		config[0] && config.some(function (item) {
 			var checker = types[item];
 			if (checker) {
 				var result = checker.validate(element);
@@ -582,7 +367,6 @@ function checkValue(dataInput, storeErrors) {
 		});
 		storeErrors.set(element, message);
 	});
-	// console.log(toArray);
 	return storeErrors;
 }
 
@@ -668,7 +452,7 @@ function sortForName(item) {
  */
 function checkValueGroup(groupRadio, storeErrors) {
 	groupRadio[0] && groupRadio.forEach(function (arr) {
-		var message = getMessage$1(arr);
+		var message = getMessage(arr);
 		storeErrors.set(arr[0], message);
 	});
 	return storeErrors;
@@ -680,7 +464,7 @@ function checkValueGroup(groupRadio, storeErrors) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage$1(arr) {
+function getMessage(arr) {
 	var message = '';
 
 	arr[0] && arr.some(function (item) {
@@ -699,11 +483,27 @@ function getMessage$1(arr) {
 	return message;
 }
 
+var addedClasses = function addedClasses(element) {
+  for (var _len = arguments.length, classes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    classes[_key - 1] = arguments[_key];
+  }
+
+  return element.classList.add(classes);
+};
+var removedClasses = function removedClasses(element) {
+  for (var _len2 = arguments.length, classes = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    classes[_key2 - 1] = arguments[_key2];
+  }
+
+  return element.classList.remove(classes);
+};
+
 /**
  * Out errors
  * 
  * @class OutputErrors
  */
+
 var OutputErrors = function () {
 	/**
   * Creates an instance of OutputErrors.
@@ -730,7 +530,6 @@ var OutputErrors = function () {
 			var _this = this;
 
 			messages.forEach(function (message, element, map) {
-				// console.log(message);
 				if (message) {
 					if (!_this.storeCreateElements.has(element)) {
 						_this.errorNotificationElement = {
@@ -738,35 +537,25 @@ var OutputErrors = function () {
 							message: message
 						};
 						_this.storeCreateElements.set(element, _this.errorNotificationElement);
-						// console.log('if');
 					} else if (_this.storeCreateElements.get(element)['message'] !== message) {
 						var notifyElement = _this.storeCreateElements.get(element);
 						notifyElement['newElement'].textContent = message;
 						notifyElement['message'] = message;
-						notifyElement['newElement'].classList.add('show');
-						// console.log('else if');
+						addedClasses(notifyElement['newElement'], CLASS_SHOW);
 					}
 				} else {
 					if (_this.storeCreateElements.has(element)) {
-						// console.log('else');
 						var _notifyElement = _this.storeCreateElements.get(element);
 						_notifyElement['newElement'].textContent = '';
 						_notifyElement['message'] = '';
-						_notifyElement['newElement'].classList.remove('show');
+						removedClasses(_notifyElement['newElement'], CLASS_SHOW);
 
 						// TODO решено сделать так, чтобы при инициализации создавался span и 
 						// чтобы он не удалялся, а удалялся textContent в нём
 						// Попробовать обойтись без дополнительного Map и setTimeout
 					}
 				}
-				// try {
-				// 	throw new Error('oops');
-				// } catch (err) {
-				// 	console.error(err.message);
-				// }
 			});
-			// console.log(this.storeCreateElements);
-			// console.log(messages);
 		}
 
 		/**
@@ -781,10 +570,10 @@ var OutputErrors = function () {
 		key: 'createErrorElement',
 		value: function createErrorElement(element, message) {
 			var span = document.createElement('span');
-			span.classList.add('notify');
+			addedClasses(span, CLASS_NOTIFY);
 			setTimeout(function () {
-				return span.classList.add('show');
-			}, 0);
+				return addedClasses(span, CLASS_SHOW);
+			});
 			span.textContent = message;
 			element.parentElement.insertBefore(span, element);
 			return span;
@@ -831,7 +620,6 @@ var Store = function () {
 	}, {
 		key: 'outMessage',
 		value: function outMessage(messages) {
-			// console.log(messages, 'messages');
 			this.outputErrors.sortMessages(messages);
 		}
 	}]);
@@ -960,17 +748,14 @@ var Validation = function () {
 			this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
 
 			this.store.getMessage(this.storeErrors);
-			var errors = this.storeErrors.entries();
-			// console.log(this.storeErrors);
+
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
 			var _iteratorError = undefined;
 
 			try {
-				for (var _iterator = errors[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-					var _step$value = slicedToArray(_step.value, 2),
-					    key = _step$value[0],
-					    value = _step$value[1];
+				for (var _iterator = this.storeErrors.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					var value = _step.value;
 
 					if (value !== '') {
 						this.formRegisterHandlers();
@@ -1004,7 +789,7 @@ var Validation = function () {
 /**
  * Find all forms on the page
  */
-function validation$1(config$$1) {
+function validation(config$$1) {
 	var forms = document.querySelectorAll('form[data-validation=true]');
 	if (config$$1 && config$$1.lang) {
 		types.lang = config$$1.lang;
@@ -1044,7 +829,7 @@ function initValidation(forms) {
 }
 
 // module.exports = validation;
-validation$1();
+validation();
 // validation({lang: 'ru'});
 
 // TODO чекбокс не с первого раза при добавлении галочки, убирает ошибку

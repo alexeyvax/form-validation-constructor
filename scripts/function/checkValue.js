@@ -30,7 +30,6 @@ function checkValue(dataInput, storeErrors) {
 		});
 		storeErrors.set(element, message);
 	});
-	// console.log(toArray);
 	return storeErrors;
 }
 

@@ -16,3 +16,16 @@ export const EN = 'en';
 export const RU = 'ru';
 export const INSTRUCTION_EN = 'instructions-en';
 export const INSTRUCTION_RU = 'instructions-ru';
+
+/** Classes */
+export const CLASS_SHOW = 'show';
+export const CLASS_NOTIFY = 'notify';
+
+/** Events */
+export const EVENT_SUBMIT = 'submit';
+export const EVENT_INPUT = 'input';
+export const EVENT_CHANGE = 'change';
+
+/** Types group element */
+export const RADIO = 'radio';
+export const CHECKBOX = 'checkbox';

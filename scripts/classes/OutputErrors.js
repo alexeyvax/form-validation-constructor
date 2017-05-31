@@ -1,3 +1,6 @@
+import { addedClasses, removedClasses } from '../function/toggleClasses';
+import { CLASS_SHOW, CLASS_NOTIFY } from '../constants/index';
+
 /**
  * Out errors
  * 
@@ -21,7 +24,6 @@ class OutputErrors {
 	 */
 	sortMessages(messages) {
 		messages.forEach((message, element, map) => {
-			// console.log(message);
 			if (message) {
 				if (!this.storeCreateElements.has(element)) {
 					this.errorNotificationElement = {
@@ -29,35 +31,25 @@ class OutputErrors {
 						message: message,
 					};
 					this.storeCreateElements.set(element, this.errorNotificationElement);
-					// console.log('if');
 				} else if (this.storeCreateElements.get(element)['message'] !== message) {
 					const notifyElement = this.storeCreateElements.get(element);
 					notifyElement['newElement'].textContent = message;
 					notifyElement['message'] = message;
-					notifyElement['newElement'].classList.add('show');
-					// console.log('else if');
+					addedClasses(notifyElement['newElement'], CLASS_SHOW);
 				}
 			} else {
 				if (this.storeCreateElements.has(element)) {
-					// console.log('else');
 					const notifyElement = this.storeCreateElements.get(element);
 					notifyElement['newElement'].textContent = '';
 					notifyElement['message'] = '';
-					notifyElement['newElement'].classList.remove('show');
+					removedClasses(notifyElement['newElement'], CLASS_SHOW);
 					
 					// TODO решено сделать так, чтобы при инициализации создавался span и 
 					// чтобы он не удалялся, а удалялся textContent в нём
 					// Попробовать обойтись без дополнительного Map и setTimeout
 				}
 			}
-			// try {
-			// 	throw new Error('oops');
-			// } catch (err) {
-			// 	console.error(err.message);
-			// }
 		});
-		// console.log(this.storeCreateElements);
-		// console.log(messages);
 	}
 	
 	/**
@@ -69,8 +61,8 @@ class OutputErrors {
 	 */
 	createErrorElement(element, message) {
 		const span = document.createElement('span');
-		span.classList.add('notify');
-		setTimeout(() => span.classList.add('show'), 0);
+		addedClasses(span, CLASS_NOTIFY);
+		setTimeout(() => addedClasses(span, CLASS_SHOW));
 		span.textContent = message;
 		element.parentElement.insertBefore(span, element);
 		return span;
