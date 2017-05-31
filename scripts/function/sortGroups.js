@@ -1,3 +1,5 @@
+import { RADIO, CHECKBOX } from '../constants/index';
+
 /**
  * Sort the field to check on groups
  * 
@@ -7,10 +9,14 @@
 function sortGroups(listGroups) {
 	const groups = [];
 	const listGroupsName = [];
+	const listOfErrors = [];
+	
 	listGroups.forEach(item => {
-		const currentName = sortForName(item);
+		const currentName = sortForName(item, listOfErrors);
+		
 		if (!listGroupsName.includes(currentName)) {
-			const currentCroup = selectAllElementsCurrentGroup(currentName, listGroups);
+			const currentCroup = selectAllElementsCurrentGroup(
+				currentName, listGroups, listOfErrors);
 			listGroupsName.push(currentName);
 			groups.push(currentCroup);
 		}
@@ -25,11 +31,11 @@ function sortGroups(listGroups) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function selectAllElementsCurrentGroup(currentName, list) {
+function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
 	const arr = [];
 	
 	list.forEach(item => {
-		const name = sortForName(item);
+		const name = sortForName(item, listOfErrors);
 		if (currentName === name) {
 			arr.push(item);
 		}
@@ -43,20 +49,22 @@ function selectAllElementsCurrentGroup(currentName, list) {
  * @param item {HTMLInputElement}
  * @returns name {String}
  */
-function sortForName(item) {
+function sortForName(item, listOfErrors) {
 	const type = item.type;
 	let name;
 	
-	if (type === 'radio') {
+	if (type === RADIO) {
 		name = item.name;
-	} else if (type === 'checkbox') {
+	} else if (type === CHECKBOX) {
 		const dataset = item.dataset['groupname'];
 		if (dataset) {
 			name = dataset;
 		} else {
-			// TODO сделать вывод ошибки один раз, а не по колличеству элементов
-			console.error(`Input please valid groupname for input with name ${item.name} 
-				and type="checkbox"`);
+			if (!listOfErrors.includes(item.name)) {
+				listOfErrors.push(item.name);
+				console.error(`Please enter valid groupname for input with name ${item.name} 
+					and type="checkbox"`);
+			}
 		}
 	}
 	return name;

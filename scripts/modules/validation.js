@@ -7,7 +7,13 @@ import { EN } from '../constants/index';
  * Find all forms on the page
  */
 function validation(config) {
+	if (typeof window === 'undefined') {
+		console.error('Sorry but this library is designed to work in the browser!');
+		return;
+	}
+	
 	const forms = document.querySelectorAll('form[data-validation=true]');
+	
 	if (config && config.lang) {
 		typesValidation.lang = config.lang;
 	} else {

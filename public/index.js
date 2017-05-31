@@ -88,6 +88,15 @@ var INSTRUCTION_RU = 'instructions-ru';
 var CLASS_SHOW = 'show';
 var CLASS_NOTIFY = 'notify';
 
+/** Events */
+var EVENT_SUBMIT = 'submit';
+var EVENT_INPUT = 'input';
+var EVENT_CHANGE = 'change';
+
+/** Types group element */
+var RADIO = 'radio';
+var CHECKBOX = 'checkbox';
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -389,10 +398,13 @@ var checkAttrGroup = function checkAttrGroup(item) {
 function sortGroups(listGroups) {
 	var groups = [];
 	var listGroupsName = [];
+	var listOfErrors = [];
+
 	listGroups.forEach(function (item) {
-		var currentName = sortForName(item);
+		var currentName = sortForName(item, listOfErrors);
+
 		if (!listGroupsName.includes(currentName)) {
-			var currentCroup = selectAllElementsCurrentGroup(currentName, listGroups);
+			var currentCroup = selectAllElementsCurrentGroup(currentName, listGroups, listOfErrors);
 			listGroupsName.push(currentName);
 			groups.push(currentCroup);
 		}
@@ -407,11 +419,11 @@ function sortGroups(listGroups) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function selectAllElementsCurrentGroup(currentName, list) {
+function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
 	var arr = [];
 
 	list.forEach(function (item) {
-		var name = sortForName(item);
+		var name = sortForName(item, listOfErrors);
 		if (currentName === name) {
 			arr.push(item);
 		}
@@ -425,19 +437,21 @@ function selectAllElementsCurrentGroup(currentName, list) {
  * @param item {HTMLInputElement}
  * @returns name {String}
  */
-function sortForName(item) {
+function sortForName(item, listOfErrors) {
 	var type = item.type;
 	var name = void 0;
 
-	if (type === 'radio') {
+	if (type === RADIO) {
 		name = item.name;
-	} else if (type === 'checkbox') {
+	} else if (type === CHECKBOX) {
 		var dataset = item.dataset['groupname'];
 		if (dataset) {
 			name = dataset;
 		} else {
-			// TODO сделать вывод ошибки один раз, а не по колличеству элементов
-			console.error('Input please valid groupname for input with name ' + item.name + ' \n\t\t\t\tand type="checkbox"');
+			if (!listOfErrors.includes(item.name)) {
+				listOfErrors.push(item.name);
+				console.error('Please enter valid groupname for input with name ' + item.name + ' \n\t\t\t\t\tand type="checkbox"');
+			}
 		}
 	}
 	return name;
@@ -549,10 +563,6 @@ var OutputErrors = function () {
 						_notifyElement['newElement'].textContent = '';
 						_notifyElement['message'] = '';
 						removedClasses(_notifyElement['newElement'], CLASS_SHOW);
-
-						// TODO решено сделать так, чтобы при инициализации создавался span и 
-						// чтобы он не удалялся, а удалялся textContent в нём
-						// Попробовать обойтись без дополнительного Map и setTimeout
 					}
 				}
 			});
@@ -650,7 +660,6 @@ var Validation = function () {
 		this.storeErrors = new Map();
 		this.dataSimpleInput = Object.create(null);
 		this.dataGroupElements = [];
-		/** Is this first press to send form? */
 		this.isFormRegisterHandler = false;
 
 		this.boundFormInputHandler = debounce(function (event) {
@@ -674,7 +683,7 @@ var Validation = function () {
 			var _this2 = this;
 
 			this.init();
-			this.form.addEventListener('submit', function (event) {
+			this.form.addEventListener(EVENT_SUBMIT, function (event) {
 				return _this2.validation(event);
 			});
 		}
@@ -682,16 +691,16 @@ var Validation = function () {
 		key: 'formRegisterHandlers',
 		value: function formRegisterHandlers() {
 			if (!this.isFormRegisterHandler) {
-				this.form.addEventListener('input', this.boundFormInputHandler);
-				this.form.addEventListener('change', this.boundFormChangeHandler);
+				this.form.addEventListener(EVENT_INPUT, this.boundFormInputHandler);
+				this.form.addEventListener(EVENT_CHANGE, this.boundFormChangeHandler);
 				this.isFormRegisterHandler = true;
 			}
 		}
 	}, {
 		key: 'formUnRegisterHandlers',
 		value: function formUnRegisterHandlers() {
-			this.form.removeEventListener('input', this.boundFormInputHandler);
-			this.form.removeEventListener('change', this.boundFormChangeHandler);
+			this.form.removeEventListener(EVENT_INPUT, this.boundFormInputHandler);
+			this.form.removeEventListener(EVENT_CHANGE, this.boundFormChangeHandler);
 			this.isFormRegisterHandler = false;
 		}
 
@@ -714,7 +723,7 @@ var Validation = function () {
 				}
 				var datasetToArray = dataset.split(' ');
 
-				if (inputElement.type === 'radio' || inputElement.type === 'checkbox') {
+				if (inputElement.type === RADIO || inputElement.type === CHECKBOX) {
 					var isGroup = datasetToArray.some(checkAttrGroup);
 
 					if (isGroup) {
@@ -777,7 +786,7 @@ var Validation = function () {
 				}
 			}
 
-			if (event.type === 'submit') {
+			if (event.type === EVENT_SUBMIT) {
 				this.formUnRegisterHandlers();
 				this.form.submit();
 			}
@@ -790,7 +799,13 @@ var Validation = function () {
  * Find all forms on the page
  */
 function validation(config$$1) {
+	if (typeof window === 'undefined') {
+		console.error('Sorry but this library is designed to work in the browser!');
+		return;
+	}
+
 	var forms = document.querySelectorAll('form[data-validation=true]');
+
 	if (config$$1 && config$$1.lang) {
 		types.lang = config$$1.lang;
 	} else {
@@ -832,5 +847,4 @@ function initValidation(forms) {
 validation();
 // validation({lang: 'ru'});
 
-// TODO чекбокс не с первого раза при добавлении галочки, убирает ошибку
-// TODO при добалении в npm не проходит быстрое тестирование прямо на сайте
+// TODO при добалении в npm не проходит быстрое тестирование в runkit

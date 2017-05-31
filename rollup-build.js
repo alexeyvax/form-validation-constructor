@@ -10,7 +10,7 @@ rollup({
 				exclude: 'node_modules/**',
 				presets: 'es2015-rollup',
 			}),
-			/*uglify( {}, minify )*/ // activate when you need to uglify
+			/** uglify({}, minify) */ // activate when you need to uglify
 		]
 	}).then(bundle => {
 		return bundle.write({
@@ -18,4 +18,4 @@ rollup({
 			dest: 'public/index.js',
 			moduleName: 'formValidationConstructor',
 		});
-	}).then(() => console.log( 'Сборка окончена' ));
+	}).then(() => console.log('Bundle completed'));
