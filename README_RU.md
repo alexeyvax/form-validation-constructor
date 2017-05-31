@@ -1,5 +1,3 @@
-// TODO добавить в описание создание группы для чекбоксов
-
 # form-validation-constructor
 
 Простая библиотека-конструктор для валидации формы на стороне клиента.
@@ -57,14 +55,14 @@ form-validation-constructor расчитан на дополнение суще�
 
 **скачайте скрипт** form-validation-constructor
 
-[версия form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
+версия [form-validation-constructor.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.js)
 <br />
-[версия form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
+версия [form-validation-constructor.min.js](https://github.com/alexeyvax/form-validation-constructor/blob/master/download/form-validation-constructor.min.js)
 
 и подключите
 
 	// index.html
-	<script src="your-way/form-validation-constructor.min.js"></script>
+	<script src="your-path/form-validation-constructor.min.js"></script>
 
 
 ## Инструкция по использованию
@@ -121,7 +119,7 @@ form-validation-constructor расчитан на дополнение суще�
 который передан при инициализации скрипта пример:
 
 	formValidationConstructor({ lang: 'en' });
-	
+
 или указан в атрибуте **lang** в теге **html**
 
 	<html lang="en">
