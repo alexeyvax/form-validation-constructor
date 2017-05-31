@@ -6,6 +6,7 @@ import checkAttrGroup from '../function/checkAttrGroup';
 import sortGroups from '../function/sortGroups';
 import checkValueGroup from '../function/checkValueGroup';
 import Store from './Store';
+import { EVENT_SUBMIT, EVENT_INPUT, EVENT_CHANGE, RADIO, CHECKBOX } from '../constants/index';
 
 /**
 * @class Validation
@@ -37,7 +38,6 @@ class Validation {
 		this.storeErrors = new Map();
 		this.dataSimpleInput = Object.create(null);
 		this.dataGroupElements = [];
-		/** Is this first press to send form? */
 		this.isFormRegisterHandler = false;
 		
 		this.boundFormInputHandler = debounce(
@@ -53,20 +53,20 @@ class Validation {
 	 */
 	registerHandlers() {
 		this.init();
-		this.form.addEventListener('submit', event => this.validation(event));
+		this.form.addEventListener(EVENT_SUBMIT, event => this.validation(event));
 	}
 	
 	formRegisterHandlers() {
 		if (!this.isFormRegisterHandler) {
-			this.form.addEventListener('input', this.boundFormInputHandler);
-			this.form.addEventListener('change', this.boundFormChangeHandler);
+			this.form.addEventListener(EVENT_INPUT, this.boundFormInputHandler);
+			this.form.addEventListener(EVENT_CHANGE, this.boundFormChangeHandler);
 			this.isFormRegisterHandler = true;
 		}
 	}
 	
 	formUnRegisterHandlers() {
-		this.form.removeEventListener('input', this.boundFormInputHandler);
-		this.form.removeEventListener('change', this.boundFormChangeHandler);
+		this.form.removeEventListener(EVENT_INPUT, this.boundFormInputHandler);
+		this.form.removeEventListener(EVENT_CHANGE, this.boundFormChangeHandler);
 		this.isFormRegisterHandler = false;
 	}
 	
@@ -86,8 +86,8 @@ class Validation {
 				}
 				const datasetToArray = dataset.split(' ');
 				
-				if ((inputElement.type === 'radio')
-					|| (inputElement.type === 'checkbox')) {
+				if ((inputElement.type === RADIO)
+					|| (inputElement.type === CHECKBOX)) {
 					const isGroup = datasetToArray.some(checkAttrGroup);
 					
 					if (isGroup) {
@@ -119,15 +119,14 @@ class Validation {
 		this.dataGroupElements[0] && checkValueGroup(this.dataGroupElements, this.storeErrors);
 		
 		this.store.getMessage(this.storeErrors);
-		const errors = this.storeErrors.entries();
-		// console.log(this.storeErrors);
-		for (let [key, value] of errors) {
+		
+		for (let value of this.storeErrors.values()) {
 			if (value !== '') {
 				this.formRegisterHandlers();
 				return;
 			}
 		}
-		if (event.type === 'submit') {
+		if (event.type === EVENT_SUBMIT) {
 			this.formUnRegisterHandlers();
 			this.form.submit();
 		}

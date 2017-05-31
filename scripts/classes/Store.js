@@ -28,7 +28,6 @@ class Store {
 	 * @param messages {Map}
 	 */
 	outMessage(messages) {
-		// console.log(messages, 'messages');
 		this.outputErrors.sortMessages(messages);
 	}
 }

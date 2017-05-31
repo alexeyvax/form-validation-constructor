@@ -24,7 +24,6 @@ function debounce(
 				if (!atBeginning) {
 					func.apply(this, rest);
 				}
-				
 				timerId = 0;
 			},
 			threshold
