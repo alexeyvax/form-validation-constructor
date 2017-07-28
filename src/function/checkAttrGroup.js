@@ -6,8 +6,6 @@ import { IS_EMPTY_GROUP } from '../constants/index';
  * @param item {HTMLInputElement}
  * @returns true or false {boolean}
  */
-const checkAttrGroup = item => {
-	return item === IS_EMPTY_GROUP;
-};
+const checkAttrGroup = item => item === IS_EMPTY_GROUP;
 
 export default checkAttrGroup;
