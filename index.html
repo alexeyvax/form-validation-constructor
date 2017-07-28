@@ -1,140 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>form-validation-constructor</title>
-	<link rel="stylesheet" type="text/css" href="./styles/style.css">
+  <meta charset="UTF-8">
+  <title>form-validation-constructor</title>
+  <link rel="stylesheet" type="text/css" href="./styles/style.css">
 </head>
 <body>
-	<h1>Example to use form-validation-constructor</h1>
-	<form data-validation="true">
-		<ul>
-			<li>
-				<label>Name user *</label>
-				<input type="text" name="name" data-options="isNonEmpty onlyLetters"
-					placeholder="User name *"
-				/>
-			</li>
-			<li>
-				<label>Surname user</label>
-				<input type="text" name="surName" data-options="onlyLetters"
-					placeholder="User surname"
-				/>
-			</li>
-			<li>
-				<label>Email *</label>
-				<input type="email" name="email" data-options="isNonEmpty isEmailCorrect"
-					placeholder="Email *"
-				/>
-			</li>
-			<li>
-				<label>agree *</label>
-				<input type="checkbox" name="checkbox" data-options="isRequired" />
-			</li>
-			<li>
-				<button type="submit">Send</button>
-			</li>
-		</ul>
-	</form>
-	
-	
-	
-	<form data-validation="true">
-		<ul>
-			<li>
-				<label>login *</label>
-				<input type="text" name="login" data-options="isNonEmpty"
-					placeholder="Login *"
-				/>
-			</li>
-			<li>
-				<label>email *</label>
-				<input type="email" name="email" data-options="isNonEmpty isEmailCorrect"
-					placeholder="Email *"
-				/>
-			</li>
-			<li>
-				<label>password authentication *</label>
-				<input type="password" name="password" data-options="isNonEmpty"
-					placeholder="Password *"
-				/>
-			</li>
-			<li>
-				<button type="submit">Send</button>
-			</li>
-		</ul>
-	</form>
-	
-	<form data-validation="true">
-		<ul>
-			<li>
-				<label>phone number *</label>
-				<input type="tel" name="tel" data-options="isNonEmpty isValidTel"
-					placeholder="Tel *"
-				/>
-			</li>
-			<li>
-				<label>url *</label>
-				<input type="url" name="url" data-options="isNonEmpty isValidUrl"
-					placeholder="Url *"
-				/>
-			</li>
-			<li>
-				<label>age *</label>
-				<input type="number" name="age" data-options="isNonEmpty isValidNumber"
-					placeholder="How many years * "
-				/>
-			</li>
-			<li>
-				<label>agree *</label>
-				<input type="checkbox" name="checkbox" data-options="isRequired" />
-			</li>
-			<li>
-				<button type="submit">Send</button>
-			</li>
-		</ul>
-	</form>
-	
-	<form data-validation="true">
-		<ul>
-			<li>
-				<label>check checkbox required *</label>
-				<input type="checkbox" name="checkbox" data-options="isRequired" />
-			</li>
-			<li>
-				<label>check radio required *</label>
-				<input type="radio" name="radio" data-options="isRequired" />
-			</li>
-			<li>
-				<button type="submit">Send</button>
-			</li>
-		</ul>
-	</form>
-	<form data-validation="true">
-		<ul>
-			<li>
-				<h2>You need select one field of the group</h2>
-				<label>check groupRadio</label>
-				<input type="radio" name="group-radio" data-options="isEmptyGroup" />
-				<label>check groupRadio</label>
-				<input type="radio" name="group-radio" data-options="isEmptyGroup" />
-				<label>check groupRadio</label>
-				<input type="radio" name="group-radio" data-options="isEmptyGroup" />
-			</li>
-			<li>
-				<h2>You need select one field of the isEmptyGroup</h2>
-				<label>check group checkbox, first</label>
-				<input type="checkbox" name="checkbox-group-first" data-groupname="one" data-options="isEmptyGroup" />
-				<label>check group checkbox, second</label>
-				<input type="checkbox" name="checkbox-group-second" data-groupname="one" data-options="isEmptyGroup" />
-				<label>check group checkbox, third</label>
-				<input type="checkbox" name="checkbox-group-third" data-groupname="one" data-options="isEmptyGroup" />
-			</li>
-			<li>
-				<button type="submit">Send</button>
-			</li>
-		</ul>
-	</form>
-	<script src="public/index-example.js"></script>
+  <h1>Example to use form-validation-constructor</h1>
+  <form data-validation="true">
+    <ul>
+      <li>
+        <label>Name user *</label>
+        <input type="text" name="name" data-options="isNonEmpty onlyLetters"
+          placeholder="User name *" />
+      </li>
+      <li>
+        <label>Surname user</label>
+        <input type="text" name="surName" data-options="onlyLetters" placeholder="User surname" />
+      </li>
+      <li>
+        <label>Email *</label>
+        <input type="email" name="email" data-options="isNonEmpty isEmailCorrect"
+          placeholder="Email *" />
+      </li>
+      <li>
+        <label>agree *</label>
+        <input type="checkbox" name="checkbox" data-options="isRequired" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+
+  <form data-validation="true">
+    <ul>
+      <li>
+        <label>login *</label>
+        <input type="text" name="login" data-options="isNonEmpty" placeholder="Login *" />
+      </li>
+      <li>
+        <label>email *</label>
+        <input type="email" name="email" data-options="isNonEmpty isEmailCorrect"
+          placeholder="Email *" />
+      </li>
+      <li>
+        <label>password authentication *</label>
+        <input type="password" name="password" data-options="isNonEmpty" placeholder="Password *" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+  
+  <form data-validation="true">
+    <ul>
+      <li>
+        <label>phone number *</label>
+        <input type="tel" name="tel" data-options="isNonEmpty isValidTel" placeholder="Tel *" />
+      </li>
+      <li>
+        <label>url *</label>
+        <input type="url" name="url" data-options="isNonEmpty isValidUrl" placeholder="Url *" />
+      </li>
+      <li>
+        <label>age *</label>
+        <input type="number" name="age" data-options="isNonEmpty isValidNumber"
+          placeholder="How many years * " />
+      </li>
+      <li>
+        <label>agree *</label>
+        <input type="checkbox" name="checkbox" data-options="isRequired" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+  
+  <form data-validation="true">
+    <ul>
+      <li>
+        <label>check checkbox required *</label>
+        <input type="checkbox" name="checkbox" data-options="isRequired" />
+      </li>
+      <li>
+        <label>check radio required *</label>
+        <input type="radio" name="radio" data-options="isRequired" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+  <form data-validation="true">
+    <ul>
+      <li>
+        <h2>You need select one field of the group</h2>
+        <label>check groupRadio</label>
+        <input type="radio" name="group-radio" data-options="isEmptyGroup" />
+        <label>check groupRadio</label>
+        <input type="radio" name="group-radio" data-options="isEmptyGroup" />
+        <label>check groupRadio</label>
+        <input type="radio" name="group-radio" data-options="isEmptyGroup" />
+      </li>
+      <li>
+        <h2>You need select one field of the isEmptyGroup</h2>
+        <label>check group checkbox, first</label>
+        <input type="checkbox" name="checkbox-group-first" data-groupname="one" data-options="isEmptyGroup" />
+        <label>check group checkbox, second</label>
+        <input type="checkbox" name="checkbox-group-second" data-groupname="one" data-options="isEmptyGroup" />
+        <label>check group checkbox, third</label>
+        <input type="checkbox" name="checkbox-group-third" data-groupname="one" data-options="isEmptyGroup" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+
+  <form data-validation="true">
+    <ul>
+      <li>
+        <label>Name user *</label>
+        <input type="text" name="name" data-options="isTestCheck"
+          placeholder="Custom check name *" />
+      </li>
+      <li>
+        <button type="submit">Send</button>
+      </li>
+    </ul>
+  </form>
+  <script src="public/index-example.js"></script>
 </body>
 </html>
