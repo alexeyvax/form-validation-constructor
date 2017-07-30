@@ -23,13 +23,17 @@ This project is currently being developed.
 
 ![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example1.gif)
 
-You`ll could clone repository and enter on console
+```javascript
 
-  npm install
+// You`ll could clone repository and enter on console
 
-after
+npm install
 
-  npm start
+// after
+
+npm start
+
+```
 
 and open on your browser file **index.html**
 
@@ -38,18 +42,22 @@ and open on your browser file **index.html**
 
 You`ll could install library with npm
 
-  npm install --save form-validation-constructor
+```javascript
+npm install --save form-validation-constructor
+```
 
 You could connect to your project after install
 The best place to the connect your root file, which connected all scripts
 example:
 
-  // index.js or main.js
-  // to connect
-  import formValidationConstructor from 'form-validation-constructor';
-  
-  // to run
-  formValidationConstructor();
+```javascript
+// index.js or main.js
+// to connect
+import formValidationConstructor from 'form-validation-constructor';
+
+// to run
+formValidationConstructor();
+```
 
 or
 
@@ -61,35 +69,42 @@ version [form-validation-constructor.min.js](https://github.com/alexeyvax/form-v
 
 and connect script
 
-  // index.html
-  <script src="your-path/form-validation-constructor.min.js"></script>
-
+```javascript
+// index.html
+<script src="your-path/form-validation-constructor.min.js"></script>
+```
 
 ## Instructions for use
 
 At first, you will could add form on your page
 
-  // index.html
-  <form name="form" action="/" method="post"></form>
+```javascript
+// index.html
+<form name="form" action="/" method="post"></form>
+```
 
 now you need to add **data** attribute **data-validation="true"**
 
-  <form name="form" action="/" method="post" data-validation="true"></form>
+```javascript
+<form name="form" action="/" method="post" data-validation="true"></form>
+```
 
 Form added to the list of scanned, after you will need add input fields in the form, example: 
 We have simple form with three fields: name, email, and confirmation of the agreement.
 
-  <form name="form" action="/" method="post" data-validation="true">
-    // name
-    <label for="name">Name user</label>
-    <input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Name *" />
-    // email
-    <label for="email">Email address</label>
-    <input type="email" name="email" id="email" data-options="isNonEmpty isEmailCorrect" placeholder="Email *" />
-    // agreement
-    <label for="agreement">I agree to the processing of...</label>
-    <input type="checkbox" name="agreement" id="agreement" data-options="isRequired" />
-  </form>
+```javascript
+<form name="form" action="/" method="post" data-validation="true">
+  // name
+  <label for="name">Name user</label>
+  <input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Name *" />
+  // email
+  <label for="email">Email address</label>
+  <input type="email" name="email" id="email" data-options="isNonEmpty isEmailCorrect" placeholder="Email *" />
+  // agreement
+  <label for="agreement">I agree to the processing of...</label>
+  <input type="checkbox" name="agreement" id="agreement" data-options="isRequired" />
+</form>
+```
 
 You will need enter name in the first field, which contain only letters, without special characters. 
 You will need add checks on attribute **data-options="isNonEmpty onlyLetters"**.
@@ -104,7 +119,9 @@ Important factor, attribute **"isRequired"** works only input fields with types 
 **An important addition** the data attribute **data-options** you could add any checks and 
 separate them by space, example:
 
-  data-options="isNonEmpty onlyLetters email"
+```javascript
+data-options="isNonEmpty onlyLetters email"
+```
 
 If you make a **mistake** you will see warning with description about error in the console
 
@@ -118,11 +135,15 @@ Tooltips are currently available in English and Russian languages.
 Language tooltips fit is the language which 
 is passed when the script is initialized, example: 
 
-  formValidationConstructor({ lang: 'en' });
+```javascript
+formValidationConstructor({ lang: 'en' });
+```
 
 or the installed language in the attribute **lang** on the tag **html**
 
-  <html lang="en">
+```javascript
+<html lang="en">
+```
 
 If the language isn't initialized or isn't set in the **lang** attribute,
 Then the default language is English **'en'**'.
@@ -134,39 +155,42 @@ You will could add your personal check on the first argument
 
 example:
 
-  // list of personal checks {Object}
-  const myPersonalChecks = {
+```javascript
+// list of personal checks {Object}
+const myPersonalChecks = {
+  // the name of your check
+  isTestCheck: {
+    // set english for tooltips
+    lang: 'en',
+    // types of fields which will be applied verification (listed in the array {Array})
+    typeField: [
+      'text',
+      'number',
+    ],
     // the name of your check
-    isTestCheck: {
-      // set english for tooltips
-      lang: 'en',
-      // types of fields which will be applied verification (listed in the array {Array})
-      typeField: [
-        'text',
-        'number',
-      ],
-      // the name of your check
-      checkName: 'isTestCheck',
-      // check function, checked element receives input {HTMLInputElement}
-      // return true or false {Boolean}
-      validate(input) {
-        return input.value !== '';
-      },
-      // error output text on your language 
-      // name has two parts **instructions** and **en** 
-      // the language which the attribute **lang** on the tag **html**, you can specify multiple 
-      'instructions-ru': 'это поле не может быть пустым.',
-      'instructions-en': 'This field can not be empty.',
+    checkName: 'isTestCheck',
+    // check function, checked element receives input {HTMLInputElement}
+    // return true or false {Boolean}
+    validate(input) {
+      return input.value !== '';
     },
-  };
+    // error output text on your language 
+    // name has two parts **instructions** and **en** 
+    // the language which the attribute **lang** on the tag **html**, you can specify multiple 
+    'instructions-ru': 'это поле не может быть пустым.',
+    'instructions-en': 'This field can not be empty.',
+  },
+};
 
-  // enter first argument
-  formValidationConstructor(myPersonalChecks);
+// enter first argument
+formValidationConstructor(myPersonalChecks);
+```
 
 and now you will could add check to the element
 
-  <input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Name *" />
-
+```javascript
+<input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Name *" />
+```
 
 ### Create a group for items with a checkbox type
 
@@ -176,10 +200,11 @@ with the group name and data attribute **data-options = "isEmptyGroup"**
 To verify that at least one checkbox is selected.
 
 example:
-  <input type="checkbox" name="checkbox-first" data-groupname="one" data-options="isEmptyGroup" />
-  <input type="checkbox" name="checkbox-second" data-groupname="one" data-options="isEmptyGroup" />
-  <input type="checkbox" name="checkbox-third" data-groupname="one" data-options="isEmptyGroup" />
-
+```javascript
+<input type="checkbox" name="checkbox-first" data-groupname="one" data-options="isEmptyGroup" />
+<input type="checkbox" name="checkbox-second" data-groupname="one" data-options="isEmptyGroup" />
+<input type="checkbox" name="checkbox-third" data-groupname="one" data-options="isEmptyGroup" />
+```
 
 ## The list of existing checks
 

@@ -23,13 +23,15 @@ form-validation-constructor расчитан на дополнение суще�
 
 ![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example1.gif)
 
+```javascript
 Вам необходимо склонировать репозиторий и ввести в консоли
 
 npm install
 
 после
 
-  npm start
+npm start
+```
 
 и открыть в вашем браузере файл index.html
 
@@ -38,18 +40,22 @@ npm install
 
 Для установки библиотеки скачайте её командой 
 
-  npm install --save form-validation-constructor
+```javascript
+npm install --save form-validation-constructor
+```
 
 После необходимо подключить
 Лучше всего подключать в вашем корневом файле, куда подключаются все скрипты
 пример:
 
-  // index.js or main.js
-  // подключите
-  import formValidationConstructor from 'form-validation-constructor';
-  
-  // запустите
-  formValidationConstructor();
+```javascript
+// index.js or main.js
+// подключите
+import formValidationConstructor from 'form-validation-constructor';
+
+// запустите
+formValidationConstructor();
+```
 
 или
 
@@ -61,37 +67,44 @@ npm install
 
 и подключите
 
-  // index.html
-  <script src="your-path/form-validation-constructor.min.js"></script>
-
+```javascript
+// index.html
+<script src="your-path/form-validation-constructor.min.js"></script>
+```
 
 ## Инструкция по использованию
 
 Для начала, добавьте форму на страницу
 
-  // index.html
-  <form name="form" action="/" method="post"></form>
+```javascript
+// index.html
+<form name="form" action="/" method="post"></form>
+```
 
 Для проверки формы необходимо указать у неё **data** атрибут **data-validation="true"**
 
-  <form name="form" action="/" method="post" data-validation="true"></form>
+```javascript
+<form name="form" action="/" method="post" data-validation="true"></form>
+```
 
 Теперь форма добавится в список проверяющихся, после необходимо добавить в форму поля ввода, к примеру 
 у нас есть простая форма состоящая из трёх полей: имя, email, и подтверждение о согласии.
 
 Запишем следующим образом:
 
-  <form name="form" action="/" method="post" data-validation="true">
-    // имя
-    <label for="name">Имя пользователя</label>
-    <input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Имя *" />
-    // email
-    <label for="email">Email адрес</label>
-    <input type="email" name="email" id="email" data-options="isNonEmpty isEmailCorrect" placeholder="Email *" />
-    // согласие
-    <label for="agreed">Согласен на обработку...</label>
-    <input type="checkbox" name="agreed" id="agreed" data-options="isRequired" />
-  </form>
+```javascript
+<form name="form" action="/" method="post" data-validation="true">
+  // имя
+  <label for="name">Имя пользователя</label>
+  <input type="text" name="name" id="name" data-options="isNonEmpty onlyLetters" placeholder="Имя *" />
+  // email
+  <label for="email">Email адрес</label>
+  <input type="email" name="email" id="email" data-options="isNonEmpty isEmailCorrect" placeholder="Email *" />
+  // согласие
+  <label for="agreed">Согласен на обработку...</label>
+  <input type="checkbox" name="agreed" id="agreed" data-options="isRequired" />
+</form>
+```
 
 В первом поле необходимо ввести имя, которое содержит только буквы, без спец символов. 
 Для этого добавляем в атрибут **data-options="isNonEmpty onlyLetters"** нужные проверки. 
@@ -105,7 +118,9 @@ npm install
 **Важное дополнение** в data атрибут **data-options** можно добавлять сколько угодно соответствующих 
 проверок перечислив их через пробел, например так:
 
-  data-options="isNonEmpty onlyLetters"
+```javascript
+data-options="isNonEmpty onlyLetters"
+```
 
 Если вы допустили **ошибку** или не к тому типу поля поставили проверку, то выведется предупреждение в консоль 
 с описанием ошибки.
@@ -118,11 +133,15 @@ npm install
 Всплывающие подсказки на данный момент на английском и русском языках. Язык подсказок соответствует языку, 
 который передан при инициализации скрипта пример:
 
-  formValidationConstructor({ lang: 'en' });
+```javascript
+formValidationConstructor({ lang: 'en' });
+```
 
 или указан в атрибуте **lang** в теге **html**
 
-  <html lang="en">
+```javascript
+<html lang="en">
+```
 
 Если не передан язык при инициализации или не установлен в атрибуте **lang**,
 то язык по умолчанию будет английский 'en'.
@@ -134,39 +153,42 @@ npm install
 
 пример:
 
-  // список кастомных проверок {Object}
-  const myPersonalChecks = {
-    // установить английский язык для всплывающих подсказок
-    lang: 'en',
+```javascript
+// список кастомных проверок {Object}
+const myPersonalChecks = {
+  // установить английский язык для всплывающих подсказок
+  lang: 'en',
+  // название вашей проверки
+  isTestCheck: {
+    // типы полей к которым будет применена проверка(перечислены в массиве{Array})
+    typeField: [
+      'text',
+      'number',
+    ],
     // название вашей проверки
-    isTestCheck: {
-      // типы полей к которым будет применена проверка(перечислены в массиве{Array})
-      typeField: [
-        'text',
-        'number',
-      ],
-      // название вашей проверки
-      checkName: 'isTestCheck',
-      // функция проверки, принимает проверяемый елемент input {HTMLInputElement}
-      // функция должна возвращать true или false {Boolean}
-      validate(input) {
-        return input.value !== '';
-      },
-      // вывод текста ошибок на вашем языке 
-      // название состоит из двух частей **instructions** и **en** 
-      // язык указанный в атибуте **lang** в теге **html**, можно указать несколько 
-      'instructions-ru': 'это поле не может быть пустым.',
-      'instructions-en': 'This field can not be empty.',
+    checkName: 'isTestCheck',
+    // функция проверки, принимает проверяемый елемент input {HTMLInputElement}
+    // функция должна возвращать true или false {Boolean}
+    validate(input) {
+      return input.value !== '';
     },
-  };
-  
-  // при запуске скрипта передать аргументом
-  formValidationConstructor(myPersonalChecks);
+    // вывод текста ошибок на вашем языке 
+    // название состоит из двух частей **instructions** и **en** 
+    // язык указанный в атибуте **lang** в теге **html**, можно указать несколько 
+    'instructions-ru': 'это поле не может быть пустым.',
+    'instructions-en': 'This field can not be empty.',
+  },
+};
+
+// при запуске скрипта передать аргументом
+formValidationConstructor(myPersonalChecks);
+```
 
 и теперь можно добавить проверку к элементу 
 
-  <input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Имя *" />
-
+```javascript
+<input type="text" name="name" id="name" data-options="isTestCheck" placeholder="Имя *" />
+```
 
 ### Создание группы для элементов с типом checkbox
 
@@ -175,10 +197,11 @@ npm install
 для проверки на то, что выбран хоть один чекбокс.
 
 пример:
-  <input type="checkbox" name="checkbox-first" data-groupname="one" data-options="isEmptyGroup" />
-  <input type="checkbox" name="checkbox-second" data-groupname="one" data-options="isEmptyGroup" />
-  <input type="checkbox" name="checkbox-third" data-groupname="one" data-options="isEmptyGroup" />
-
+```javascript
+<input type="checkbox" name="checkbox-first" data-groupname="one" data-options="isEmptyGroup" />
+<input type="checkbox" name="checkbox-second" data-groupname="one" data-options="isEmptyGroup" />
+<input type="checkbox" name="checkbox-third" data-groupname="one" data-options="isEmptyGroup" />
+```
 
 ## Список существующих проверок
 
