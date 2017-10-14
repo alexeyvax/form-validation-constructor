@@ -17,7 +17,7 @@ class OutputErrors {
   * @param messages {Map}
   */
   sortMessages(messages) {
-    messages.forEach((message, element, map) => {
+    messages.forEach((message, element) => {
       if (message) {
         if (!this.storeCreateElements.has(element)) {
           this.errorNotificationElement = {

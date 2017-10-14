@@ -1,29 +1,41 @@
 import { RADIO, CHECKBOX } from '../constants/index';
 
 /**
+ * Detected name of its group
+ * 
+ * @param groupName {String}
+ * @param name {String}
+ * @param listOfErrors {Array}
+ * @returns name {String}
+ */
+const checkGroupName = (groupName, name, listOfErrors) => {
+  let newName;
+  if (groupName) {
+    newName = groupName;
+  } else if (!listOfErrors.includes(name)) {
+    listOfErrors.push(name);
+    console.error(`Please enter valid groupname for input with name ${name} 
+      and type="checkbox"`);
+  }
+  return newName;
+};
+
+/**
  * Detected field type and detected name of its group
  * 
  * @param item {HTMLInputElement}
  * @returns name {String}
  */
-function sortForName(item, listOfErrors) {
-  const type = item.type;
-  let name;
+const sortForName = ({ type, name, dataset }, listOfErrors) => {
+  let newName;
 
   if (type === RADIO) {
-    name = item.name;
+    newName = name;
   } else if (type === CHECKBOX) {
-    const dataset = item.dataset.groupname;
-    if (dataset) {
-      name = dataset;
-    } else if (!listOfErrors.includes(item.name)) {
-      listOfErrors.push(item.name);
-      console.error(`Please enter valid groupname for input with name ${item.name} 
-        and type="checkbox"`);
-    }
+    newName = checkGroupName(dataset.groupname, name, listOfErrors);
   }
-  return name;
-}
+  return newName;
+};
 
 /**
  * It passes through the main list, and created groups to check
@@ -32,7 +44,7 @@ function sortForName(item, listOfErrors) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
+const selectAllElementsCurrentGroup = (currentName, list, listOfErrors) => {
   const arr = [];
 
   list.forEach((item) => {
@@ -42,7 +54,7 @@ function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
     }
   });
   return arr;
-}
+};
 
 /**
  * Sort the field to check on groups
@@ -50,7 +62,7 @@ function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
  * @param listGroups {Array}
  * @returns arr {Array}
  */
-function sortGroups(listGroups) {
+const sortGroups = (listGroups) => {
   const groups = [];
   const listGroupsName = [];
   const listOfErrors = [];
@@ -64,6 +76,6 @@ function sortGroups(listGroups) {
     }
   });
   return groups;
-}
+};
 
 export default sortGroups;

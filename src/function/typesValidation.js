@@ -141,7 +141,7 @@ const types = {
     validate: array => array.some(item => item.checked),
     [INSTRUCTION_EN]: warnings.en.isEmptyGroup,
     [INSTRUCTION_RU]: warnings.ru.isEmptyGroup,
-  }
+  },
 };
 
 export default types;

@@ -6,7 +6,7 @@
  * @param {boolean=false} atBeginning
  * @returns {Function}
  */
-function debounce(func, threshold = 100, atBeginning = false) {
+const debounce = (func, threshold = 100, atBeginning = false) => {
   let timerId;
 
   return function debounced(...rest) {
@@ -25,6 +25,6 @@ function debounce(func, threshold = 100, atBeginning = false) {
     threshold,
     );
   };
-}
+};
 
 export default debounce;

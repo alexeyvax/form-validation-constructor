@@ -8,7 +8,7 @@
  * @param {boolean=false} atBeginning
  * @returns {Function}
  */
-function debounce(func) {
+var debounce = function debounce(func) {
   var threshold = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
   var atBeginning = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
@@ -34,7 +34,7 @@ function debounce(func) {
       timerId = 0;
     }, threshold);
   };
-}
+};
 
 /** Warnings */
 var IS_NON_EMPTY = 'isNonEmpty';
@@ -103,20 +103,25 @@ var config$1 = {
  * @param arr {Array}
  * @returns mediateArray {Array}
  */
-function findWarning(element, arr) {
-  var name = element.name;
-  var type = element.type;
+var findWarning = function findWarning(_ref, arr) {
+  var name = _ref.name,
+      type = _ref.type;
+
   var mediateArray = [];
 
-  arr.length && arr.forEach(function (item) {
+  if (!arr.length) {
+    return mediateArray;
+  }
+
+  arr.forEach(function (item) {
     if (config$1[type].includes(item)) {
-      mediateArray.push(item);
-    } else {
-      console.error('Warning: field named "' + name + '" with type="' + type + '". \n        data-options can not contain check to "' + item + '"');
+      return mediateArray.push(item);
     }
+
+    return console.error('Warning: field named "' + name + '" with type="' + type + '". \n      data-options can not contain check to "' + item + '"');
   });
   return mediateArray;
-}
+};
 
 var warnings = {
   en: {
@@ -346,34 +351,54 @@ var types = {
 /**
  * Determines error on ordinary field
  * 
+ * @param config {Object}
+ * @param inputElement {HTMPInputElement}
+ * @param instructions {String}
+ * @returns storeErrors {Map}
+ */
+
+var getMessageError = function getMessageError(config, inputElement, instructions) {
+  var message = '';
+  config.some(function (item) {
+    var checker = types[item];
+    if (!checker) {
+      return false;
+    }
+
+    var result = checker.validate(inputElement);
+    if (!result) {
+      message = checker[instructions];
+      return true;
+    }
+    return false;
+  });
+  return message;
+};
+
+/**
+ * Determines error on ordinary field
+ * 
  * @param dataInput {Object}
  * @param storeErrors {Map}
  * @returns storeErrors {Map}
  */
-function checkValue(dataInput, storeErrors) {
+var checkValue = function checkValue(dataInput, storeErrors) {
   var toArray = Object.values(dataInput);
   var instructions = 'instructions-' + types.lang;
 
-  toArray.length && toArray.forEach(function (data) {
-    var element = data.inputElement;
-    var config = data.config;
-    var message = '';
+  if (!toArray.length) {
+    return storeErrors;
+  }
 
-    config.length && config.some(function (item) {
-      var checker = types[item];
-      if (checker) {
-        var result = checker.validate(element);
-        if (!result) {
-          message = checker[instructions];
-          return true;
-        }
-      }
-      return false;
-    });
-    storeErrors.set(element, message);
+  toArray.forEach(function (_ref) {
+    var inputElement = _ref.inputElement,
+        config = _ref.config;
+
+    var message = getMessageError(config, inputElement, instructions);
+    storeErrors.set(inputElement, message);
   });
   return storeErrors;
-}
+};
 
 /**
  * Determines field in the group or ordinary
@@ -386,28 +411,44 @@ var checkAttrGroup = function checkAttrGroup(item) {
 };
 
 /**
+ * Detected name of its group
+ * 
+ * @param groupName {String}
+ * @param name {String}
+ * @param listOfErrors {Array}
+ * @returns name {String}
+ */
+var checkGroupName = function checkGroupName(groupName, name, listOfErrors) {
+  var newName = void 0;
+  if (groupName) {
+    newName = groupName;
+  } else if (!listOfErrors.includes(name)) {
+    listOfErrors.push(name);
+    console.error('Please enter valid groupname for input with name ' + name + ' \n      and type="checkbox"');
+  }
+  return newName;
+};
+
+/**
  * Detected field type and detected name of its group
  * 
  * @param item {HTMLInputElement}
  * @returns name {String}
  */
-function sortForName(item, listOfErrors) {
-  var type = item.type;
-  var name = void 0;
+var sortForName = function sortForName(_ref, listOfErrors) {
+  var type = _ref.type,
+      name = _ref.name,
+      dataset = _ref.dataset;
+
+  var newName = void 0;
 
   if (type === RADIO) {
-    name = item.name;
+    newName = name;
   } else if (type === CHECKBOX) {
-    var dataset = item.dataset.groupname;
-    if (dataset) {
-      name = dataset;
-    } else if (!listOfErrors.includes(item.name)) {
-      listOfErrors.push(item.name);
-      console.error('Please enter valid groupname for input with name ' + item.name + ' \n        and type="checkbox"');
-    }
+    newName = checkGroupName(dataset.groupname, name, listOfErrors);
   }
-  return name;
-}
+  return newName;
+};
 
 /**
  * It passes through the main list, and created groups to check
@@ -416,7 +457,7 @@ function sortForName(item, listOfErrors) {
  * @param list {Array}
  * @returns arr {Array}
  */
-function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
+var selectAllElementsCurrentGroup = function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
   var arr = [];
 
   list.forEach(function (item) {
@@ -426,7 +467,7 @@ function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
     }
   });
   return arr;
-}
+};
 
 /**
  * Sort the field to check on groups
@@ -434,7 +475,7 @@ function selectAllElementsCurrentGroup(currentName, list, listOfErrors) {
  * @param listGroups {Array}
  * @returns arr {Array}
  */
-function sortGroups(listGroups) {
+var sortGroups = function sortGroups(listGroups) {
   var groups = [];
   var listGroupsName = [];
   var listOfErrors = [];
@@ -448,7 +489,7 @@ function sortGroups(listGroups) {
     }
   });
   return groups;
-}
+};
 
 /**
  * Get message about error
@@ -456,22 +497,28 @@ function sortGroups(listGroups) {
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage(arr, instructions) {
+var getMessage = function getMessage(arr, instructions) {
   var message = '';
 
-  arr.length && arr.some(function (item) {
+  if (!arr.length) {
+    return message;
+  }
+
+  arr.some(function () {
     var checker = types[IS_EMPTY_GROUP];
-    if (checker) {
-      var result = checker.validate(arr);
-      if (!result) {
-        message = checker[instructions];
-        return true;
-      }
+    if (!checker) {
+      return false;
+    }
+
+    var result = checker.validate(arr);
+    if (!result) {
+      message = checker[instructions];
+      return true;
     }
     return false;
   });
   return message;
-}
+};
 
 /**
  * Field group check
@@ -480,14 +527,19 @@ function getMessage(arr, instructions) {
  * @param storeErrors {Map}
  * @returns storeErrors {Map}
  */
-function checkValueGroup(groupRadio, storeErrors) {
+var checkValueGroup = function checkValueGroup(groupRadio, storeErrors) {
   var instructions = 'instructions-' + types.lang;
-  groupRadio.length && groupRadio.forEach(function (arr) {
+
+  if (!groupRadio.length) {
+    return storeErrors;
+  }
+
+  groupRadio.forEach(function (arr) {
     var message = getMessage(arr, instructions);
     storeErrors.set(arr[0], message);
   });
   return storeErrors;
-}
+};
 
 var addedClasses = function addedClasses(element) {
   for (var _len = arguments.length, classes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -529,7 +581,7 @@ var OutputErrors = function () {
     value: function sortMessages(messages) {
       var _this = this;
 
-      messages.forEach(function (message, element, map) {
+      messages.forEach(function (message, element) {
         if (message) {
           if (!_this.storeCreateElements.has(element)) {
             _this.errorNotificationElement = {
@@ -764,14 +816,14 @@ var Validation = function () {
  * 
  * @param forms список форм {NodeListOf<HTMLFormElement>}
  */
-function initValidation(forms) {
-  Array.prototype.forEach.call(forms, function (item) {
+var initValidation = function initValidation(forms) {
+  return Array.prototype.forEach.call(forms, function (item) {
     return new Validation(item);
   });
-}
+};
 
 /* Find all forms on the page */
-function validation() {
+var validation = function validation() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   if (typeof window === 'undefined') {
@@ -783,22 +835,22 @@ function validation() {
   if (config.lang) {
     types.lang = config.lang;
   } else {
-    var getHtmlLang = document.documentElement.lang;
-    types.lang = getHtmlLang || EN;
+    var htmlLang = document.documentElement.lang;
+    types.lang = htmlLang || EN;
   }
   var configToArray = Object.values(config);
   if (configToArray.length) {
-    configToArray.map(function (item) {
-      var types$$1 = item.typeField;
-      var name = item.checkName;
-      return types$$1.forEach(function (i) {
-        return config$1[i].push(name);
+    configToArray.map(function (_ref) {
+      var typeField = _ref.typeField,
+          checkName = _ref.checkName;
+      return typeField.forEach(function (i) {
+        return config$1[i].push(checkName);
       });
     });
     Object.assign(types, config);
   }
   initValidation(forms);
-}
+};
 
 // module.exports = validation;
 var config = {

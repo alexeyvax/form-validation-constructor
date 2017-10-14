@@ -1,7 +1,7 @@
 import { rollup } from 'rollup';
 import babel from 'rollup-plugin-babel';
-import uglify from 'rollup-plugin-uglify';
-import { minify } from 'uglify-js';
+// import uglify from 'rollup-plugin-uglify';
+// import { minify } from 'uglify-js';
 
 rollup({
   entry: 'src/index.js',

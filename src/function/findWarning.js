@@ -7,20 +7,22 @@ import configValidation from './configValidation';
  * @param arr {Array}
  * @returns mediateArray {Array}
  */
-function findWarning(element, arr) {
-  const name = element.name;
-  const type = element.type;
+const findWarning = ({ name, type }, arr) => {
   const mediateArray = [];
 
-  arr.length && arr.forEach((item) => {
+  if (!arr.length) {
+    return mediateArray;
+  }
+
+  arr.forEach((item) => {
     if (configValidation[type].includes(item)) {
-      mediateArray.push(item);
-    } else {
-      console.error(`Warning: field named "${name}" with type="${type}". 
-        data-options can not contain check to "${item}"`);
+      return mediateArray.push(item);
     }
+
+    return console.error(`Warning: field named "${name}" with type="${type}". 
+      data-options can not contain check to "${item}"`);
   });
   return mediateArray;
-}
+};
 
 export default findWarning;

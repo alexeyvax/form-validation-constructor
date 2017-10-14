@@ -3,33 +3,50 @@ import typesValidation from './typesValidation';
 /**
  * Determines error on ordinary field
  * 
+ * @param config {Object}
+ * @param inputElement {HTMPInputElement}
+ * @param instructions {String}
+ * @returns storeErrors {Map}
+ */
+
+const getMessageError = (config, inputElement, instructions) => {
+  let message = '';
+  config.some((item) => {
+    const checker = typesValidation[item];
+    if (!checker) {
+      return false;
+    }
+
+    const result = checker.validate(inputElement);
+    if (!result) {
+      message = checker[instructions];
+      return true;
+    }
+    return false;
+  });
+  return message;
+};
+
+/**
+ * Determines error on ordinary field
+ * 
  * @param dataInput {Object}
  * @param storeErrors {Map}
  * @returns storeErrors {Map}
  */
-function checkValue(dataInput, storeErrors) {
+const checkValue = (dataInput, storeErrors) => {
   const toArray = Object.values(dataInput);
   const instructions = `instructions-${typesValidation.lang}`;
 
-  toArray.length && toArray.forEach((data) => {
-    const element = data.inputElement;
-    const config = data.config;
-    let message = '';
+  if (!toArray.length) {
+    return storeErrors;
+  }
 
-    config.length && config.some((item) => {
-      const checker = typesValidation[item];
-      if (checker) {
-        const result = checker.validate(element);
-        if (!result) {
-          message = checker[instructions];
-          return true;
-        }
-      }
-      return false;
-    });
-    storeErrors.set(element, message);
+  toArray.forEach(({ inputElement, config }) => {
+    const message = getMessageError(config, inputElement, instructions);
+    storeErrors.set(inputElement, message);
   });
   return storeErrors;
-}
+};
 
 export default checkValue;

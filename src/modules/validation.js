@@ -8,15 +8,11 @@ import { EN } from '../constants/index';
  * 
  * @param forms список форм {NodeListOf<HTMLFormElement>}
  */
-function initValidation(forms) {
-  Array.prototype.forEach.call(
-    forms,
-    item => new Validation(item),
-  );
-}
+const initValidation = forms =>
+  Array.prototype.forEach.call(forms, item => new Validation(item));
 
 /* Find all forms on the page */
-function validation(config = {}) {
+const validation = (config = {}) => {
   if (typeof window === 'undefined') {
     console.error('Sorry but this library is designed to work in the browser!');
     return;
@@ -26,19 +22,16 @@ function validation(config = {}) {
   if (config.lang) {
     typesValidation.lang = config.lang;
   } else {
-    const getHtmlLang = document.documentElement.lang;
-    typesValidation.lang = (getHtmlLang) || EN;
+    const htmlLang = document.documentElement.lang;
+    typesValidation.lang = (htmlLang) || EN;
   }
   const configToArray = Object.values(config);
   if (configToArray.length) {
-    configToArray.map((item) => {
-      const types = item.typeField;
-      const name = item.checkName;
-      return types.forEach(i => configValidation[i].push(name));
-    });
+    configToArray.map(({ typeField, checkName }) =>
+      typeField.forEach(i => configValidation[i].push(checkName)));
     Object.assign(typesValidation, config);
   }
   initValidation(forms);
-}
+};
 
 export default validation;

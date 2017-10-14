@@ -7,22 +7,28 @@ import { IS_EMPTY_GROUP } from '../constants/index';
  * @param arr {Array}
  * @returns message {String}
  */
-function getMessage(arr, instructions) {
+const getMessage = (arr, instructions) => {
   let message = '';
 
-  arr.length && arr.some((item) => {
+  if (!arr.length) {
+    return message;
+  }
+
+  arr.some(() => {
     const checker = typesValidation[IS_EMPTY_GROUP];
-    if (checker) {
-      const result = checker.validate(arr);
-      if (!result) {
-        message = checker[instructions];
-        return true;
-      }
+    if (!checker) {
+      return false;
+    }
+
+    const result = checker.validate(arr);
+    if (!result) {
+      message = checker[instructions];
+      return true;
     }
     return false;
   });
   return message;
-}
+};
 
 /**
  * Field group check
@@ -31,13 +37,18 @@ function getMessage(arr, instructions) {
  * @param storeErrors {Map}
  * @returns storeErrors {Map}
  */
-function checkValueGroup(groupRadio, storeErrors) {
+const checkValueGroup = (groupRadio, storeErrors) => {
   const instructions = `instructions-${typesValidation.lang}`;
-  groupRadio.length && groupRadio.forEach((arr) => {
+
+  if (!groupRadio.length) {
+    return storeErrors;
+  }
+
+  groupRadio.forEach((arr) => {
     const message = getMessage(arr, instructions);
     storeErrors.set(arr[0], message);
   });
   return storeErrors;
-}
+};
 
 export default checkValueGroup;
