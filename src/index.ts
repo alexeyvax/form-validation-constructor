@@ -1,3 +1,3 @@
-import validation from './modules/validation';
+import formValidationConstructor from './modules/validation';
 
-module.exports = validation;
+export default formValidationConstructor;

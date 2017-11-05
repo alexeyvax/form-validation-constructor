@@ -4,7 +4,9 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: "./src/index.ts",
   output: {
-    filename: "./public/index.js"
+    filename: "./public/index.js",
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: [
