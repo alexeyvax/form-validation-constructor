@@ -25,13 +25,14 @@ const validation = (config: Config = {}): void => {
     store.setCurrentLanguage(config.lang as string);
   }
 
-  const listOfChecks = config.listOfChecks as Check[];
-  if (listOfChecks.length) {
+  if ('listOfChecks' in config) {
+    const listOfChecks = config.listOfChecks as Check[];
     listOfChecks.map((item: CheckItem) => {
       typesValidation[item.name] = item;
       item.typeField.forEach((i: string) => configValidation[i].push(item.name));
     });
   }
+
   initValidation(forms);
 };
 
