@@ -1,11 +1,8 @@
-import * as constants from '../constants/index';
+import * as constants from '../constants';
+import { ConfigValidation } from './../interfaces';
 
-/**
- * Checks distributed depending on the type of field
- * 
- * config {Object}
- */
-const config = {
+/* Checks distributed depending on the type of field */
+const config: ConfigValidation = {
   /** inpyt type="text" */
   text: [
     constants.IS_NON_EMPTY,

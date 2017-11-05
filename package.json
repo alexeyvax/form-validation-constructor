@@ -2,12 +2,20 @@
   "name": "form-validation-constructor",
   "version": "0.5.2",
   "description": "form-validation-constructor the simple constructor for validation form",
-  "author": "alexeyvax Alexey Vakhrushev <Alexeyvax1990@gmail.com>",
+  "author": "alexeyvax Alexey Vakhrushev <alexeyvax1990@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/alexeyvax/form-validation-constructor",
   "main": "public/index.js",
+  "bugs": {
+    "url": "https://github.com/alexeyvax/form-validation-constructor/issues",
+    "email" : "alexeyvax1990@gmail.com"
+  },
   "scripts": {
-    "start": "babel-node --presets es2015 rollup-build.js"
+    "start": "npm run build",
+    "dev": "NODE_ENV=development webpack-dev-server --progress",
+    "watch": "NODE_ENV=development webpack --watch",
+    "build": "NODE_ENV=production webpack --progress",
+    "lint": "tslint --project \"tsconfig.json\""
   },
   "keywords": [
     "form-validation",
@@ -15,21 +23,14 @@
     "form validation builder",
     "form validation library",
     "form-validation-constructor",
-    "patterns strategy",
-    "rollup"
+    "pattern strategy"
   ],
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-import": "^2.7.0",
-    "rollup": "^0.41.6",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-uglify": "^1.0.1",
-    "uglify-js": "^2.7.5"
+    "ts-loader": "^2.3.7",
+    "tslib": "^1.8.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3",
+    "webpack": "^3.7.1"
   },
   "dependencies": {}
 }
