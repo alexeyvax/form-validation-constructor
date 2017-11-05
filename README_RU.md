@@ -203,7 +203,7 @@ const config = {
       'instructions-en': 'This field can not be empty.',
     },
     ...
-  },
+  ],
 };
 
 formValidationConstructor(config);

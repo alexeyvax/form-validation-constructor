@@ -5,7 +5,7 @@ function debounce<T extends Function>(
   atBeginning: boolean = false,
 ): T
 {
-  let timerId: any;
+  let timerId: number;
   return function debounced(this: any, ...rest: any[]): void {
     if (timerId) {
       clearTimeout(timerId);
