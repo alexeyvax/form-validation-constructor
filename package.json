@@ -1,6 +1,6 @@
 {
   "name": "form-validation-constructor",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "form-validation-constructor the simple constructor for validation form",
   "author": "alexeyvax Alexey Vakhrushev <alexeyvax1990@gmail.com>",
   "license": "MIT",
@@ -9,6 +9,10 @@
   "bugs": {
     "url": "https://github.com/alexeyvax/form-validation-constructor/issues",
     "email": "alexeyvax1990@gmail.com"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/alexeyvax/form-validation-constructor"
   },
   "scripts": {
     "start": "npm run build",

@@ -4,7 +4,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: "./src/index.ts",
   output: {
-    filename: "./public/index.min.js"
+    filename: "./public/index.js"
   },
   module: {
     rules: [
