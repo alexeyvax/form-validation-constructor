@@ -8,7 +8,7 @@ form {
 }
 
 ul {
-	width: 600px;
+	width: 300px;
 	padding: 0;
 	margin: 0;
 }
@@ -29,7 +29,7 @@ input:not([type="radio"]):not([type="checkbox"]):not([type="file"]) {
 	display: inline-block;
 	width: 220px;
 	padding: 10px 5px;
-	
+
 	box-sizing: border-box;
 	border: 1px solid #dedede;
 	border-radius: 6px;
@@ -40,66 +40,7 @@ input[type="checkbox"] {
 	display: block;
 }
 
-span.notify {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	z-index: 1;
-	
-	visibility: hidden;
-	opacity: 0;
-	
-	width: 200px;
-	padding: 10px 5px;
-	
-	background-color: #ffffff;
-	border: 1px solid red;
-	border-radius: 6px;
-	
-	transform: translateX(-200px);
-	transition: visibility .3s, opacity .3s, transform .3s;
-}
-
-span.show {
-	visibility: visible;
-	opacity: 1;
-	transform: translateX(0);
-}
-
-span.hide {
-	visibility: hidden;
-	opacity: 0;
-	transform: translateX(0);
-}
-
-span.notify::before {
-	position: absolute;
-	top: 6px;
-	left: -20px;
-	z-index: 0;
-	
-	width: 0;
-	height: 0;
-	
-	content: '';
-	border: 8px solid transparent;
-	border-right: 12px solid red;
-}
-
-span.notify::after {
-	position: absolute;
-	top: 8px;
-	left: -16px;
-	z-index: 0;
-	
-	width: 0;
-	height: 0;
-	
-	content: '';
-	border: 6px solid transparent;
-	border-right: 10px solid #ffffff;
-}
-
-span.notify:hover {
-	z-index: 2;
+.tooltip {
+  bottom: 10px;
+  left: 230px;
 }

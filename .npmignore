@@ -4,10 +4,14 @@ node_modules
 gif-example
 download
 src
+styles
 
-rollup-build.js
 index.html
-public/index-example.js
+
+package-lock.json
+tsconfig.json
+tslint.json
+webpack.config.js
 
 __tests__
 .vscode

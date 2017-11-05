@@ -1,3 +1,16 @@
+export const listOfSearchedItems = `
+  input[type=text],
+  input[type=number],
+  input[type=email],
+  input[type=password],
+  input[type=file],
+  input[type=search],
+  input[type=tel],
+  input[type=url],
+  input[type=checkbox],
+  input[type=radio]
+`;
+
 /** Warnings */
 export const IS_NON_EMPTY = 'isNonEmpty';
 export const ONLY_LETTERS = 'onlyLetters';
@@ -19,12 +32,15 @@ export const INSTRUCTION_RU = 'instructions-ru';
 
 /** Classes */
 export const CLASS_SHOW = 'show';
-export const CLASS_NOTIFY = 'notify';
+export const CLASS_MESSAGE = 'message';
+export const CLASS_TOOLTIP = 'tooltip';
 
 /** Events */
-export const EVENT_SUBMIT = 'submit';
-export const EVENT_INPUT = 'input';
-export const EVENT_CHANGE = 'change';
+export const events = {
+  SUBMIT: 'submit',
+  INPUT: 'input',
+  CHANGE: 'change',
+};
 
 /** Types group element */
 export const RADIO = 'radio';
