@@ -1,6 +1,6 @@
 {
   "name": "form-validation-constructor",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "form-validation-constructor the simple constructor for validation form",
   "author": "alexeyvax Alexey Vakhrushev <alexeyvax1990@gmail.com>",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "main": "public/index.js",
   "bugs": {
     "url": "https://github.com/alexeyvax/form-validation-constructor/issues",
-    "email" : "alexeyvax1990@gmail.com"
+    "email": "alexeyvax1990@gmail.com"
   },
   "scripts": {
     "start": "npm run build",
@@ -26,6 +26,7 @@
     "pattern strategy"
   ],
   "devDependencies": {
+    "@types/node": "^8.0.47",
     "ts-loader": "^2.3.7",
     "tslib": "^1.8.0",
     "tslint": "^5.7.0",
