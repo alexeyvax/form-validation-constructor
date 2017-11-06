@@ -1,19 +1,16 @@
+import { Warnings } from './interfaces';
+
 export interface Config {
   lang?: string;
-  listOfChecks?: Check[];
-}
-
-export interface Check {
-  'instructions-ru': string;
-  'instructions-en': string;
-  name: string;
-  typeField: string[];
-  validate(input: HTMLInputElement): boolean;
+  listOfChecks?: CheckItem[];
 }
 
 export interface CheckItem {
+  [key: number]: string;
   name: string;
   typeField: string[];
+  instructions: Warnings;
+  validate(input: HTMLInputElement|HTMLInputElement[]): boolean;
 }
 
 export interface DataInput {
@@ -32,12 +29,18 @@ export interface ErrorNotificationElement {
 }
 
 export interface TypesValidation {
-  [key: string]: Types|any;
+  [key: string]: Types;
 }
 
 interface Types {
   [key: number]: string;
-  INSTRUCTION_EN: string;
-  INSTRUCTION_RU: string;
   validate(input: HTMLInputElement|HTMLInputElement[]): boolean;
+}
+
+export interface Warnings {
+  [key: string]: WarningItem;
+}
+
+export interface WarningItem {
+  [key: string]: string;
 }

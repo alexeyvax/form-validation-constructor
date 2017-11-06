@@ -12,8 +12,14 @@ const config = {
       validate(input) {
         return input.value !== '';
       },
-      'instructions-ru': 'это поле не может быть пустым.',
-      'instructions-en': 'This field can not be empty.',
+      instructions: {
+        en: {
+          isTestCheck: 'This field can not be empty.',
+        },
+        ru: {
+          isTestCheck: 'это поле не может быть пустым.',
+        },
+      },
     },
   ],
 };

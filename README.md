@@ -21,6 +21,8 @@ This project is currently being developed.
 
 ## Show example
 
+[see code example](https://github.com/alexeyvax/form-validation-constructor/tree/master/example)
+
 ![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example.gif)
 
 ```javascript
@@ -200,10 +202,16 @@ const config = {
       validate(input) {
         return input.value !== '';
       },
-      // error text on your language
-      // name consist of two parts **instructions** and **en**
-      'instructions-ru': 'это поле не может быть пустым.',
-      'instructions-en': 'This field can not be empty.',
+      // error text on needed language
+      instructions: {
+        en: {
+          // key is name of your check, value is message
+          isTestCheck: 'This field can not be empty.',
+        },
+        ru: {
+          isTestCheck: 'это поле не может быть пустым.',
+        },
+      },
     },
     ...
   ],
