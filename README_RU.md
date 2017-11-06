@@ -21,6 +21,8 @@ form-validation-constructor расчитан на дополнение суще�
 
 ## Посмотреть пример
 
+[Посмотреть пример кода](https://github.com/alexeyvax/form-validation-constructor/tree/master/example)
+
 ![Example1](https://github.com/alexeyvax/form-validation-constructor/blob/master/gif-example/example.gif)
 
 ```javascript
@@ -197,10 +199,16 @@ const config = {
       validate(input) {
         return input.value !== '';
       },
-      // вывод текста ошибок на вашем языке
-      // название состоит из двух частей **instructions** и **en**
-      'instructions-ru': 'это поле не может быть пустым.',
-      'instructions-en': 'This field can not be empty.',
+      // вывод текста ошибок на нужном языке
+      instructions: {
+        en: {
+          // ключ - название проверки, значение - сообщение
+          isTestCheck: 'This field can not be empty.',
+        },
+        ru: {
+          isTestCheck: 'это поле не может быть пустым.',
+        },
+      },
     },
     ...
   ],

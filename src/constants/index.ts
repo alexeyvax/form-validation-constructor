@@ -24,11 +24,8 @@ export const IS_VALID_URL = 'isValidUrl';
 export const IS_REQUIRED = 'isRequired';
 export const IS_EMPTY_GROUP = 'isEmptyGroup';
 
-/** Language */
+/** Default language */
 export const EN = 'en';
-export const RU = 'ru';
-export const INSTRUCTION_EN = 'instructions-en';
-export const INSTRUCTION_RU = 'instructions-ru';
 
 /** Classes */
 export const CLASS_SHOW = 'show';

@@ -1,4 +1,6 @@
-const warnings = {
+import { Warnings } from './../interfaces';
+
+const warnings: Warnings = {
   en: {
     isNonEmpty: 'This field can not be empty.',
     onlyLetters: 'value can only be the letters "a" to "z".',

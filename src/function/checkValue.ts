@@ -1,4 +1,5 @@
 import store from '../classes/Store';
+import warnings from '../warnings';
 import { DataInput } from './../interfaces';
 import typesValidation from './typesValidation';
 
@@ -6,21 +7,18 @@ import typesValidation from './typesValidation';
 const getMessageError = (
   config: string[],
   inputElement: HTMLInputElement,
-  instructions: string,
 ) => {
   let message = '';
+  const lang = store.getCurrentLanguage().toLowerCase();
 
   config.some((item: string) => {
     const checker = typesValidation[item];
-
     if (!checker) {
       return false;
     }
 
-    const result = checker.validate(inputElement);
-
-    if (!result) {
-      message = checker[instructions];
+    if (!checker.validate(inputElement)) {
+      message = warnings[lang][item];
       return true;
     }
     return false;
@@ -30,14 +28,12 @@ const getMessageError = (
 
 /* Determines error on ordinary field */
 const checkValue = (dataInput: DataInput[]): void|Map<HTMLInputElement, string> => {
-  const instructions = `instructions-${store.getCurrentLanguage()}`;
-
   if (!dataInput.length) {
     return store.getErrors();
   }
 
   dataInput.forEach(({ inputElement, config }: DataInput) => {
-    const message = getMessageError(config, inputElement, instructions);
+    const message = getMessageError(config, inputElement);
     store.setErrors(inputElement, message);
   });
 };
