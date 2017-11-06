@@ -1,6 +1,7 @@
 import outputErrors from '../classes/OutputErrors';
 import store from '../classes/Store';
 import Validation from '../classes/Validation';
+import { EN } from '../constants';
 import configValidation from '../function/configValidation';
 import typesValidation from '../function/typesValidation';
 import { Check, CheckItem, Config } from './../interfaces';
@@ -23,6 +24,8 @@ const validation = (config: Config = {}): void => {
   const forms = document.querySelectorAll('form[data-validation=true]') as HTMLFormElement;
   if ('lang' in config) {
     store.setCurrentLanguage(config.lang as string);
+  } else {
+    store.setCurrentLanguage(document.documentElement.lang || EN);
   }
 
   if ('listOfChecks' in config) {

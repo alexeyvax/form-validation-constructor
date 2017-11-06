@@ -3,10 +3,10 @@
 node_modules
 gif-example
 download
+example
 src
-styles
 
-index.html
+public/example.js
 
 package-lock.json
 tsconfig.json
