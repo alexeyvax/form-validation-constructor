@@ -1,4 +1,3 @@
-import { EN } from '../constants';
 import outputErrors from './OutputErrors';
 
 class Store {
@@ -8,7 +7,6 @@ class Store {
   /* Creates an instance of Store */
   public constructor() {
     this.errors = new Map();
-    this.lang = document.documentElement.lang || EN;
   }
 
   public getMessage(): void {
