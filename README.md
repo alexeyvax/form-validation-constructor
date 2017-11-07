@@ -11,7 +11,7 @@ add your own check to the list of checks.
 
 ## See description
 
-[Description](https://github.com/alexeyvax/form-validation-constructor/tree/master/description)
+[See description](https://github.com/alexeyvax/form-validation-constructor/tree/master/description)
 
 ## See example
 
