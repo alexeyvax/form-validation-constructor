@@ -159,7 +159,14 @@ see structure tooltip:
 
 ### Set language for tooltips
 
-Tooltips are currently available in English and Russian languages.
+The list of supported languages:
+
+| ----------------- | ------------------------- |
+| English           | 'en'                      |
+| German            | 'de'                      |
+| Russian           | 'ru'                      |
+| ----------------- | ------------------------- |
+
 Language tooltips have language which
 is passed when the script is initialized, example:
 
