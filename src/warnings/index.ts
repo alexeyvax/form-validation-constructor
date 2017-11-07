@@ -27,6 +27,19 @@ const warnings: Warnings = {
     isRequired: 'для продолжения активируйте обязательное поле',
     isEmptyGroup: 'необходимо выбрать хоть один пункт',
   },
+  de: {
+    isNonEmpty: 'Dieses Feld darf nicht leer sein.',
+    onlyLetters: 'Wert kann nur ein Buchstabe von "a" nach "z" sein.',
+    isValidNumber: 'Wert kann nur eine Zahl sein, zum Beispiel 1, 3.14 oder 2010',
+    minMax: 'Wert kann nur mindestens min und nicht mehr als max',
+    min: 'Wert kann nur mindestens min sein',
+    max: 'Wert kann nur nicht mehr als max',
+    isEmailCorrect: 'korrekte Emailadresse eingeben',
+    isValidTel: 'geben Sie das richtige Telefon ein',
+    isValidUrl: 'Gib die richtige URL ein',
+    isRequired: 'um fortzufahren, aktivieren Sie das erforderliche Feld',
+    isEmptyGroup: 'Sie müssen mindestens einen Artikel auswählen',
+  },
 };
 
 export default warnings;

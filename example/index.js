@@ -1,7 +1,7 @@
 import formValidationConstructor from '../src';
 
 const config = {
-  lang: 'en',
+  lang: 'de',
   listOfChecks: [
     {
       name: 'isTestCheck',
@@ -18,6 +18,9 @@ const config = {
         },
         ru: {
           isTestCheck: 'это поле не может быть пустым.',
+        },
+        de: {
+          isTestCheck: 'Dieses Feld darf nicht leer sein.',
         },
       },
     },
