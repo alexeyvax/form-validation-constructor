@@ -161,11 +161,11 @@ see structure tooltip:
 
 The list of supported languages:
 
+| **Language**      | **code**                  |
 | ----------------- | ------------------------- |
 | English           | 'en'                      |
 | German            | 'de'                      |
 | Russian           | 'ru'                      |
-| ----------------- | ------------------------- |
 
 Language tooltips have language which
 is passed when the script is initialized, example:
